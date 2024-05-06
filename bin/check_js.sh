@@ -1,0 +1,47 @@
+#!/bin/bash
+
+echo "这里是UT脚本"
+
+curl -O https://rdk.zte.com.cn/mirrors/node-sass/v4.13.0/linux-x64-64_binding.node
+export SASS_BINARY_PATH=`pwd`/linux-x64-64_binding.node
+
+npm install || {
+    echo "Error: npm install failed"
+    exit 1
+}
+
+runScript() {
+    echo "Running script: $1"
+    node $1 || {
+        echo "Error: Script failed - $1"
+        exit 1
+    }
+}
+runScript build/scripts/check-demo-import.js
+runScript build/scripts/check-html-element-type.js
+runScript build/scripts/check-import-path.js
+runScript build/scripts/check-mark-for-check.js
+runScript build/scripts/check-public-variables.js
+runScript build/scripts/check-scss-in-demo.js
+runScript build/scripts/check-tagname-selector.js
+runScript build/scripts/extract-theme-variables.js
+runScript build/scripts/check-extraction.js
+runScript build/scripts/check-non-i18n-terms.js
+runScript build/scripts/create-component-wings-theme.js
+runScript build/scripts/generate-external-demo-info.js
+runScript build/scripts/generate-external-navigation-info.js
+
+./node_modules/.bin/gulp build:novice-guide || {
+    echo "Error: gulp task failed - build:novice-guide"
+    exit 1
+}
+
+./node_modules/.bin/gulp build:formly:clean || {
+    echo "Error: gulp task failed - build:formly:clean"
+    exit 1
+}
+
+npm test || {
+    echo "Error: npm test failed"
+    exit 1
+}

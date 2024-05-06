@@ -1,0 +1,5 @@
+images:
+  node: 10.16.0
+modules:
+uploadFile: diy
+services: no-services
