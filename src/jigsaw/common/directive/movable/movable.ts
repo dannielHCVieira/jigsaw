@@ -16,6 +16,8 @@ export class JigsawMovable extends AbstractJigsawViewBase implements OnInit, OnD
     private _removeWindowMouseMoveListener: CallbackRemoval;
     private _removeWindowMouseUpListener: CallbackRemoval;
 
+    private _removeHostTouchStartListener: CallbackRemoval;
+
     @Input('jigsawMovableTargetSelector')
     public targetSelector: string;
 
@@ -46,21 +48,26 @@ export class JigsawMovable extends AbstractJigsawViewBase implements OnInit, OnD
         event.preventDefault();
         event.stopPropagation();
         this._isFixed = this._checkFixed();
+        const isMobile = event.touches?.length == 1;
         let scale = CommonUtils.getScale(this._movableTarget, NaN);
         // 有缩放时，fixed失效，按照absolute的运行
         const targetRect = this._isFixed && isNaN(scale) ? this._movableTarget.getBoundingClientRect() : AffixUtils.offset(this._movableTarget);
         if (isNaN(scale)) {
             scale = 1;
         }
-        this._position = [event.clientX - targetRect.left, event.clientY - targetRect.top];
+        const clientX = isMobile ? event.touches[0].clientX : event.clientX;
+        const clientY = isMobile ? event.touches[0].clientY : event.clientY;
+        this._position = [clientX - targetRect.left, clientY - targetRect.top];
         this._moving = true;
 
         if (this._removeWindowMouseMoveListener) {
             this._removeWindowMouseMoveListener();
         }
         const offset = this.moveOffset.apply(this);
+        const moveEventName = isMobile ? 'touchmove' : 'mousemove';
+        const endEventName = isMobile ? 'touchend' : 'mouseup';
         this._zone.runOutsideAngular(() => {
-            this._removeWindowMouseMoveListener = this._renderer.listen(document, 'mousemove', (event) => {
+            this._removeWindowMouseMoveListener = this._renderer.listen(document, moveEventName, (event) => {
                 this._dragMove(event, offset, scale)
             });
         });
@@ -68,13 +75,17 @@ export class JigsawMovable extends AbstractJigsawViewBase implements OnInit, OnD
         if (this._removeWindowMouseUpListener) {
             this._removeWindowMouseUpListener();
         }
-        this._removeWindowMouseUpListener = this._renderer.listen(document, 'mouseup', this._dragEnd);
+        this._removeWindowMouseUpListener = this._renderer.listen(document, endEventName, this._dragEnd);
     };
 
     private _dragMove = (event, offset, scale) => {
         if (this._moving) {
-            const ox = event.clientX - this._position[0] - offset.left;
-            const oy = event.clientY - this._position[1] - offset.top;
+            const isMobile = event.touches?.length == 1;
+            const clientX = isMobile ? event.touches[0].clientX : event.clientX;
+            const clientY = isMobile ? event.touches[0].clientY : event.clientY;
+
+            const ox = clientX - this._position[0] - offset.left;
+            const oy = clientY - this._position[1] - offset.top;
             this._renderer.removeStyle(this._movableTarget, 'right');
             this._renderer.removeStyle(this._movableTarget, 'bottom');
             this._renderer.setStyle(this._movableTarget, 'left', ox/scale + 'px');
@@ -101,10 +112,8 @@ export class JigsawMovable extends AbstractJigsawViewBase implements OnInit, OnD
                 this._renderer.setStyle(this._movableTarget, 'position', this.affixType);
             }
             if (this._isElementAffixed(this._movableTarget)) {
-                if (this._removeHostMouseDownListener) {
-                    this._removeHostMouseDownListener();
-                }
                 this._removeHostMouseDownListener = this._renderer.listen(this._host, 'mousedown', this._dragStart);
+                this._removeHostTouchStartListener = this._renderer.listen(this._host, 'touchstart', this._dragStart);
             }
         })
     }
@@ -147,8 +156,9 @@ export class JigsawMovable extends AbstractJigsawViewBase implements OnInit, OnD
         if (this._removeHostMouseDownListener) {
             this._removeHostMouseDownListener();
         }
+        if (this._removeHostTouchStartListener) {
+            this._removeHostTouchStartListener();
+        }
         this._removeWindowListener();
     }
 }
-
-
