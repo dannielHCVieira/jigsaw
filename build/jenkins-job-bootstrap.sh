@@ -1,6 +1,8 @@
 
 source ~/.bashrc
 
+echo "Build URL: $BUILD_URL"
+
 if [ "$JIGSAW_BUILD_ROOT" == "" ]; then
     echo "Error: invalid JIGSAW_BUILD_ROOT env var!"
     exit 1
@@ -70,17 +72,19 @@ if [[ "$change" == "" || "$patch" == "0" || "$branch" == "" || "$revision" == ""
 fi
 
 function markWorkflow() {
-    local score=$1
-    echo "maring workflow score to $score..."
+    local result=$1
+    local score=$2
+    echo "marking build message, and set workflow score to $score..."
     local info=`curl -s -i -H "$cookie" "https://gerrit.zte.com.cn/#/c/$change/"`
     local account=`echo $info | grep -oP 'GerritAccount=\K[^;]*'`
     local token=`echo $info | grep -oP 'XSRF_TOKEN=\K[^;]*'`
-    local data='{"labels":{"Code-Review":0,"Verified":0,"Workflow":'$score'},"strict_labels":true}'
+    local data='{"labels":{"Code-Review":0,"Verified":0,"Workflow":'$score'},"strict_labels":true,
+        "message":"Build '$result'. '$BUILD_URL'"}'
     curl -H "Cookie: GerritAccount=$account" -H "$contentType" -H "X-Gerrit-Auth: $token" \
          -X POST -d "$data" "$url/$change/revisions/$revision/review"
 }
 
-markWorkflow -1
+markWorkflow "Started" -1
 
 overallTimestamp=`date +%s`
 echo "self process id: $$"
@@ -89,7 +93,7 @@ finishedCode=0
 function onExit() {
     echo "the script is exiting, code=$finishedCode"
     test "$finishedCode" == "0" && score="1" || score="-1"
-    markWorkflow $score
+    markWorkflow "Finished" $score
 }
 trap onExit EXIT
 
