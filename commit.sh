@@ -30,6 +30,24 @@ function printUsageAndExit() {
     exit 1
 }
 
+function triggerDevopsJob() {
+    echo "正在触发流水线，请稍候....."
+
+    local changeId=`git log -1 | grep 'Change-Id:' | awk '{print $2}'`
+    echo "Change Id: $changeId"
+    if [ "$changeId" == "" ]; then
+        echo "无效的 Change Id，请确认当前仓库已正确克隆，或者使用下面这个命令修复，注意将10045812替换为你的工号"
+        echo "scp -p -P 29418 10045812@gerrit.zte.com.cn:hooks/commit-msg .git/hooks/"
+        return 1
+    fi
+
+    # 等一会再触发，确保流水线可以查询到gerrit代码
+    sleep 5
+    url="https://cloudci.zte.com.cn/zxvmax-ran/job/ZXWINMO/job/VerifyCI/job/verifyci-jigsaw"
+    curl -s "$url/buildWithParameters?token=run-verify-ci-for-jigsaw&changeId=$changeId"
+    echo "流水线任务应该已经触发"
+}
+
 wip=""
 if [[ "$1" == "wip" || "$1" == "WIP" ]]; then
     wip="WIP "
@@ -50,6 +68,7 @@ fi
 
 if [[ "$command" == "push" ]]; then
     git push origin HEAD:refs/for/master%r=chen.xu8@zte.com.cn
+    triggerDevopsJob
     exit 0
 fi
 

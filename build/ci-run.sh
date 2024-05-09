@@ -1,11 +1,17 @@
 #!/bin/bash
 
-echo "这里是UT脚本"
+if [[ "$AWADE_BUILD_RESOURCE" == "" || ! -d "$AWADE_BUILD_RESOURCE" ]]; then
+    echo "Error: param AWADE_BUILD_RESOURCE is invalid, we need this env param to locate all resource files!"
+    exit 1
+fi
 
-curl -O https://rdk.zte.com.cn/mirrors/node-sass/v4.13.0/linux-x64-64_binding.node
-export SASS_BINARY_PATH=`pwd`/linux-x64-64_binding.node
+home=$(cd `dirname $0`/..; pwd);
+cd $home
 
-npm install || {
+echo "preparing node_modules ...."
+tar xfz $AWADE_BUILD_RESOURCE/jigsaw_node_modules/node_modules.ng9.tgz -C ./
+chmod +x ./node_modules/.bin/*
+npm install --unsafe-perm || {
     echo "Error: npm install failed"
     exit 1
 }
