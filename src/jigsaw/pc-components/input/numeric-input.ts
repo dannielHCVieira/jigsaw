@@ -239,11 +239,6 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
             this._value = value;
             return;
         }
-
-        value = Number(value);
-        if (value > this.max) {
-            value = this.max;
-        }
         this._value = value;
     }
 
@@ -314,6 +309,9 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
      * @internal
      */
     public _$increase(event): void {
+        if (this._$upDisabled) {
+            return;
+        }
         event.preventDefault();
         event.stopPropagation();
         this._onTouched();
@@ -331,6 +329,9 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
      * @internal
      */
     public _$decrease(event): void {
+        if (this._$downDisabled) {
+            return;
+        }
         event.preventDefault();
         event.stopPropagation();
         this._onTouched();
@@ -395,6 +396,11 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
         this._value = value;
         if (<any>this._value !== "" && (this._value < this.min || isNaN(this._value))) {
             this._value = this.min == -Infinity ? 0 : this.min;
+            needUpdate = true;
+        }
+        this._value = Number(this._value);
+        if (this._value > this.max) {
+            this._value = this.max;
             needUpdate = true;
         }
         if (needUpdate) {

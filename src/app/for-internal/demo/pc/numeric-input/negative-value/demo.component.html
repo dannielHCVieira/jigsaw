@@ -1,0 +1,18 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+
+<ul class="demo-options">
+    <li class="demo-options-item">
+        <span>最值：</span>
+        <jigsaw-numeric-input prefix="最小值" [(value)]="min"></jigsaw-numeric-input>
+        <jigsaw-numeric-input prefix="最大值" [(value)]="max"></jigsaw-numeric-input>
+    </li>
+</ul>
+<j-numeric-input [(value)]="value" [min]="min" [max]="max" placeholder="请输入数字"
+    (valueChange)="valueChange($event)">
+</j-numeric-input>
+<p>当前值{{value}}</p>

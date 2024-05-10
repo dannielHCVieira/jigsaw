@@ -16,6 +16,8 @@ import { NumericInputShowBorderDemoComponent } from "./show-border/demo.componen
 import { NumericInputShowBorderDemoModule } from "./show-border/demo.module";
 import { NumericInputDefaultValueDemoModule } from "./default-value/demo.module";
 import { NumericInputDefaultValueDemoComponent } from "./default-value/demo.component";
+import { NumericInputNegativeValueDemoComponent} from "./negative-value/demo.component";
+import { NumericInputNegativeValueDemoModule } from "./negative-value/demo.module";
 
 export const routerConfig = [
     {
@@ -42,6 +44,9 @@ export const routerConfig = [
     {
         path: 'default-value', component: NumericInputDefaultValueDemoComponent
     },
+    {
+        path: 'negative-value', component: NumericInputNegativeValueDemoComponent
+    }
 ];
 
 @NgModule({
@@ -54,7 +59,8 @@ export const routerConfig = [
         NumericInputPrefixSuffixDemoModule,
         NumericInputShowOptionDemoModule,
         NumericInputShowBorderDemoModule,
-        NumericInputDefaultValueDemoModule
+        NumericInputDefaultValueDemoModule,
+        NumericInputNegativeValueDemoModule
     ]
 })
 export class NumericInputDemoModule {
