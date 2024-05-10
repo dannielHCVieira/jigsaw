@@ -22,10 +22,10 @@ fi
 url="https://gerrit.zte.com.cn/a/changes"
 cookie="Cookie: PORTALSSOUser=$user; PORTALSSOCookie=$auth;"
 contentType="Content-Type: application/json; charset=UTF-8"
-chagnes=`curl -H "$cookie" -H "$contentType" "$url/?q=vmax/rdk/jigsaw+limit:10+status:open&O=81&pp=0" | sed "s/)]}'//"`
+changes=`curl -H "$cookie" -H "$contentType" "$url/?q=vmax/rdk/jigsaw+limit:10&O=81&pp=0" | sed "s/)]}'//"`
 eval $(node -e "
     console.error('reading change brief info ....');
-    const change = $chagnes.find(ch => ch.change_id == '$changeId');
+    const change = $changes.find(ch => ch.change_id == '$changeId');
     console.error('gerrit change found:', !!change);
     if (change) {
         console.log(\`branch=\${change.branch}; change=\${change._number}\`);
@@ -135,17 +135,21 @@ cd $workspace
 git status > /dev/null 2> /dev/null
 if [ "$?" == "0" ]; then
     # 仓库可用，应该是重跑触发的，直接利用
+    git rebase --abort
     git checkout .
     git clean -xdf
+    git checkout master
+    git pull
 else
     time git clone ssh://10045812@gerritro.zte.com.cn:29418/vmax/rdk/jigsaw ./
     if [ "$?" != "0" ]; then
         echo "failed to clone Jigsaw repo, fix this problem and try again!"
         exit 1
     fi
-    fetch
-    rebase
 fi
+
+fetch
+rebase
 
 # 传这个参数没啥用，主要是用于前面grep
 sh build/ci-run.sh change-$change-$patch
