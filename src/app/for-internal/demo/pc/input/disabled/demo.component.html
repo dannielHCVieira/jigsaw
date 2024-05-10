@@ -2,12 +2,17 @@
 <jigsaw-demo-description [summary]="summary" [content]="description">
 </jigsaw-demo-description>
 
-
 <!-- start to learn the demo from here -->
+<ul class="demo-options">
+    <li class="demo-options-item">
+        <span>是否禁用：</span>
+        <jigsaw-switch [(checked)]="enabled">
+        </jigsaw-switch>
+    </li>
+</ul>
+
+<jigsaw-header>普通</jigsaw-header>
 <jigsaw-input [disabled]="!enabled"></jigsaw-input>
 
-<jigsaw-switch [(checked)]="enabled" onLabel="enabled" offLabel="disabled">
-</jigsaw-switch>
-
-
-
+<jigsaw-header>带图标</jigsaw-header>
+<jigsaw-input [disabled]="!enabled" [icon]="backIcon" (iconSelect)="onIconSelect($event)"></jigsaw-input>

@@ -4,13 +4,16 @@
 
 <!-- start to learn the demo from here -->
 <ul class="demo-options">
-    <li>
-        <span>Readonly</span>
+    <li class="demo-options-item">
+        <span>是否只读：</span>
         <jigsaw-switch [(checked)]="readonly"></jigsaw-switch>
     </li>
 </ul>
+
 <jigsaw-header>readonly</jigsaw-header>
 <jigsaw-input width="200" [(value)]="inputValue" placeholder="Readonly demo" [readonly]="readonly">
 </jigsaw-input>
 <jigsaw-input width="200" [(value)]="inputValue2" placeholder="Readonly demo" [readonly]="readonly">
+</jigsaw-input>
+<jigsaw-input width="200" [(value)]="inputValue3" placeholder="Readonly demo" [readonly]="readonly" [icon]="backIcon" (iconSelect)="onIconSelect($event)">
 </jigsaw-input>
