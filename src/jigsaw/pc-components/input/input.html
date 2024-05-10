@@ -11,7 +11,7 @@
             </ng-container>
         </div>
         <ng-content></ng-content>
-        <input #input
+        <input #inputElement
                [placeholder]="placeholder"
                [(ngModel)]="value"
                [disabled]="disabled"
@@ -19,6 +19,7 @@
                (blur)="_$handleBlur($event)"
                (focus)="_$handleFocus($event)"
                [type]="type"
+               (ngModelChange)="input.emit()"
                autocomplete="off">
         <div *ngIf="clearable && !readonly && !disabled" class="jigsaw-input-icon-end">
             <i (mousedown)="_$clearValue()" [hidden]="!value" class="jigsaw-input-clear-bar iconfont iconfont-e14b"></i>

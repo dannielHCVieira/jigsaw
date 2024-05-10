@@ -108,6 +108,9 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent implements
 
     private _value: string = ''; //input表单值
 
+    @Output()
+    public input: EventEmitter<void> = new EventEmitter<void>();
+
     /**
      * 文本框中当前的文本
      *
@@ -367,7 +370,7 @@ export class JigsawInput extends JigsawInputBase {
         return this.password ? "password" : "text";
     }
 
-    @ViewChild('input')
+    @ViewChild('inputElement')
     private _inputElement: ElementRef;
 
     /**
