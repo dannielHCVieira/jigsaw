@@ -258,7 +258,9 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
             return;
         }
         this._current = newValue;
-        this.currentChange.emit(newValue);
+        if (this.initialized) {
+            this.currentChange.emit(newValue);
+        }
         if (this.data.pagingInfo.currentPage != newValue) {
             // pagingInfo.currentPage采用的getter&setter，不可随便赋值
             this.data.pagingInfo.currentPage = newValue;
@@ -511,11 +513,6 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
         if (isNaN(this._totalPage) || this._totalPage < 0) {
             this._totalPage = 0;
         }
-
-        //验证current合法性
-        if (this.current <= 0 || this.current > this._totalPage) {
-            this.current = 1;
-        }
     }
 
     /**
@@ -542,8 +539,9 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     }
 
     ngOnInit() {
-        super.ngOnInit();
+        // 在super.ngOnInit之前执行可以根据this.initialized分辩方法是否在初始时执行
         this._renderPages();
+        super.ngOnInit();
 
         // 国际化
         TranslateHelper.languageChangEvent.subscribe(langInfo => {

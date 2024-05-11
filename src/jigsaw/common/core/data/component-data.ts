@@ -681,7 +681,7 @@ export class PagingInfo implements IEmittable {
     }
 
     public setCurrentPage(value: number, silent: boolean = false) {
-        if (isNaN(value) || value < 1 || value > this.totalPage) {
+        if (isNaN(value) || (!silent && (value < 1 || value > this.totalPage))) {
             return;
         }
         this._currentPage = value;
