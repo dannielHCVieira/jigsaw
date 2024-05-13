@@ -243,6 +243,13 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     @ViewChildren(JigsawSearchInput)
     private _inputs: QueryList<JigsawSearchInput>;
 
+    /**
+     * 不支持初始化分页的标记，旧版不支持初始化分页要设为true，以防止有兼容性问题
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public noInitializePage: boolean = false;
+
     private _current: number;
 
     /**
@@ -258,7 +265,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
             return;
         }
         this._current = newValue;
-        if (this.initialized) {
+        if (this.initialized || this.noInitializePage) {
             this.currentChange.emit(newValue);
         }
         if (this.data.pagingInfo.currentPage != newValue) {
