@@ -93,6 +93,7 @@ if [[ "$command" == "bc" ]]; then
     message="[破坏性修改] $message"
 fi
 
+message="$wip$message"
 echo "正在提交：$message ..."
 git commit -m "$message"
 
