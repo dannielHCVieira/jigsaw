@@ -239,7 +239,7 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
             this._value = value;
             return;
         }
-        this._value = value;
+        this._value = Number(value);
     }
 
     /**
