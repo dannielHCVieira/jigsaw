@@ -6,6 +6,8 @@ import { JigsawSystemPrompt } from "jigsaw/public_api";
     styleUrls: ['./../../assets/demo.common.css', './demo.component.css']
 })
 export class JigsawSystemPromptBasicDemoComponent {
+    public instances: JigsawSystemPrompt[] = [];
+
     @ViewChild('container1', { read: ViewContainerRef })
     public container1: ViewContainerRef;
     @ViewChild('container2', { read: ViewContainerRef })
@@ -15,27 +17,48 @@ export class JigsawSystemPromptBasicDemoComponent {
 
     public timeout = 8000;
 
+    private _save(instance) {
+        this.instances.push(instance);
+        instance.dispose.subscribe(()=>{
+            const index = this.instances.indexOf(instance);
+            if (index !== -1) {
+                this.instances.splice(index, 1);
+            }
+        })
+    }
+
     public showSystemPrompt1(message, type) {
-        JigsawSystemPrompt.show(message, this.container1, { type: type, timeout: this.timeout });
+        const instance = JigsawSystemPrompt.show(message, this.container1, { type: type, timeout: this.timeout });
+        this._save(instance);
     }
     public showSystemPrompt2(message, type) {
-        JigsawSystemPrompt.show(message, this.container2, { type: type, timeout: this.timeout });
+        const instance = JigsawSystemPrompt.show(message, this.container2, { type: type, timeout: this.timeout });
+        this._save(instance);
     }
     public showSystemPrompt3(message, type) {
-        JigsawSystemPrompt.show(message, this.container3, { type: type, timeout: this.timeout });
+        const instance = JigsawSystemPrompt.show(message, this.container3, { type: type, timeout: this.timeout });
+        this._save(instance);
     }
 
     public showSuccess(message) {
-        JigsawSystemPrompt.showSuccess(message, this.container3, this.timeout);
+        const instance = JigsawSystemPrompt.showSuccess(message, this.container3, this.timeout);
+        this._save(instance);
     }
     public showError(message) {
-        JigsawSystemPrompt.showError(message, this.container3, this.timeout);
+        const instance = JigsawSystemPrompt.showError(message, this.container3, this.timeout);
+        this._save(instance);
     }
     public showWarning(message) {
-        JigsawSystemPrompt.showWarning(message, this.container3, this.timeout);
+        const instance = JigsawSystemPrompt.showWarning(message, this.container3, this.timeout);
+        this._save(instance);
     }
     public showInfo(message) {
-        JigsawSystemPrompt.showInfo(message, this.container3, this.timeout);
+        const instance = JigsawSystemPrompt.showInfo(message, this.container3, this.timeout);
+        this._save(instance);
+    }
+
+    public showInstance() {
+        console.log(this.instances);
     }
 
     // ====================================================================

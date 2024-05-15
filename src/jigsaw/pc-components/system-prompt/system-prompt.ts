@@ -2,13 +2,14 @@ import {
     ChangeDetectionStrategy,
     Component,
     ComponentFactoryResolver,
-    ElementRef,
     Injector,
     Input,
     NgModule,
-    NgZone,
     OnDestroy,
-    ViewContainerRef
+    ViewContainerRef,
+    ComponentRef,
+    Output,
+    EventEmitter
 } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { CommonUtils } from "../../common/core/utils/common-utils";
@@ -35,11 +36,12 @@ export class SystemPromptMessage {
 })
 export class JigsawSystemPrompt extends AbstractJigsawComponent implements OnDestroy {
     constructor(
-        private _elementRef: ElementRef,
         // @RequireMarkForCheck 需要用到，勿删
         private _injector: Injector) {
         super();
     }
+
+    private _componentRef: ComponentRef<JigsawSystemPrompt>;
 
     @Input()
     @RequireMarkForCheck()
@@ -57,6 +59,9 @@ export class JigsawSystemPrompt extends AbstractJigsawComponent implements OnDes
 
     private _timer: number;
 
+    @Output()
+    public dispose: EventEmitter<any> = new EventEmitter<any>();
+
     public static show(message: string, containerRef: ViewContainerRef, options?: SystemPromptMessage): JigsawSystemPrompt {
         const factory = containerRef.injector.get(ComponentFactoryResolver).resolveComponentFactory(JigsawSystemPrompt);
         const componentRef = containerRef.createComponent(factory);
@@ -64,6 +69,7 @@ export class JigsawSystemPrompt extends AbstractJigsawComponent implements OnDes
         instance.type = options?.type || 'error';
         instance.timeout = CommonUtils.isDefined(options?.timeout) ? options.timeout : 8000;
         instance.message = message;
+        instance._componentRef = componentRef;
         instance._setupTimeout();
         containerRef.element.nativeElement.appendChild(componentRef.location.nativeElement);
         return instance;
@@ -99,10 +105,10 @@ export class JigsawSystemPrompt extends AbstractJigsawComponent implements OnDes
 
     public remove() {
         clearTimeout(this._timer);
-        const componentNativeElement = this._elementRef.nativeElement;
-        if (componentNativeElement && componentNativeElement.parentNode) {
-            componentNativeElement.parentNode.removeChild(componentNativeElement);
+        if (!this._componentRef) {
+            return;
         }
+        this._componentRef.destroy();
     }
 
     /**
@@ -125,6 +131,7 @@ export class JigsawSystemPrompt extends AbstractJigsawComponent implements OnDes
 
     ngOnDestroy() {
         clearTimeout(this._timer);
+        this.dispose.emit();
     }
 }
 
