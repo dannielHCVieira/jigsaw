@@ -19,7 +19,7 @@ task('publish:all', publishAll);
 task(':publish:whoami', () => {
     try {
         /** Make sure we're logged in. */
-        execSync('npm whoami', { stdio: 'inherit' });
+        execSync('npm whoami --registry=https://artsh.zte.com.cn/artifactory/api/npm/rnia-release-npm/', { stdio: 'inherit' });
     } catch (error) {
         console.error("An error occurred:", error);
         throw '当前环境未登录到npm，无法发布，请先登录后再试';
@@ -113,7 +113,10 @@ function _execNpmPublish(label: string, packageName: string): Promise<{}> {
 
     const command = npm;
 
-    const args = ['publish', '--access', 'public', '--loglevel=warn'];
+    const args = [
+        'publish', '--access', 'public', '--loglevel=warn',
+        '--registry=https://artsh.zte.com.cn/artifactory/api/npm/rnia-release-npm/'
+    ];
     if (label) {
         args.push('--tag', label);
     }
