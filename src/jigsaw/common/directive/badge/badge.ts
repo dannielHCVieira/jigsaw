@@ -193,11 +193,11 @@ export class JigsawBadgeDirective extends AccessoryBase implements AfterViewInit
         if (this.value == 'dot' || CommonUtils.isUndefined(this.value)) {
             return '';
         }
-        const badgeStr = this.value.toString();
-        const num = parseInt(badgeStr);
-        if (isNaN(num)) {
-            return (/(^fa\s+fa-.+$)|(^iconfont\s+iconfont-.+$)/).test(badgeStr) ? `<span class="${badgeStr}"></span>` : this.value.toString();
+        if (isNaN(this.value as number)) {
+            const badgeStr = this.value.toString();
+            return (/(^fa\s+fa-.+$)|(^iconfont\s+iconfont-.+$)/).test(badgeStr) ? `<span class="${badgeStr}"></span>` : badgeStr;
         } else {
+            const num = Number(this.value);
             return CommonUtils.isDefined(this.jigsawBadgeMaxValue) && num > this.jigsawBadgeMaxValue ? `${this.jigsawBadgeMaxValue}+` : num.toString();
         }
     }
