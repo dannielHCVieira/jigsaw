@@ -193,7 +193,8 @@ export class JigsawBadgeDirective extends AccessoryBase implements AfterViewInit
         if (this.value == 'dot' || CommonUtils.isUndefined(this.value)) {
             return '';
         }
-        if (isNaN(this.value as number)) {
+        // '0'算数字，''或者' '算字符串
+        if (isNaN(this.value as number) || String(this.value).trim() === '') {
             const badgeStr = this.value.toString();
             return (/(^fa\s+fa-.+$)|(^iconfont\s+iconfont-.+$)/).test(badgeStr) ? `<span class="${badgeStr}"></span>` : badgeStr;
         } else {
