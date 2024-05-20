@@ -232,6 +232,8 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
         return this._placeholder;
     }
 
+    private _includesCRLF: boolean = false;
+
     /**
      * 设置多行文本框字数，是否包含回车换行符
      * true：表示字数包含换行符
@@ -242,7 +244,14 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
      * $demo = textarea/max-length
      */
     @Input()
-    public includesCRLF: boolean = false;
+    public get includesCRLF(): boolean{
+        return this._includesCRLF;
+    }
+
+    public set includesCRLF(value: boolean) {
+        this._includesCRLF = value;
+        this._updateCurrentLength(this.value);
+    }
 
     /**
      * @internal
