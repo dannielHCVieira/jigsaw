@@ -12,13 +12,14 @@ import {
     AfterViewInit,
     ChangeDetectionStrategy,
     ChangeDetectorRef,
-    Injector
+    Injector,
+    ViewChild
 } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { TranslateModule, TranslateService } from "@ngx-translate/core";
 import { JigsawSelectModule } from "../select/index";
-import { JigsawInputModule } from "../input/input";
+import { JigsawInput, JigsawInputModule } from "../input/input";
 import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import { TranslateHelper } from "../../common/core/utils/translate-helper";
 import { IPageable, PagingInfo } from "../../common/core/data/component-data";
@@ -470,15 +471,20 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
         this._changeDetectorRef.markForCheck();
     }
 
+    @ViewChild('input')
+    private _input: JigsawInput;
+
     /**
      * @internal
      * goto功能
      * */
-    public _goto(pageNum): void {
-        pageNum = parseInt(pageNum);
-        if (pageNum <= this._totalPage && pageNum >= 1) {
-            this.current = pageNum;
+    public _goto(pageNum: any): void {
+        pageNum = isNaN(pageNum) ? 1 : Math.min(Math.max(1, Math.floor(pageNum)), this._totalPage);
+        if (this.current == pageNum) {
+            return;
         }
+        this.current = pageNum;
+        this._input.value = String(pageNum);
         this._changeDetectorRef.markForCheck();
     }
 
