@@ -5,12 +5,14 @@ import {Component} from "@angular/core";
     styleUrls: ["./demo.component.css"]
 })
 export class SearchInputBasicDemoComponent {
-    value1: string;
-    value2: string;
+    public _$value1: string;
+    public _$value2: string;
+    public _$value3: string;
 
     clear() {
-        this.value1 = '';
-        this.value2 = '';
+        this._$value1 = '';
+        this._$value2 = '';
+        this._$value3 = '';
     }
 
     // ====================================================================

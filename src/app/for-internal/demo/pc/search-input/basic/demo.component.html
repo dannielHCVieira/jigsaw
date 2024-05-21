@@ -6,11 +6,11 @@
 <a (click)="clear()">清空搜索框内容</a>
 
 <jigsaw-header>自动搜索</jigsaw-header>
-<jigsaw-search-input width="200px" [(value)]="value1" (search)="value1 = $event" [searchDebounce]="1000" placeholder="这里是占位文本">
+<jigsaw-search-input width="200px" [(value)]="_$value1" (search)="_$value1 = $event" [searchDebounce]="1000" placeholder="这里是占位文本">
 </jigsaw-search-input>
-<div> {{ " 搜索值为：" + value1 }} </div>
+<div> {{ " 搜索值为：" + _$value1 }} </div>
 
 <jigsaw-header>手动搜索</jigsaw-header>
-<jigsaw-search-input width="200px" [(value)]="value2" [autoSearch]="false" (search)="value2 = $event">
+<jigsaw-search-input width="200px" [(value)]="_$value2" [autoSearch]="false" (search)="_$value3 = $event">
 </jigsaw-search-input>
-<div> {{ " 搜索值为：" + value2 }} </div>
+<div> {{ " 搜索值为：" + _$value3 }} </div>
