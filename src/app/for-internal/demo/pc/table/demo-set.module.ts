@@ -137,6 +137,8 @@ import { TablePerformanceDemoComponent } from "./performance/demo.component";
 import { TablePerformanceDemoModule } from "./performance/demo.module";
 import { TableAlwaysShowEditorDemoComponent } from "./always-show-editor/demo.component";
 import { TableAlwaysShowEditorDemoModule } from "./always-show-editor/demo.module";
+import {TableChangeRenderDemoModule} from "./change-render/demo.module";
+import {TableChangeRenderDemoComponent} from "./change-render/demo.component";
 
 export const routerConfig = [
     {
@@ -180,6 +182,9 @@ export const routerConfig = [
     },
     {
         path: 'header-render', component: TableSetHeaderRenderDemoComponent
+    },
+    {
+        path: 'change-render', component: TableChangeRenderDemoComponent
     },
     {
         path: 'header-class', component: TableSetHeaderClassDemoComponent
@@ -356,7 +361,7 @@ export const routerConfig = [
         TableFixedHeadDemoModule, BigTableDataDemoModule, LocalPagingDataDemoModule, TablePageableDemoModule, TablePageableReadyDemoModule,
         TableRendererDemoModule, TableCheckBoxInputDemoModule, TableRendererOfTemplateRefDemoModule, TableContentWidthDemoModule, BigColumnDemoModule,
         TableSetCellClassDemoModule, TableSetCellEditableDemoModule, TableSetCellRenderDemoModule, TableColumnGroupDemoModule,
-        TableColumnSetVisibleDemoModule, TableColumnSetWidthDemoModule, TableSetHeaderClassDemoModule, TableSetHeaderRenderDemoModule,
+        TableColumnSetVisibleDemoModule, TableColumnSetWidthDemoModule, TableSetHeaderClassDemoModule, TableSetHeaderRenderDemoModule, TableChangeRenderDemoModule,
         TableSetHeaderSortDemoModule, TableDataWithPopupDemoModule, SwimLaneDiagramDemoModule, TableHideHeadDemoModule, TableChangeDataDemoModule,
         TableSelectRowDemoModule, TableCheckboxColumnObjectCellDemoModule, TableCalendarDemoModule, BigRowDemoModule, TableResizeDemoModule,
         TableScrollListenDemoModule, SodokuGameModule, TableAddCheckboxColumnPageableDemoModule, TableSwitchRendererDemoModule,

@@ -7,7 +7,10 @@ import {TableCellRendererBase} from "./table-renderer";
 
 export class TableUtils {
     public static updateHeaderSettings(columnDefine: ColumnDefine, settings: TableHeadSetting): TableHeadSetting {
-        if (!settings) {
+        const headerDef = columnDefine.header;
+        const renderer = TableUtils.getRenderer(headerDef?.renderer);
+        const isRendererChanged = settings?.renderer != renderer;
+        if (!settings || isRendererChanged) {
             settings = {
                 cellData: null, width: null, maxWidth: null, visible: true, renderer: null, rendererInitData: null, clazz: '', alignment: 'default', noPadding: false, field: '',
                 sortable: false, sortAs: SortAs.string, defaultSortOrder: SortOrder.default, innerHtmlContext: null, filterable: false, filterHistoryStorageSize: 3
@@ -16,10 +19,9 @@ export class TableUtils {
         settings.width = columnDefine.width;
         settings.maxWidth = columnDefine.maxWidth;
         settings.field = <string>columnDefine.target;
-        let headerDef = columnDefine.header;
         if (headerDef) {
             settings.cellData = CommonUtils.isDefined(headerDef.text) ? headerDef.text : settings.cellData;
-            settings.renderer = TableUtils.getRenderer(headerDef.renderer);
+            settings.renderer = renderer;
             settings.rendererInitData = headerDef.rendererInitData;
             settings.clazz = headerDef.clazz;
             settings.alignment = headerDef.alignment ? headerDef.alignment : (settings.renderer instanceof Function && settings.renderer.prototype.constructor.name === "TableHeadCheckboxRenderer" ? "center" : "default");
@@ -36,7 +38,10 @@ export class TableUtils {
     }
 
     public static updateCellSettings(columnDefine: ColumnDefine, settings: TableCellSetting): TableCellSetting {
-        if (!settings) {
+        const cellDef = columnDefine.cell;
+        const renderer = TableUtils.getRenderer(cellDef?.renderer);
+        const isRendererChanged = settings?.renderer != renderer;
+        if (!settings || isRendererChanged) {
             settings = {
                 cellData: '', width: null, visible: true, renderer: null, rendererInitData: null, clazz: '', alignment: 'default', noPadding: false, rowSpan: 1,
                 editable: false, editorRenderer: null, editorRendererInitData: null, group: null, field: null, tooltip: null, innerHtmlContext: null,
@@ -46,9 +51,8 @@ export class TableUtils {
         settings.width = columnDefine.width;
         settings.group = columnDefine.group;
         settings.field = <string>columnDefine.target;
-        const cellDef = columnDefine.cell;
         if (cellDef) {
-            settings.renderer = TableUtils.getRenderer(cellDef.renderer);
+            settings.renderer = renderer;
             settings.rendererInitData = cellDef.rendererInitData;
             settings.clazz = cellDef.clazz;
             settings.alignment = cellDef.alignment ? cellDef.alignment : (settings.renderer instanceof Function && settings.renderer.prototype.constructor.name === "TableCellCheckboxRenderer" ? "center" : "default");

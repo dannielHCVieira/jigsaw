@@ -1,0 +1,18 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<jigsaw-button (click)="changeRenderer()">改变渲染器</jigsaw-button>
+
+<jigsaw-table [data]="tableData" [columnDefines]="columns" ></jigsaw-table>
+
+<ng-template #render1 let-context="context">
+    <span class="iconfont iconfont-e4fa"></span>{{context.cellData}}
+</ng-template>
+
+<ng-template #render2 let-context="context">
+    {{context.cellData}}<span class="iconfont iconfont-e87d"></span>
+</ng-template>
+
