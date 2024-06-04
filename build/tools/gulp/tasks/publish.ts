@@ -29,7 +29,7 @@ task(':publish:whoami', () => {
 task(`publish:governance:jigsaw`, sequenceTask(
     ':publish:whoami',
     `:governance:replace-import`,
-    `build:jigsaw:clean`,
+    `build:jigsaw-omni:clean`,
     `validate:check-jigsaw-bundles`,
     `:publish:jigsaw`,
     `:governance:replace-import:restore`,
@@ -225,7 +225,7 @@ function _replaceFiles(folder: string) {
 }
 
 function _replacePackageJson() {
-    let pkgPath = path.join(jigsawHome, "src/jigsaw/pc-components/package.json");
+    let pkgPath = path.join(jigsawHome, "src/jigsaw/omni-components/package.json");
     let packageInfo = JSON.parse(readFileSync(pkgPath).toString());
     packageInfo.peerDependencies = packageInfo.peerDependenciesGovernance;
     delete packageInfo.peerDependenciesGovernance;

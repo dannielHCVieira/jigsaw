@@ -36,14 +36,20 @@ runScript build/scripts/check-non-i18n-terms.js
 runScript build/scripts/create-component-wings-theme.js
 runScript build/scripts/generate-external-demo-info.js
 runScript build/scripts/generate-external-navigation-info.js
+runScript build/scripts/create-omni-components.js
 
-./node_modules/.bin/gulp build:novice-guide || {
+./node_modules/.bin/gulp build:jigsaw-novice-guide || {
     echo "Error: gulp task failed - build:novice-guide"
     exit 1
 }
 
 ./node_modules/.bin/gulp build:formly:clean || {
     echo "Error: gulp task failed - build:formly:clean"
+    exit 1
+}
+
+./node_modules/.bin/gulp build:jigsaw-omni:clean || {
+    echo "Error: gulp task failed - build:jigsaw-omni:clean"
     exit 1
 }
 

@@ -15,12 +15,18 @@ const gulpSass = require('gulp-sass');
 const gulpRun = require('gulp-run');
 const gulpCleanCss = require('gulp-clean-css');
 
+export const packageMap: { [key: string]: { src: string, dist: string } } = {
+    'jigsaw': {src: 'pc-components', dist: 'jigsaw'},
+    'jigsaw-mobile': {src: 'mobile-components', dist: 'jigsaw-mobile'},
+    'jigsaw-omni': {src: 'omni-components', dist: 'jigsaw'}
+};
+
 export function createTask(packageName: string) {
     const projectName = packageName;
     const distDir = './dist';
-    const releasePath = join(distDir, `@rdkmaster/${packageName}`);
+    const releasePath = join(distDir, `@rdkmaster/${packageMap[packageName].dist}`);
 
-    const jigsawPath = `./src/jigsaw/${packageName == 'jigsaw' ? 'pc-components' : 'mobile-components'}`;
+    const jigsawPath = `./src/jigsaw/${packageMap[packageName].src}`;
     const jigsawCommonPath = './src/jigsaw/common';
     const themingEntryPointPath = join(jigsawPath, 'theming/all-theme.scss');
     const themingBundlePath = join(releasePath, 'theming.scss');
@@ -37,12 +43,12 @@ export function createTask(packageName: string) {
 
     task(`:build:${packageName}-styles`, [
         `:build:${packageName}-all-theme-file`,
-        `:build:${packageName}-all-scoped-theme`,
+        packageName === 'jigsaw' ? `:build:${packageName}-all-scoped-theme` : null,
         `:build:${packageName}-bundle-theming-scss`,
         `:build:${packageName}-copy-prebuilt-theme-settings`,
         `:build:${packageName}-copy-theming-api`,
         `:build:${packageName}-all-component-styles`
-    ]);
+    ].filter(task => task !== null));
 
     task(`:build:${packageName}-all-theme-file`, function () {
         return src([allThemingStyleGlob])
@@ -146,25 +152,28 @@ export function createTask(packageName: string) {
         }
     });
 
-    task('build:novice-guide', buildCandidatePackage.bind({
+    task(`build:${packageName}-novice-guide`, buildCandidatePackage.bind({
         packageName: "novice-guide",
         entryPath: "src/jigsaw/common/novice-guide/exports.ts",
         rollupTo: "window.jigsaw=window.jigsaw||{};window.jigsaw",
+        distPath: `${packageMap[packageName].dist}`
     }));
-    task('build:unified-paging', buildCandidatePackage.bind({
+    task(`build:${packageName}-unified-paging`, buildCandidatePackage.bind({
         packageName: "unified-paging",
         entryPath: "src/jigsaw/common/core/data/unified-paging/exports.ts",
         rollupTo: "",
+        distPath: `${packageMap[packageName].dist}`
     }));
 
     task(`build:${packageName}`, sequenceTask(
         ':extract-theme-variables',
         ':create-component-wings-theme',
+        ':create-omni-components',
         `:build:${packageName}-package`,
         `:build:${packageName}-styles`,
         `:build:${packageName}-copy-files`,
-        'build:novice-guide',
-        'build:unified-paging',
+        `build:${packageName}-novice-guide`,
+        `build:${packageName}-unified-paging`,
     ));
 
     task(`build:${packageName}:clean`, sequenceTask(
@@ -187,6 +196,10 @@ export function createTask(packageName: string) {
 
     task(':create-component-wings-theme', () => {
         return gulpRun(`node build/scripts/create-component-wings-theme.js`, {}).exec();
+    });
+
+    task(':create-omni-components', () => {
+        return gulpRun(`node build/scripts/create-omni-components.js`, {}).exec();
     });
 }
 

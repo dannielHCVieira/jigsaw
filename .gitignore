@@ -45,3 +45,9 @@ prettier.config.js
 **/template/demo-navigation-info.json
 **/demo-template/description-and-sources.json
 src/app/for-external/assets/docs
+
+#omni-component
+src/jigsaw/omni-components/module.ts
+src/jigsaw/omni-components/package.json
+src/jigsaw/omni-components/theming/all-theme.scss
+src/jigsaw/omni_public_api.ts

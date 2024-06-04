@@ -11,3 +11,4 @@ import './tasks/generate-demo-info';
 
 createTask('jigsaw');
 createTask('jigsaw-mobile');
+createTask('jigsaw-omni');

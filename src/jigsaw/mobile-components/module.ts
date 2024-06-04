@@ -10,7 +10,7 @@ import {JigsawDraggableModule, JigsawDroppableModule} from '../common/directive/
 import {JigsawCommonModule} from "../common/common";
 import {JigsawTrustedHtmlModule} from "../common/directive/trusted-html/trusted-html";
 
-const JIGSAW_MODULE = [
+const JIGSAW_MOBILE_MODULE = [
     JigsawBlockModule,
     JigsawMobileButtonModule,
     JigsawScrollbarModule,
@@ -24,7 +24,7 @@ const JIGSAW_MODULE = [
 ];
 
 @NgModule({
-    exports: JIGSAW_MODULE
+    exports: JIGSAW_MOBILE_MODULE
 })
-export class JigsawModule {
+export class JigsawMobileModule {
 }

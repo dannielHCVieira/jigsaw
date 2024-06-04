@@ -11,6 +11,7 @@
         "build-internal": "node build/build.js jigsaw-app-internal prod",
         "build": "gulp build:jigsaw:clean",
         "build-mobile": "gulp build:jigsaw-mobile:clean",
+        "build-omni": "gulp build:jigsaw-omni:clean",
         "build-formly": "gulp build:formly:clean",
         "test": "ts-node --project src/app/for-internal/tsconfig.spec.json node_modules/jasmine/bin/jasmine --config=spec/support/jasmine.json",
         "lint": "ng lint",

@@ -29,5 +29,6 @@ export * from "./common/service/loading.service";
 export * from "./common/service/popup.service";
 export * from "./common/service/time.service";
 export * from "./common/service/time.types";
+export * from "./mobile-components/module";
 export * from "./mobile-components/button/button";
 

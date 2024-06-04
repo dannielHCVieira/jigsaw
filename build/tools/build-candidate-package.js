@@ -9,6 +9,7 @@ function buildCandidatePackage() {
     const packageName = this["packageName"];
     const entryPath = this["entryPath"];
     const rollupTo = this["rollupTo"] ? this["rollupTo"] + '=' : '';
+    const distPath = this["distPath"];
     const strParam = `\n   packageName = ${packageName}\n     entryPath = ${entryPath}\n      rollupTo = ${this["rollupTo"]}`;
     if (!packageName || !entryPath) {
         throw `invalid parameters:${strParam}`;
@@ -25,7 +26,7 @@ function buildCandidatePackage() {
             }
             return '';
         }));
-    const dist = `${home}/dist/@rdkmaster/jigsaw/${packageName}`;
+    const dist = `${home}/dist/@rdkmaster/${distPath}/${packageName}`;
     if (existsSync(dist)) {
         removeDir(dist);
     }
