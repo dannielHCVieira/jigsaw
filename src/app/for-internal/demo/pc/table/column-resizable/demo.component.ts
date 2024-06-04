@@ -59,6 +59,44 @@ export class TableColumnResizableDemoComponent {
         },
     ];
 
+    public columns1: ColumnDefine[] = [
+        {
+            target: 'name',
+            visible: true,
+            width:'byContent'
+        },
+        {
+            target: 'gender',
+            visible: true,
+            width:'byContent'
+        },
+        {
+            target: 'position',
+            visible: true,
+            width:'byContent'
+        },
+        {
+            target: 'salary',
+            visible: true,
+            width:'byContent'
+        },
+        {
+            target: 'enroll-date',
+            visible: true,
+            width:'byContent'
+        },
+        {
+            target: 'office',
+            visible: true,
+            width:'byContent'
+        },
+        {
+            target: 'desc',
+            visible: true,
+            width:'byContent'
+        },
+    ];
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
