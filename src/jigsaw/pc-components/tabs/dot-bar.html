@@ -1,0 +1,3 @@
+<div class="jigsaw-dot-bar-item" [ngStyle]="{'background-color': dotColor}"
+     *ngFor="let tab of _$tabPanes; let i = index" (click)="_$tabClick(i)"
+     [class.jigsaw-dot-bar-item-active]="_$selectedIndex === i"></div>

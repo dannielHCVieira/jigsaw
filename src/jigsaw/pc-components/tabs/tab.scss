@@ -1,6 +1,7 @@
 $jigsaw-tabs: #{$jigsaw-prefix}-tabs;
 $jigsaw-tabs-bar: #{$jigsaw-prefix}-tabs-bar;
 $jigsaw-list: #{$jigsaw-prefix}-list;
+$jigsaw-dot-bar: #{$jigsaw-prefix}-dot-bar;
 
 .#{$jigsaw-tabs}-host {
     display: block;
@@ -356,5 +357,26 @@ $jigsaw-list: #{$jigsaw-prefix}-list;
                 }
             }
         }
+    }
+}
+
+.#{$jigsaw-dot-bar}-host {
+    display: flex;
+
+    .#{$jigsaw-dot-bar}-item {
+        height: 8px;
+        width: 8px;
+        border-radius: 8px;
+        cursor: pointer;
+        opacity: .13;
+
+        &:not(:first-child) {
+            margin-left: 8px;
+        }
+    }
+
+    .#{$jigsaw-dot-bar}-item-active {
+        opacity: 1;
+        width: 16px;
     }
 }

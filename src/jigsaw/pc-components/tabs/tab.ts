@@ -29,7 +29,7 @@ import {Subscription} from "rxjs";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {IJigsawTabTitleRenderer} from "./tab-renderer";
 import {CommonUtils} from '../../common/core/utils/common-utils';
-import { TabBarData, TabBarStyleOptions, TabStyleOptions, TabTitleInfo } from './tab-types';
+import {TabBarData, TabBarStyleOptions, TabStyleOptions, TabTitleInfo} from './tab-types';
 
 @Directive()
 export abstract class JigsawTabBase extends AbstractJigsawComponent implements AfterViewInit, AfterViewChecked {
@@ -429,7 +429,7 @@ export class JigsawTabBar extends JigsawTabBase {
     /**
      * 设置标签样式
      * @NoMarkForCheckRequired
-    */
+     */
     @Input()
     public get styleOptions(): TabBarStyleOptions {
         return this._styleOptions;
@@ -451,7 +451,7 @@ export class JigsawTabBar extends JigsawTabBase {
 
     private _setTabLabelStyle() {
         const styles = [
-            this.styleOptions?.normalStyles?.backgroundFill, 
+            this.styleOptions?.normalStyles?.backgroundFill,
             this.styleOptions?.normalStyles?.textColor,
             this.styleOptions?.hoverStyles?.backgroundFill,
             this.styleOptions?.hoverStyles?.textColor,
@@ -471,7 +471,7 @@ export class JigsawTabBar extends JigsawTabBase {
             '--jigsaw-tab-bar-label-disabled-color'
         ]
         const elementStyle = this._elementRef.nativeElement.style;
-        
+
         styles.forEach((style, i) => {
             if (CommonUtils.isUndefined(style)) {
                 return;
@@ -535,6 +535,26 @@ export class JigsawTabBar extends JigsawTabBase {
     }
 }
 
+@WingsTheme('tab.scss')
+@Component({
+    selector: 'jigsaw-dot-bar, j-dot-bar',
+    templateUrl: 'dot-bar.html',
+    host: {
+        '[style.width]': 'width',
+        '[style.height]': 'height',
+        '[attr.data-theme]': 'theme',
+        '[class.jigsaw-dot-bar-host]': 'true'
+    },
+    changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class JigsawDotBar extends JigsawTabBar {
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public dotColor: string = 'var(--brand-default)';
+}
+
 /**
  * 使用`JigsawTab`来将一组视图叠加在同一个区域使用，并以页签的方式来切换这些视图。
  * `JigsawTab`提供了多个api用于动态创建、销毁、隐藏tab页，
@@ -572,7 +592,7 @@ export class JigsawTab extends JigsawTabBase {
     /**
      * 设置标签样式
      * @NoMarkForCheckRequired
-    */
+     */
     @Input()
     public get styleOptions(): TabStyleOptions {
         return this._styleOptions;

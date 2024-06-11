@@ -6,7 +6,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from "@angular/common";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 
-import {JigsawTab, JigsawTabBar} from './tab';
+import {JigsawDotBar, JigsawTab, JigsawTabBar} from './tab';
 import {JigsawTabPane} from "./tab-pane";
 import {JigsawTabContent, JigsawTabLabel} from "./tab-item";
 import {JigsawListModule} from "../list-and-tile/list";
@@ -22,8 +22,8 @@ import {TranslateHelper} from "../../common/core/utils/translate-helper";
         CommonModule, PerfectScrollbarModule, JigsawListModule, JigsawInputModule, JigsawFloatModule, JigsawTrustedHtmlModule,
         TranslateModule.forChild()
     ],
-    exports: [JigsawTab, JigsawTabPane, JigsawEditableTabTitleRenderer, JigsawTabBar],
-    declarations: [JigsawTab, JigsawTabPane, JigsawTabLabel, JigsawTabContent, JigsawEditableTabTitleRenderer, JigsawTabBar]
+    exports: [JigsawTab, JigsawTabPane, JigsawEditableTabTitleRenderer, JigsawTabBar, JigsawDotBar],
+    declarations: [JigsawTab, JigsawTabPane, JigsawTabLabel, JigsawTabContent, JigsawEditableTabTitleRenderer, JigsawTabBar, JigsawDotBar]
 })
 export class JigsawTabsModule {
     constructor() {

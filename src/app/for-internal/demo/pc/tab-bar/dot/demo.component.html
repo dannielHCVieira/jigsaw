@@ -1,0 +1,26 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<jigsaw-header>圆点颜色</jigsaw-header>
+<jigsaw-button-bar [data]="colors" [selectedItems]="[colors[0]]" (selectedItemsChange)="docColor = $event[0].value"></jigsaw-button-bar>
+
+<div class="container">
+    <jigsaw-tabs [headless]="true" [(selectedIndex)]="selectedIndex" [height]="'100px'" [width]="'100%'">
+        <ng-container *ngFor="let tabData of tabs">
+            <jigsaw-tab-pane>
+                <ng-template>
+                    <div class="content">
+                        {{tabData.label}} Content
+                    </div>
+                </ng-template>
+            </jigsaw-tab-pane>
+        </ng-container>
+    </jigsaw-tabs>
+
+    <jigsaw-dot-bar [data]="tabs" [(selectedIndex)]="selectedIndex" [dotColor]="docColor"></jigsaw-dot-bar>
+</div>
+
+
