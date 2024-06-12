@@ -3,7 +3,7 @@
     [icon]="_$icon" (preIconSelect)="preIconSelect.emit($event)" (iconSelect)="iconSelect.emit($event)"
     (focus)="_$handleFocus($event)" (blur)="_$handleBlur($event)" (select)="_$handleSelect($event)" jigsaw-float
     [jigsawFloatTarget]="dropDownTemp" [jigsawFloatOpen]="_$propertyListOpen" jigsawFloatOpenTrigger="none"
-    jigsawFloatCloseTrigger="none" [jigsawFloatOptions]="{showShadow: false}" [jigsawFloatPosition]="floatPosition"
+    [jigsawFloatCloseTrigger]= "floatCloseTrigger" [jigsawFloatOptions]="{showShadow: false}" [jigsawFloatPosition]="floatPosition"
     [prefixWidth]="prefixWidth" [prefix]="prefix" [prefixLabelField]="prefixLabelField"
     (prefixChange)="prefixChange.emit($event)" [suffixWidth]="suffixWidth" [suffix]="suffix"
     [suffixLabelField]="suffixLabelField" (suffixChange)="suffixChange.emit($event)" (input)="_$getFilteredDropDownData(true)">

@@ -21,7 +21,7 @@ import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {TranslateHelper} from '../../common/core/utils/translate-helper';
 import {RequireMarkForCheck} from '../../common/decorator/mark-for-check';
-import {FloatPosition, JigsawFloatModule} from '../../common/directive/float/float';
+import {DropDownTrigger, FloatPosition, JigsawFloatModule} from '../../common/directive/float/float';
 import {JigsawListModule} from '../list-and-tile/list';
 import {JigsawAutoCompleteInputModule} from './auto-complete-input';
 
@@ -238,6 +238,13 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
      */
     @Input()
     public floatPosition: FloatPosition = 'bottomLeft';
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public floatCloseTrigger: 'click' | 'mouseleave' | 'none' | DropDownTrigger = 'none'
+
 
     /**
      * @internal
