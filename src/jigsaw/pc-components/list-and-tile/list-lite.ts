@@ -61,6 +61,12 @@ export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements 
     private _removeOnRefresh: CallbackRemoval;
 
     /**
+    * @NoMarkForCheckRequired
+    */
+    @Input()
+    public autoRemoveInvalidValue: boolean = true;
+
+    /**
      * 供选择的数据集合
      */
     private _data: SupportedDataType;

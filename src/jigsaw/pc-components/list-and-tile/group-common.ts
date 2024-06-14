@@ -141,7 +141,8 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
      */
     public _removeInvalidSelectedItems(): void {
         this._cdr.markForCheck();
-        if (!this._items || !this._selectedItems || !this._selectedItems.length) {
+        if (!this._items || !this._selectedItems || !this._selectedItems.length || !this.autoRemoveInvalidValue) {
+            // 在本地数据为空时，不检查无用选项
             return;
         }
         let needRefresh = false;
@@ -255,10 +256,7 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
             this._setItemTheme(this._items);
             this._subscribeItemSelectedChange(items);
         });
-        if (this._items.length && this.autoRemoveInvalidValue) {
-            // 在本地数据为空时，不检查无用选项
-            this._removeInvalidSelectedItems();
-        }
+        this._removeInvalidSelectedItems();
     }
 
     ngOnDestroy() {
