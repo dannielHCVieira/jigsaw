@@ -278,7 +278,8 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
                 break;
             }
             if (i > currentIndex - offset) {
-                canClose = !this._isChildOf(event.toElement, popups[i].element);
+                const targetElement = event.toElement || event.relatedTarget;
+                canClose = !this._isChildOf(targetElement, popups[i].element);
             }
         }
         // 弹出的全局遮盖jigsaw-block' 触发的mouseleave不应关闭float
