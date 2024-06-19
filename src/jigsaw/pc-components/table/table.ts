@@ -385,7 +385,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._$resizing = true;
         const tablePos = this._tableRange.nativeElement.getBoundingClientRect();
         const tableLeft = tablePos.x;
-        const scaleRatio = tablePos.width / this._tableRange.nativeElement.offsetWidth;
+        const scaleRatio = tablePos.width / this._tableRange.nativeElement.clientWidth;
         const preCell = this._tableHeaderCell.toArray()[index];
         const nextCell = this._tableHeaderCell.toArray()[index + 1];
         const preCellLeft = preCell.nativeElement.getBoundingClientRect().x;
@@ -414,8 +414,15 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     private _tableBodyHeaderColgroup: QueryList<ElementRef>;
 
     private _updateColumnWidth(index: number, preWidth: number, nextWidth: number) {
-        this._renderer.setStyle(this._tableHeaderColgroup.toArray()[index].nativeElement, 'width', preWidth + 'px');
-        this._renderer.setStyle(this._tableHeaderColgroup.toArray()[index + 1].nativeElement, 'width', nextWidth + 'px');
+        const cellElements = this._tableHeaderColgroup.toArray();
+        const cellWidths = cellElements.map(cell => cell.nativeElement.clientWidth);
+        cellElements.forEach((cell, index) => {
+            const newWidth = cellWidths[index];
+            this._renderer.setStyle(cell.nativeElement, 'width', newWidth + 'px');
+            this._renderer.setStyle(this._tableBodyHeaderColgroup.toArray()[index].nativeElement, 'width', newWidth + 'px');
+        });
+        this._renderer.setStyle(cellElements[index].nativeElement, 'width', preWidth + 'px');
+        this._renderer.setStyle(cellElements[index + 1].nativeElement, 'width', nextWidth + 'px');
         this._renderer.setStyle(this._tableBodyHeaderColgroup.toArray()[index].nativeElement, 'width', preWidth + 'px');
         this._renderer.setStyle(this._tableBodyHeaderColgroup.toArray()[index + 1].nativeElement, 'width', nextWidth + 'px');
     }
