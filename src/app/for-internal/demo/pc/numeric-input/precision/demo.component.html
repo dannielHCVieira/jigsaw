@@ -1,0 +1,28 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<jigsaw-header [level]="1">精度</jigsaw-header>
+
+<ul class="demo-options">
+    <li class="demo-options-item">
+        <span>精度：</span>
+        <j-numeric-input [disabled]="precisionDefault" [(value)]="_$precision" min="0" max="10" placeholder="请输入精度">
+        </j-numeric-input>
+        <span>默认值</span>
+        <jigsaw-switch [(checked)]="precisionDefault" style="margin-right: 5px"></jigsaw-switch>
+    </li>
+    <li class="demo-options-item">
+        <span>步长：</span>
+        <j-numeric-input [disabled]="stepDefault" [(value)]="_$step" placeholder="请输入步长">
+        </j-numeric-input>
+        <span>默认值</span>
+        <jigsaw-switch [(checked)]="stepDefault" style="margin-right: 5px"></jigsaw-switch>
+    </li>
+</ul>
+
+<j-numeric-input [(value)]="value" [precision]="precision" [step]="step" placeholder="请输入数字"
+    (valueChange)="valueChange($event)">
+</j-numeric-input>
