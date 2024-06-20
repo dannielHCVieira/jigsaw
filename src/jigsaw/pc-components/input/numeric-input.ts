@@ -239,8 +239,22 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
             this._value = value;
             return;
         }
+
+        if (!isNaN(this.precision) && <any>this.precision != '') {
+            this._value = this._toPrecisionAsStep(value);
+            return;
+        }
+
         this._value = Number(value);
     }
+
+    /**
+     * 精度，设定小数点后最多保留位数
+     *
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public precision: number;
 
     /**
      * 尺寸，默认是‘default’
@@ -350,11 +364,12 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
         this._inputElement.nativeElement.focus();
     }
 
-    private _toPrecisionAsStep(num) {
-        if (isNaN(num) || num === '') {
+    private _toPrecisionAsStep(num: number): number {
+        if (isNaN(num) || <any>num === '') {
             return num;
         }
-        return Number(Number(num).toFixed(this._precisionStep));
+        const precision = isNaN(this.precision) || <any>this.precision == '' ? this._precisionStep : this.precision;
+        return Number(Number(num).toFixed(precision));
     }
 
     /**

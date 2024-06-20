@@ -18,6 +18,8 @@ import { NumericInputDefaultValueDemoModule } from "./default-value/demo.module"
 import { NumericInputDefaultValueDemoComponent } from "./default-value/demo.component";
 import { NumericInputNegativeValueDemoComponent} from "./negative-value/demo.component";
 import { NumericInputNegativeValueDemoModule } from "./negative-value/demo.module";
+import { NumericInputPrecisionDemoModule } from "./precision/demo.module";
+import { NumericInputPrecisionDemoComponent } from "./precision/demo.component";
 
 export const routerConfig = [
     {
@@ -46,6 +48,9 @@ export const routerConfig = [
     },
     {
         path: 'negative-value', component: NumericInputNegativeValueDemoComponent
+    },
+    {
+        path: 'precision', component: NumericInputPrecisionDemoComponent
     }
 ];
 
@@ -60,7 +65,8 @@ export const routerConfig = [
         NumericInputShowOptionDemoModule,
         NumericInputShowBorderDemoModule,
         NumericInputDefaultValueDemoModule,
-        NumericInputNegativeValueDemoModule
+        NumericInputNegativeValueDemoModule,
+        NumericInputPrecisionDemoModule
     ]
 })
 export class NumericInputDemoModule {
