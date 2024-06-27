@@ -650,9 +650,10 @@
 
 .jigsaw-table-host {
     table {
-      background: $bg-component-darken;
+        background: $bg-component-darken;
         thead {
             tr {
+                background: var(--bg-container);
                 td {
                     color: $blue-9;
                     font-size: 14px;
@@ -664,7 +665,15 @@
         tbody {
             tr {
                 &:nth-child(2n) {
-                    background: $bg-component-darken;
+                    background: var(--jigsaw-table-row-odd, $bg-component-darken);
+                }
+
+                &:hover {
+                    background: var(--jigsaw-table-row-hover, var(--bg-hover));
+                }
+
+                &.jigsaw-table-row-selected {
+                    background: var(--jigsaw-table-row-selected, var(--brand-active-lighten));
                 }
             }
         }
