@@ -42,9 +42,8 @@ function triggerDevopsJob() {
     fi
 
     # 等一会再触发，确保流水线可以查询到gerrit代码
-    sleep 5
-    url="https://cloudci.zte.com.cn/zxvmax-ran/job/ZXWINMO/job/VerifyCI/job/verifyci-jigsaw"
-    curl -s "$url/buildWithParameters?token=run-verify-ci-for-jigsaw&changeId=$changeId"
+    url="https://cloudci.zte.com.cn/zxvmax-ran/job/ZXWINMO/job/VerifyCI/job/verifyci-jigsaw/buildWithParameters"
+    curl -s "$url?token=run-verify-ci-for-jigsaw&changeId=$changeId&cause=Triggered+by+`whoami`"
     echo "流水线任务应该已经触发"
 }
 
