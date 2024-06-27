@@ -187,6 +187,7 @@ const packages = [
     {oldPkgName: "ngx-color-picker", newPkgName: "@rdkmaster/ngx-color-picker"},
     {oldPkgName: "ngx-perfect-scrollbar", newPkgName: "@rdkmaster/ngx-perfect-scrollbar"},
     {oldPkgName: "web-animations-js", newPkgName: "@rdkmaster/web-animations-js"},
+    {oldPkgName: "file-saver", newPkgName: "@rdkmaster/file-saver"},
     {oldPkgName: "zone.js", newPkgName: "@rdkmaster/zone.js"}
 ];
 const jigsawHome = buildConfig.projectDir;
@@ -214,7 +215,7 @@ function _replaceFiles(folder: string) {
         const filePath = path.join(folder, fileName);
         let code = readFileSync(filePath).toString();
         packages.forEach(pkg => {
-            const oldPkgRegex = new RegExp(`(\\bimport\\s*\\{[^{}]*}\\s*from\\s*['"]${pkg.oldPkgName}['"];?)`, 'g');
+            const oldPkgRegex = new RegExp(`(\\bimport\\s+(\\{[^}]+}|\\*\\s+as\\s+\\w+)\\s+from\\s*['"]${pkg.oldPkgName}['"];?)`, 'g');
             if (!oldPkgRegex.test(code)) {
                 return;
             }
@@ -225,7 +226,7 @@ function _replaceFiles(folder: string) {
 }
 
 function _replacePackageJson() {
-    let pkgPath = path.join(jigsawHome, "src/jigsaw/omni-components/package.json");
+    let pkgPath = path.join(jigsawHome, "src/jigsaw/pc-components/package.json");
     let packageInfo = JSON.parse(readFileSync(pkgPath).toString());
     packageInfo.peerDependencies = packageInfo.peerDependenciesGovernance;
     delete packageInfo.peerDependenciesGovernance;
