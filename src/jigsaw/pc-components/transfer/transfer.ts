@@ -629,6 +629,38 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
     public labelField: string;
 
     /**
+     * 用户用于设置存在localStorage中历史记录的key值
+     *
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public sourceHistoryStorageKey: string = 'jigsawSearchInputHistory';
+
+    /**
+     * 用户用于设置存在localStorage中历史记录的key值
+     *
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public destHistoryStorageKey: string = 'jigsawSearchInputHistory';
+
+    /**
+     * 用户用于设置存在localStorage中历史记录的记录条数
+     *
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public sourceHistoryStorageSize: number = 10;
+
+    /**
+     * 用户用于设置存在localStorage中历史记录的记录条数
+     *
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public destHistoryStorageSize: number = 10;
+
+    /**
      * @NoMarkForCheckRequired
      */
     @Input()

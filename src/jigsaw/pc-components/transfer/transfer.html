@@ -15,7 +15,8 @@
             </div>
             <div class="jigsaw-transfer-search-cntr">
                 <jigsaw-search-input [theme]="theme" width="100%" [disabled]="!searchable" [searchDebounce]="300"
-                    [(value)]="_$sourceSearchKey" (search)="_$sourceSearching($event)">
+                    [(value)]="_$sourceSearchKey" (search)="_$sourceSearching($event)" [historyStorageKey]="sourceHistoryStorageKey"
+                    [historyStorageSize]="sourceHistoryStorageSize">
                 </jigsaw-search-input>
             </div>
         </div>
@@ -48,7 +49,8 @@
             </div>
             <div class="jigsaw-transfer-search-cntr">
                 <jigsaw-search-input [theme]="theme" width="100%" [disabled]="!searchable" [searchDebounce]="300"
-                    [(value)]="_$destSearchKey" (search)="_$destSearching($event)">
+                    [(value)]="_$destSearchKey" (search)="_$destSearching($event)" [historyStorageKey]="destHistoryStorageKey"
+                    [historyStorageSize]="destHistoryStorageSize">
                 </jigsaw-search-input>
             </div>
         </div>
