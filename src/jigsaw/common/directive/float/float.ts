@@ -532,7 +532,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
                     popupElement.style.transformOrigin = 'left top';
                 }
                 this._changePosByFloatPosition(pos, popupElement);
-                this._positionReviser(pos, popupElement);
+                this.positionReviser(pos, popupElement);
                 return pos;
             },
             size: {
@@ -722,7 +722,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
     /**
      * 计算弹层区域的位置，当指定的方向位置不够，且反向弹位置足够时，那么反向弹层
      */
-    private _positionReviser(pos: PopupPositionValue, popupElement: HTMLElement): PopupPositionValue {
+    private positionReviser(pos: PopupPositionValue, popupElement: HTMLElement): PopupPositionValue {
         const hostRect = this._elementRef.nativeElement.getBoundingClientRect();
         const popupRect = popupElement.getBoundingClientRect();
         const point = this._getElementPos();
