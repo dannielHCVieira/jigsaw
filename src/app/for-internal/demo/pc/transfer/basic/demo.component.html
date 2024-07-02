@@ -46,3 +46,7 @@
             labelField="custom" subLabelField="someOtherField" trackItemBy="custom"
             [sourceRenderer]="sourceRenderer" [destRenderer]="targetRenderer">
 </j-transfer>
+<jigsaw-header>配置搜索框的历史记录和显示条数</jigsaw-header>
+<j-transfer width="100%" height="500" [data]="data" [selectedItems]="selectedItems" [sourceRenderer]="sourceRenderer"
+    [destRenderer]="targetRenderer" [sourceHistoryStorageKey]="'sourceHistory'" [destHistoryStorageKey]="'destHistory'"
+    [sourceHistoryStorageSize]="2" [destHistoryStorageSize]="3"></j-transfer>
