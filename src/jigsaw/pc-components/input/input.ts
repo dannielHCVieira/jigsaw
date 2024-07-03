@@ -78,6 +78,13 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent implements
     @Input()
     public showBorder: boolean = true;
 
+    /**
+     * 设置输入框的最大字符数。
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public maxLength: number;
+
     @Output('focus')
     private _focusEmitter: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
 

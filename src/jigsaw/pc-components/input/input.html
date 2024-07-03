@@ -20,7 +20,8 @@
                (focus)="_$handleFocus($event)"
                [type]="type"
                (ngModelChange)="input.emit()"
-               autocomplete="off">
+               autocomplete="off"
+               [maxlength]="maxLength">
         <div class="jigsaw-input-icon-end">
             <i *ngIf="clearable && !readonly && !disabled" (mousedown)="_$clearValue()" [hidden]="!value" class="jigsaw-input-clear-bar iconfont iconfont-e14b"></i>
             <ng-content select="[jigsaw-icon], [j-icon]"></ng-content>

@@ -6,6 +6,7 @@ import {JigsawInput} from "jigsaw/public_api";
 })
 export class InputBasicDemoComponent {
     inputValue: any;
+    inputValue1: any;
 
     valueChanged(message: string) {
         console.log(`input value is: ${message}`);
@@ -15,6 +16,8 @@ export class InputBasicDemoComponent {
     click() {
         alert('你输入的值是 ' + this.myInput.value)
     }
+
+    maxLength: number = 10;
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo
