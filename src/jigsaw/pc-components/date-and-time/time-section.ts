@@ -789,7 +789,9 @@ export class JigsawTimeSection extends AbstractJigsawComponent implements OnDest
 
     ngAfterViewInit() {
         this._updateSwitchList();
-        this.update();
+        Promise.resolve().then(() => {
+            this.update();
+        })
     }
 
     ngOnDestroy() {
