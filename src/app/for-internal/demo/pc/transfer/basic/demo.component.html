@@ -51,11 +51,8 @@
     [destRenderer]="targetRenderer" [sourceHistoryStorageKey]="'sourceHistory'" [destHistoryStorageKey]="'destHistory'"
     [sourceHistoryStorageSize]="2" [destHistoryStorageSize]="3"></j-transfer>
 <jigsaw-header>配置搜索框的关闭方式</jigsaw-header>
-<span>源搜索框关闭方式：</span>
-<jigsaw-select [(value)]="selectedSource" (valueChange)="sourceFloatCloseTrigger = $event.label" [data]="floatCloseTrigger">
-</jigsaw-select>
-<span>目标搜索框关闭方式：</span>
-<jigsaw-select [(value)]="selectedDest" (valueChange)="destFloatCloseTrigger = $event.label" [data]="floatCloseTrigger">
+<span>搜索框关闭方式：</span>
+<jigsaw-select [(value)]="selectedCloseTrigger" (valueChange)="searchHistoryCloseTrigger = $event.label" [data]="floatCloseTriggerData">
 </jigsaw-select>
 <j-transfer width="100%" height="500" [data]="data" [selectedItems]="selectedItems" [sourceRenderer]="sourceRenderer"
-    [destRenderer]="targetRenderer" [sourceFloatCloseTrigger]="sourceFloatCloseTrigger" [destFloatCloseTrigger]="destFloatCloseTrigger"></j-transfer>
+    [destRenderer]="targetRenderer" [searchHistoryCloseTrigger]="searchHistoryCloseTrigger"></j-transfer>

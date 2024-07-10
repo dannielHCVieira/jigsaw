@@ -665,12 +665,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
      * @NoMarkForCheckRequired
      */
     @Input()
-    public sourceFloatCloseTrigger: 'click' | 'mouseleave' | 'none' | DropDownTrigger = 'none';
-    /**
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public destFloatCloseTrigger: 'click' | 'mouseleave' | 'none' | DropDownTrigger = 'none';
+    public searchHistoryCloseTrigger: 'click' | 'mouseleave' | 'none' | DropDownTrigger = 'none';
 
     /**
      * @NoMarkForCheckRequired
