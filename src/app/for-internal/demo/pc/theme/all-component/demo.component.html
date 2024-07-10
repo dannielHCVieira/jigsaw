@@ -140,5 +140,25 @@
 </div>
 
 <div class="component-cntr">
+    <jigsaw-dialog width="400px" caption="Title of the dialog" icon="iconfont iconfont-e3f0">
+        <div jigsaw-body>
+            <ul class="dialog-content">
+                <li>Dialog content...</li>
+                <li>Dialog content...</li>
+                <li>Dialog content...</li>
+            </ul>
+        </div>
+        <div jigsaw-button-bar>
+            <jigsaw-button colorType="primary">OK</jigsaw-button>
+            <jigsaw-button>Cancel</jigsaw-button>
+        </div>
+    </jigsaw-dialog>
+</div>
 
+<div class="component-cntr">
+    <j-drawer [floating]="false" [width]="200" [height]="200" [emphasisHandler]="false">
+        <div class="drawer-content">
+            这是一个展示内容的box
+        </div>
+    </j-drawer>
 </div>

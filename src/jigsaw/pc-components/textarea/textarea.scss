@@ -55,6 +55,18 @@ $jigsaw-textarea: #{$jigsaw-prefix}-textarea;
         }
     }
 
+    textarea::-webkit-input-placeholder {
+        color: $font-color-hint;
+    }
+
+    textarea:-ms-input-placeholder {
+        color: $font-color-hint;
+    }
+
+    textarea:-moz-placeholder {
+        color: $font-color-hint;
+    }
+
     &.#{$jigsaw-textarea}-resize-vertical {
         height: auto !important;
 
