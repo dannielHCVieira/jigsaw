@@ -74,4 +74,13 @@ export class TransferArrayDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    floatCloseTrigger = new ArrayCollection([
+        {label: "click"},
+        {label: "mouseleave"}
+    ]);
+    selectedSource: any = 'click';
+    selectedDest: any = 'mouseleave';
+    sourceFloatCloseTrigger: string = 'click';;
+    destFloatCloseTrigger: string = 'mouseleave';;
+
 }

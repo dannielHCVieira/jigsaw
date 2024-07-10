@@ -45,6 +45,7 @@ import { CheckBoxStatus } from '../checkbox/typings';
 import { JigsawLoadingModule } from '../../common/components/loading/loading';
 import { JigsawTreeExtModule } from "../tree/tree-ext";
 import { JigsawTableModule } from "../table/table";
+import {DropDownTrigger} from '../../common/directive/float/float';
 
 /**
  * 此处不能使用箭头函数
@@ -659,6 +660,17 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
      */
     @Input()
     public destHistoryStorageSize: number = 10;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public sourceFloatCloseTrigger: 'click' | 'mouseleave' | 'none' | DropDownTrigger = 'none';
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public destFloatCloseTrigger: 'click' | 'mouseleave' | 'none' | DropDownTrigger = 'none';
 
     /**
      * @NoMarkForCheckRequired
