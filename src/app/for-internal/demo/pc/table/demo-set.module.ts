@@ -139,8 +139,13 @@ import { TableAlwaysShowEditorDemoComponent } from "./always-show-editor/demo.co
 import { TableAlwaysShowEditorDemoModule } from "./always-show-editor/demo.module";
 import {TableChangeRenderDemoModule} from "./change-render/demo.module";
 import {TableChangeRenderDemoComponent} from "./change-render/demo.component";
+import { TableResetColumnWidthDemoComponent } from "./reset-column-width/demo.component";
+import { TableResetColumnWidthDemoModule } from "./reset-column-width/demo.module";
 
 export const routerConfig = [
+    {
+        path: 'reset-column-width', component: TableResetColumnWidthDemoComponent
+    },
     {
         path: 'renderer', component: TableRendererDemoComponent
     },
@@ -370,7 +375,7 @@ export const routerConfig = [
         TableCellRenderFullDemoModule, TableAutoFillUpDemoModule, TableAutoPageableDemoModule, TableColumnWidthDemoModule, TableProgressDemoModule, TableExpandDemoModule,
         TableAlignContentDemoModule, TableExpandPageableDemoModule, TableUpdateAdditionalColumnDefineDemoModule, TableSetHeaderFilterDemoModule, TableColumnResizableDemoModule,
         TableMaxWidthDemoModule, HideColumnDividersDemoModule, TableDownloadDemoModule, TableFreezeColumnDemoModule, TableSetStyleDemoModule, TableOverflowDemoModule,
-        TablePerformanceDemoModule, TableAlwaysShowEditorDemoModule
+        TablePerformanceDemoModule, TableAlwaysShowEditorDemoModule, TableResetColumnWidthDemoModule
     ]
 })
 export class TableDemoModule {

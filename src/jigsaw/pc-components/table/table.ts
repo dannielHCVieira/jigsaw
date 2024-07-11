@@ -50,7 +50,7 @@ import { JigsawCheckBoxModule } from "../checkbox/index";
 import { JigsawSearchInputModule } from "../input/search-input";
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
 import { JigsawLoadingModule } from "../../common/components/loading/loading";
-import {HeaderFilter} from "../../common/core/data/unified-paging/paging";
+import {HeaderFilter, TableDataField} from "../../common/core/data/unified-paging/paging";
 import {JigsawThemeService} from "../../common/core/theming/theme";
 
 @WingsTheme('table.scss')
@@ -403,6 +403,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             const preWidth = (calcLeft - preCellLeft) / scaleRatio;
             const nextWidth = (nextCellRight - calcLeft) / scaleRatio;
             this._updateColumnWidth(index, preWidth, nextWidth);
+            this._columnResized = true;
             this.resize();
         }, { once: true });
     }
@@ -458,6 +459,36 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             this._$headerSettings.push(settings);
             this._headerSettingsBackup[field] = settings;
         });
+    }
+
+    // 用于判断是否进行了拖拽改变列宽
+    private _columnResized: boolean = false;
+
+    private _clearColumnWidth() {
+        if (!this._columnResized || this._compareFields(this.data.field, this._$headerSettings)) {
+            return;
+        }
+        const colgroupElements = this._tableBodyHeaderColgroup?.toArray();
+        if (!colgroupElements) {
+            return;
+        }
+        this._tableHeaderColgroup?.toArray()?.forEach((cell, index) => {
+            this._renderer.setStyle(cell.nativeElement, 'width', '');
+            this._renderer.setStyle(colgroupElements[index].nativeElement, 'width', '');
+        });
+        this._columnResized = false;
+    }
+
+    private _compareFields(fields: TableDataField, headerSettings: TableHeadSetting[]): boolean {
+        if (fields.length !== headerSettings.length) {
+            return false;
+        }
+        for (let i = 0; i < fields.length; i++) {
+            if (fields[i] !== headerSettings[i].field) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -779,6 +810,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
         const columnDefines = this._getMixedColumnDefines();
         this._initAdditionalData();
+        this._clearColumnWidth();
         this._updateHeaderSettings(columnDefines);
         this._updateCellSettings(columnDefines);
         this._changeDetectorRef.detectChanges();
