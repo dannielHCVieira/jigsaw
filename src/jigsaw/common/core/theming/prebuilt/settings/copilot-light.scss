@@ -1,5 +1,6 @@
 /* copilot-light */
 $blue-1: #e6f5ff;
+$blue-1-a: #d7efff;
 $blue-2: #bde4ff;
 $blue-3: #94d2ff;
 $blue-4: #6bbfff;
@@ -217,7 +218,7 @@ $status-error: $red-6;
 /*@public*/ $bg-component-darken: $gray-2;
 /*@public*/ $bg-disabled: $gray-2;
 /*@public*/ $bg-hover: $blue-1;
-/*@public*/ $bg-active: $blue-2;
+/*@public*/ $bg-active: $blue-1-a;
 $bg-transparent: transparent;
 $bg-popup: $gray-1;
 /*@public*/ $bg-gray: $gray-3;

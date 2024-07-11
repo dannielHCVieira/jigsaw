@@ -1,124 +1,125 @@
 /* copilot-dark */
-$blue-1: #011b51;
-$blue-2: #012774;
-$blue-3: #023497;
-$blue-4: #023eb6;
-$blue-5: #0348d4;
-$blue-6: #0099FE;
-$blue-7: #1a7cf8;
-$blue-8: #3b94fa;
-$blue-9: #5caaf9;
-$blue-10: #7dbff9;
+$blue-1: #00223B;
+$blue-1-a: #17364D;
+$blue-2: #00395E;
+$blue-3: #005082;
+$blue-4: #0069A6;
+$blue-5: #0083C9;
+$blue-6: #009FEE;
+$blue-7: #29B3F2;
+$blue-8: #54C6F7;
+$blue-9: #81D9FC;
+$blue-10:#ADE9FF;
 
-$cyan-1: #102426;
-$cyan-2: #143a3d;
-$cyan-3: #135154;
-$cyan-4: #11686b;
-$cyan-5: #0e8082;
-$cyan-6: #0c9999;
-$cyan-7: #2ab0ae;
-$cyan-8: #50c7c3;
-$cyan-9: #7cded9;
-$cyan-10: #b0f5f0;
+$cyan-1: #082629;
+$cyan-2: #0E4145;
+$cyan-3: #135D61;
+$cyan-4: #197A7D;
+$cyan-5: #1F9799;
+$cyan-6: #24B5B5;
+$cyan-7: #43C4C2;
+$cyan-8: #66D4D0;
+$cyan-9: #8DE3DF;
+$cyan-10: #B8F2EE;
 
-$green-1: #19291c;
-$green-2: #204026;
-$green-3: #24572d;
-$green-4: #256e31;
-$green-5: #268535;
-$green-6: #289c38;
-$green-7: #45b051;
-$green-8: #66c470;
-$green-9: #8dd993;
-$green-10: #b9edbc;
+$green-1: #153020;
+$green-2: #224D31;
+$green-3: #2E6942;
+$green-4: #3A8553;
+$green-5: #47A163;
+$green-6: #53BD73;
+$green-7: #6ECC89;
+$green-8: #8CDBA1;
+$green-9: #AEEBBD;
+$green-10: #D2FADB;
 
-$lime-1: #202916;
-$lime-2: #30401b;
-$lime-3: #3f571d;
-$lime-4: #4f6e1d;
-$lime-5: #5e851c;
-$lime-6: #6f9c1c;
-$lime-7: #88b038;
-$lime-8: #a3c45a;
-$lime-9: #bfd982;
-$lime-10: #dcedaf;
+$lime-1: #1F3309;
+$lime-2: #324F0E;
+$lime-3: #456B13;
+$lime-4: #598718;
+$lime-5: #6EA31D;
+$lime-6: #83BF22;
+$lime-7: #9BCF42;
+$lime-8: #B4DE66;
+$lime-9: #CEED8E;
+$lime-10: #E8FCBB;
 
-$yellow-1: #332c15;
-$yellow-2: #524518;
-$yellow-3: #705e18;
-$yellow-4: #8f7814;
-$yellow-5: #ad9310;
-$yellow-6: #ccaf0c;
-$yellow-7: #d9c230;
-$yellow-8: #e6d557;
-$yellow-9: #f2e783;
-$yellow-10: #fff9b3;
+$yellow-1: #423104;
+$yellow-2: #664C06;
+$yellow-3: #8A6908;
+$yellow-4: #AD870A;
+$yellow-5: #D1A70D;
+$yellow-6: #F5C70F;
+$yellow-7: #F7D436;
+$yellow-8: #FAE05F;
+$yellow-9: #FCEB88;
+$yellow-10: #FFF5B3;
 
-$orange-1: #382619;
-$orange-2: #57361d;
-$orange-3: #75441c;
-$orange-4: #945219;
-$orange-5: #b36115;
-$orange-6: #d17213;
-$orange-7: #db8c37;
-$orange-8: #e6a65e;
-$orange-9: #f0c189;
-$orange-10: #faddb6;
+$orange-1: #3D1D06;
+$orange-2: #612F09;
+$orange-3: #85420C;
+$orange-4: #A8570F;
+$orange-5: #CC6C12;
+$orange-6: #F08316;
+$orange-7: #F59C3D;
+$orange-8: #FAB566;
+$orange-9: #FFCE91;
+$orange-10: #FFE1BA;
 
-$red-1: #382426;
-$red-2: #572e31;
-$red-3: #753437;
-$red-4: #94373a;
-$red-5: #b3393b;
-$red-6: #d13d3d;
-$red-7: #db5c5a;
-$red-8: #e67d7a;
-$red-9: #f0a09c;
-$red-10: #fac4c0;
+$red-1: #421518;
+$red-2: #662024;
+$red-3: #8A2B2F;
+$red-4: #AD363A;
+$red-5: #D14143;
+$red-6: #F54C4C;
+$red-7: #F76D6A;
+$red-8: #FA8D89;
+$red-9: #FCADA9;
+$red-10: #FFCDC9;
 
-$magenta-1: #2b1a27;
-$magenta-2: #4a2440;
-$magenta-3: #692a57;
-$magenta-4: #872d6c;
-$magenta-5: #a62e80;
-$magenta-6: #c43193;
-$magenta-7: #d14fa4;
-$magenta-8: #de71b6;
-$magenta-9: #eb96ca;
-$magenta-10: #f7bee1;
+$magenta-1: #40162E;
+$magenta-2: #612145;
+$magenta-3: #822C5B;
+$magenta-4: #A33771;
+$magenta-5: #C44386;
+$magenta-6: #E54E9A;
+$magenta-7: #ED6DAB;
+$magenta-8: #F58EBE;
+$magenta-9: #FCB1D3;
+$magenta-10: #FFD1E5;
 
-$purple-1: #2a2336;
-$purple-2: #3d2e54;
-$purple-3: #4f3573;
-$purple-4: #5f3991;
-$purple-5: #703cb0;
-$purple-6: #8340cf;
-$purple-7: #995dd9;
-$purple-8: #b07de3;
-$purple-9: #c79fed;
-$purple-10: #dfc3f7;
+$purple-1: #25173D;
+$purple-2: #3C2461;
+$purple-3: #543185;
+$purple-4: #6C3EA8;
+$purple-5: #854BCC;
+$purple-6: #9F59F0;
+$purple-7: #B376F5;
+$purple-8: #C793FA;
+$purple-9: #DAB3FF;
+$purple-10: #E8CFFF;
 
-$navy-1: #21212e;
-$navy-2: #2e2f4d;
-$navy-3: #373a6b;
-$navy-4: #3d438a;
-$navy-5: #424ca8;
-$navy-6: #4856c7;
-$navy-7: #6372d4;
-$navy-8: #8290e0;
-$navy-9: #a4b0ed;
-$navy-10: #c8d1fa;
+$navy-1: #16173D;
+$navy-2: #22255E;
+$navy-3: #2E3380;
+$navy-4: #3A42A1;
+$navy-5: #4652C2;
+$navy-6: #5162E2;
+$navy-7: #6E7FEB;
+$navy-8: #8D9CF2;
+$navy-9: #ACB9FA;
+$navy-10: #CCD5FF;
 
-$gray-1: #0f111a;
-$gray-2: #1b1d26;
-$gray-3: #22242e;
-$gray-4: #2a2c38;
-$gray-5: #323543;
-$gray-6: #474a59;
-$gray-7: #7b7e8c;
-$gray-8: #a4a7b3;
-$gray-9: #d9d9d9;
-$gray-10: #ffffff;
+$gray-1: #0B152E;
+$gray-2: #0C1D40;
+$gray-3: #08264D;
+$gray-4: #13325E;
+$gray-5: #1E3D69;
+$gray-6: #31517A;
+$gray-7: #57779C;
+$gray-8: #7D95B8;
+$gray-9: #D3DCEB;
+$gray-10: #EAEDF2;
 
 /* 线型色 */
 $line-blue: $blue-6;
@@ -169,55 +170,55 @@ $status-error: $red-6;
 /*@public*/ $primary-default: $blue-6;
 /*@public*/ $primary-hover: $blue-7;
 /*@public*/ $primary-active: $blue-8;
-/*@public*/ $primary-disabled: $blue-2;
+/*@public*/ $primary-disabled: $blue-3;
 
 /* 功能色-success */
 /*@public*/ $success-default: $green-6;
 /*@public*/ $success-hover: $green-7;
 /*@public*/ $success-active: $green-8;
-/*@public*/ $success-disabled: $green-2;
+/*@public*/ $success-disabled: $green-3;
 
 /* 功能色-warning */
 /*@public*/ $warning-default: $yellow-6;
 /*@public*/ $warning-hover: $yellow-7;
 /*@public*/ $warning-active: $yellow-8;
-/*@public*/ $warning-disabled: $yellow-2;
+/*@public*/ $warning-disabled: $yellow-3;
 
 /* 功能色-error */
 /*@public*/ $error-default: $red-6;
 /*@public*/ $error-hover: $red-7;
 /*@public*/ $error-active: $red-8;
-/*@public*/ $error-disabled: $red-2;
+/*@public*/ $error-disabled: $red-3;
 
 /* 功能色-danger */
 /*@public*/ $danger-default: $orange-6;
 /*@public*/ $danger-hover: $orange-7;
 /*@public*/ $danger-active: $orange-8;
-/*@public*/ $danger-disabled: $orange-2;
+/*@public*/ $danger-disabled: $orange-3;
 
 /* 功能色-process */
 /*@public*/ $process-default: $navy-6;
 /*@public*/ $process-hover: $navy-7;
 /*@public*/ $process-active: $navy-8;
-/*@public*/ $process-disabled: $navy-2;
+/*@public*/ $process-disabled: $navy-3;
 
 /* brand 品牌色 */
 /*@public*/ $brand-default: $blue-6;
 /*@public*/ $brand-hover: $blue-7;
 /*@public*/ $brand-active: $blue-8;
-/*@public*/ $brand-disabled: $blue-2;
+/*@public*/ $brand-disabled: $blue-3;
 /*@public*/ $brand-lighten: $blue-1;
 /*@public*/ $brand-active-lighten: $blue-2;
 
 /* background 背景色 */
 /*@public*/ $bg-body: $gray-1;
 /*@public*/ $bg-app: #12131C;
-/*@public*/ $bg-container: #071739;
-/*@public*/ $bg-component: #071739;
+/*@public*/ $bg-container: $gray-3;
+/*@public*/ $bg-component: $gray-3;
 /*@public*/ $bg-component-darken: $gray-4;
-/*@public*/ $bg-disabled: $gray-6;
-/*@public*/ $bg-hover: #05325d;
-/*@public*/ $bg-active: #05325d;
+/*@public*/ $bg-disabled: $blue-3;
+/*@public*/ $bg-hover: $blue-1;
+/*@public*/ $bg-active: $blue-1-a;
 $bg-transparent: transparent;
 $bg-popup: $gray-2;
 /*@public*/ $bg-gray: $gray-3;
@@ -226,9 +227,9 @@ $bg-gray-spec: $gray-9;
 /*@public*/ $bg-scrollbar-lighten: $gray-7;
 
 /* font 字体颜色 */
-/*@public*/ $font-color-default: $gray-10;
+/*@public*/ $font-color-default: $gray-9;
 /*@public*/ $font-color-disabled: $gray-6;
-/*@public*/ $font-color-heading: $gray-10;
+/*@public*/ $font-color-heading: $gray-9;
 /*@public*/ $font-color-disabled-spec: $gray-7;
 /*@public*/ $font-color-hint: $gray-7;
 $font-color-watermark: $gray-7;
@@ -242,8 +243,8 @@ $font-color-white-darken: $gray-6;
 /*@public*/ $font-color-brand-hover: hsl(0, 0%, 100%);
 
 /* border 边框 */
-/*@public*/ $border-color-default: #3B4F79;
-/*@public*/ $border-color-disabled: $gray-5;
+/*@public*/ $border-color-default: $gray-6;
+/*@public*/ $border-color-disabled: $gray-3;
 $border-color-popup: $gray-5;
 $border-color-shadow-cntr: $gray-5;
 
@@ -251,8 +252,8 @@ $border-color-shadow-cntr: $gray-5;
 /*@public*/ $splitline-default: $gray-4;
 
 /* icon 图标 */
-/*@public*/ $icon-color-default: $gray-7;
-/*@public*/ $icon-color-disabled: $gray-4;
+/*@public*/ $icon-color-default: $gray-8;
+/*@public*/ $icon-color-disabled: $gray-6;
 /*@public*/ $icon-color-stress: $gray-10;
 $icon-color-inactive: $gray-4;
 
