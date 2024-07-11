@@ -1,0 +1,18 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="demo-options">
+    <ul>
+        <li>
+            <jigsaw-button (click)="changeData()">改变表格数据</jigsaw-button>
+            <jigsaw-button (click)="addFields()">改变表格增加fields</jigsaw-button>
+            <jigsaw-button (click)="reduceFields()">改变表格减少fields</jigsaw-button>
+            <jigsaw-button (click)="changeFieldsOrder()">改变fields顺序</jigsaw-button>
+        </li>
+    </ul>
+</div>
+<jigsaw-table [data]="tableData" [columnResizable]="true"></jigsaw-table>
+
