@@ -1,7 +1,7 @@
 import {AfterViewInit, ChangeDetectionStrategy, Component, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {WingsTheme} from '../../common/common';
-import {AbstractJigsawButtonBase} from "../../common/components/base/button";
+import {AbstractJigsawButtonBase} from "../../common/components/base/button/button";
 
 /**
  * 在界面上显示一个按钮，最常见最简单的组件。
@@ -16,7 +16,7 @@ import {AbstractJigsawButtonBase} from "../../common/components/base/button";
 @WingsTheme('button.scss')
 @Component({
     selector: 'jigsaw-button, a[jigsaw-button], button[jigsaw-button], j-button, a[j-button], button[j-button]',
-    templateUrl: 'button.html',
+    templateUrl: '../../common/components/base/button/button.html',
     host: {
         '[style.min-width]': 'width',
         '[style.height]': 'height',

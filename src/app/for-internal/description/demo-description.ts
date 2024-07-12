@@ -114,13 +114,11 @@ export class JigsawDemoDescription implements OnInit, OnDestroy {
                 { label: "COPILOT Light", name: 'copilot', majorStyle: 'light' },
                 { label: "COPILOT Dark", name: 'copilot', majorStyle: 'dark' }
             ]) : new ArrayCollection([
-                { label: "OES Mobile Light", name: 'paletx-pro-mobile', majorStyle: 'light' }
+                { label: "OES Mobile Light", name: 'paletx-pro-mobile', majorStyle: 'light' },
+                { label: "OES Mobile Dark", name: 'paletx-pro-mobile', majorStyle: 'dark' },
+                { label: "COPILOT Mobile Light", name: 'copilot-mobile', majorStyle: 'light' },
+                { label: "COPILOT Mobile Dark", name: 'copilot-mobile', majorStyle: 'dark' }
             ])
-            if (!isPc) {
-                this._removeWindowResizeListener = this._renderer.listen(
-                    'window', 'resize', () => this.resize());
-                this.resize();
-            }
             const themeString = localStorage.getItem("jigsawDemoTheme");
             if (themeString != null) {
                 const themeData = JSON.parse(themeString);

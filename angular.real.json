@@ -95,6 +95,21 @@
                 "input": "src/jigsaw/common/core/theming/themes/paletx-pro-mobile-light.scss",
                 "bundleName": "themes/paletx-pro-mobile-light",
                 "inject": false
+              },
+              {
+                "input": "src/jigsaw/common/core/theming/themes/paletx-pro-mobile-dark.scss",
+                "bundleName": "themes/paletx-pro-mobile-dark",
+                "inject": false
+              },
+              {
+                "input": "src/jigsaw/common/core/theming/themes/copilot-mobile-light.scss",
+                "bundleName": "themes/copilot-mobile-light",
+                "inject": false
+              },
+              {
+                "input": "src/jigsaw/common/core/theming/themes/copilot-mobile-dark.scss",
+                "bundleName": "themes/copilot-mobile-dark",
+                "inject": false
               }
             ],
             "scripts": [
