@@ -1,242 +1,35 @@
-$jigsaw-mobile-button: jigsaw-mobile-button;
+$jigsaw-button: #{$jigsaw-prefix}-button;
+$jigsaw-button-selector: jigsaw-mobile-button;
 
-.#{$jigsaw-mobile-button}-host {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
+@import "../../common/components/base/button/button";
+
+.#{$jigsaw-button-selector}-host {
     padding: 0 1rem;
     min-width: 5rem;
-    height: 2rem;
-    border-radius: $border-radius-base;
-    background-color: $bg-transparent;
-    border-width: 1px;
-    border-style: solid;
-    border-color: $border-color-disabled;
-    color: $brand-default;
-    font-size: .75rem;
-    user-select: none;
-    box-sizing: border-box;
-    vertical-align: middle;
-    cursor: pointer;
+    height: 2.5rem;
+    font-size: .875rem;
+    border-radius: 2.5rem;
 
-    &:before {
-        content: "";
-        display: inline-block;
-        height: 100%;
-        vertical-align: middle;
-    }
-
-    &:hover {
-        color: $brand-default;
-        border-color: $brand-hover;
-        @include prefixer(transition, animation 0.3s $ease-in-out);
-    }
-
-    &:active {
-        color: $brand-active;
-        border-color: $brand-active;
-    }
-
-    &.#{$jigsaw-mobile-button}-clicked:after {
-        @include prefixer(animation, buttonEffect 0.36s $ease-out forwards);
-        content: "";
-        position: absolute;
-        top: -1px;
-        left: -1px;
-        bottom: -1px;
-        right: -1px;
-        display: block;
-        opacity: 0.4;
-        border-radius: inherit;
-        border: 1px solid $brand-active;
-    }
-
-    .#{$jigsaw-mobile-button}-content {
-        display: inline-flex;
-        align-items: center;
-
-        .#{$jigsaw-mobile-button}-text {
-            display: inline-flex;
-            align-items: center;
-        }
-    }
-
-    &.#{$jigsaw-mobile-button}-icon-left {
-        .#{$jigsaw-mobile-button}-content .iconfont {
-            margin-right: 4px;
-        }
-    }
-
-    &.#{$jigsaw-mobile-button}-icon-right {
-        .#{$jigsaw-mobile-button}-content {
-            flex-direction: row-reverse;
-
-            .iconfont {
-                margin-left: 4px;
-            }
-        }
-    }
-
-    .#{$jigsaw-mobile-button}-content .iconfont {
-        font-size: $icon-size-sm;
-    }
-
-    &.#{$jigsaw-mobile-button}-disabled {
-        pointer-events: none;
-        color: $font-color-disabled;
-        border-color: $border-color-disabled;
-    }
-
-    &.#{$jigsaw-mobile-button}-color-primary {
-        background-color: $primary-default;
-        color: $font-color-white;
-        border-color: $primary-default;
-        &:hover {
-            background: $primary-hover;
-        }
-        &:active {
-            background: $primary-active;
-        }
-        &.#{$jigsaw-mobile-button}-clicked:after {
-            border-color: $primary-default;
-        }
-        &.#{$jigsaw-mobile-button}-disabled {
-            background: $primary-disabled;
-            border-color: $primary-disabled;
-        }
-    }
-
-    &.#{$jigsaw-mobile-button}-color-warning {
-        background-color: $warning-default;
-        color: $font-color-white;
-        border-color: $warning-default;
-        &:hover {
-            background: $warning-hover;
-        }
-        &:active {
-            background: $warning-active;
-        }
-        &.#{$jigsaw-mobile-button}-clicked:after {
-            border-color: $warning-default;
-        }
-        &.#{$jigsaw-mobile-button}-disabled {
-            background: $warning-disabled;
-            border-color: $warning-disabled;
-        }
-    }
-
-    &.#{$jigsaw-mobile-button}-color-error {
-        background-color: $error-default;
-        color: $font-color-white;
-        border-color: $error-default;
-        &:hover {
-            background: $error-hover;
-        }
-        &:active {
-            background: $error-active;
-        }
-        &.#{$jigsaw-mobile-button}-clicked:after {
-            border-color: $error-default;
-        }
-        &.#{$jigsaw-mobile-button}-disabled {
-            background: $error-disabled;
-            border-color: $error-disabled;
-        }
-    }
-
-    &.#{$jigsaw-mobile-button}-size-small {
+    &.#{$jigsaw-button}-size-small {
         height: 1.5rem;
         font-size: .625rem;
     }
 
-    &.#{$jigsaw-mobile-button}-size-medium {
+    &.#{$jigsaw-button}-size-medium {
         height: 1.75rem;
         font-size: .6875rem;
     }
 
-    &.#{$jigsaw-mobile-button}-size-large {
+    &.#{$jigsaw-button}-size-large {
         height: 2.25rem;
         font-size: .875rem;
     }
-
-    &.#{$jigsaw-mobile-button}-color-none {
-        min-width: 0;
-        border: none;
-        padding: 0;
-
-        &:hover {
-            .#{$jigsaw-mobile-button}-text {
-                text-decoration: underline;
-            }
-        }
-        &.#{$jigsaw-mobile-button}-clicked:after {
-            content: none;
-        }
-    }
-
-    &.#{$jigsaw-mobile-button}-icon {
-        width: $height-base;
-        min-width: 0;
-        padding: 0;
-        color: $font-color-default;
-
-        .#{$jigsaw-mobile-button}-content .iconfont {
-            margin-right: 0;
-        }
-
-        &.#{$jigsaw-mobile-button}-size-small {
-            width: $height-sm;
-        }
-
-        &.#{$jigsaw-mobile-button}-size-medium {
-            width: $height-med;
-        }
-
-        &.#{$jigsaw-mobile-button}-size-large {
-            width: $height-lg;
-        }
-
-        &.#{$jigsaw-mobile-button}-disabled {
-            background: $bg-disabled;
-            border-color: $border-color-disabled;
-            color: $font-color-disabled;
-
-            &.#{$jigsaw-mobile-button}-color-none {
-                background: none;
-                border: none;
-            }
-        }
-
-        &:hover {
-            color: $brand-hover;
-        }
-
-        &:active {
-            color: $brand-active;
-        }
-    }
 }
 
-a[#{$jigsaw-mobile-button}] {
+a[#{$jigsaw-button-selector}] {
     padding: 0 .625rem;
-    outline: none;
-    text-decoration: none !important;
 }
 
-button[#{$jigsaw-mobile-button}] {
+button[#{$jigsaw-button-selector}] {
     padding: 0 .625rem;
-    outline: none;
-    text-decoration: none !important;
-}
-
-@include keyframes(buttonEffect) {
-    to {
-        @include opacity(0);
-        top: -6px;
-        left: -6px;
-        bottom: -6px;
-        right: -6px;
-        border-width: 6px;
-    }
 }

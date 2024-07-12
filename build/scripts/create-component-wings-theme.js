@@ -134,7 +134,15 @@ styleFiles.forEach(filePath => {
     }
 
     wingsThemeIds.splice(idx, 1);
-    const fileContent = fs.readFileSync(`pc-components/theming/${filePath}.scss`).toString();
+    let fileContent = fs.readFileSync(`pc-components/theming/${filePath}.scss`).toString();
+    // 如果fileContent存在import，则读取import的文件内容并替换 @import 语句
+    const importMatch = fileContent.match(/@import\s+"(.*?)"/);
+    if (importMatch) {
+        const importFile = importMatch[1];
+        const importContent = fs.readFileSync(`pc-components/theming/${importFile}.scss`).toString();
+        fileContent = fileContent.replace(/@import\s+"(.*?)"/, importContent);
+    }
+
     const scssCode = commonImport + fileContent.replace(/(^\..+)-host\s*{/mg, "$1-host[data-theme='$THEME'] {");
     fs.writeFileSync(`common/core/theming/prebuilt/wings-theme/${wingsThemeId}-dark.scss`,
         scssCode.replace(/\$THEME/g, 'dark'));
