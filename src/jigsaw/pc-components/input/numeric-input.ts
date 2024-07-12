@@ -240,8 +240,9 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
             return;
         }
 
-        if (!isNaN(this.precision) && <any>this.precision != '') {
+        if (!isNaN(this.precision) && <any>this.precision !== '') {
             this._value = this._toPrecisionAsStep(value);
+            this._cdr.detectChanges();
             return;
         }
 
@@ -368,7 +369,7 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
         if (isNaN(num) || <any>num === '') {
             return num;
         }
-        const precision = isNaN(this.precision) || <any>this.precision == '' ? this._precisionStep : this.precision;
+        const precision = isNaN(this.precision) || <any>this.precision === '' ? this._precisionStep : this.precision;
         return Number(Number(num).toFixed(precision));
     }
 
