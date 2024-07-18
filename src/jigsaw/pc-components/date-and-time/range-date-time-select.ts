@@ -317,6 +317,7 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
             return;
         }
         this._$dateComboValue = new ArrayCollection([{ label: '', closable: false }]);
+        this._cdr.markForCheck();
         if (this._rangeDateTimePicker && this._comboSelect.open) {
             this._rangeDateTimePicker.clearDate();
             return;
