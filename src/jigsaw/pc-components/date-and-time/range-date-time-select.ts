@@ -313,12 +313,11 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
         if (CommonUtils.isUndefined(this._date)) {
             return;
         }
-
         if (this._date.beginDate == '' && this._date.endDate == '') {
             return;
         }
-
-        if (this._rangeDateTimePicker) {
+        this._$dateComboValue = new ArrayCollection([{ label: '', closable: false }]);
+        if (this._rangeDateTimePicker && this._comboSelect.open) {
             this._rangeDateTimePicker.clearDate();
             return;
         }

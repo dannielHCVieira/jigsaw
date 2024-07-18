@@ -11,7 +11,7 @@ cd $home
 echo "preparing node_modules ...."
 tar xfz $AWADE_BUILD_RESOURCE/jigsaw_node_modules/node_modules.ng9.tgz -C ./
 chmod +x ./node_modules/.bin/*
-npm install --unsafe-perm || {
+npm install --registry=https://artsh.zte.com.cn/artifactory/api/npm/rnia-npm-virtual/ || {
     echo "Error: npm install failed"
     exit 1
 }

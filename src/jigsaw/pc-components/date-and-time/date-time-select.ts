@@ -250,7 +250,8 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
         if (this._date == '' || CommonUtils.isUndefined(this._date)) {
             return;
         }
-        if (this._dateTimePicker) {
+        this._$dateComboValue = new ArrayCollection([{ label: '', closable: false }]);
+        if (this._dateTimePicker  && this._comboSelect.open) {
             this._dateTimePicker.clearDate();
             return;
         }
