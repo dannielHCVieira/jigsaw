@@ -58,3 +58,22 @@ a {
     background: #2C3A59;
     box-shadow: 0 1px 3px 0 rgba(0,0,0,0.4);
 }
+
+.jigsaw-drawer-host .jigsaw-drawer {
+    background: $gray-2;
+
+    &.jigsaw-drawer-left>.jigsaw-drawer-bar.emphasis-handler,
+    &.jigsaw-drawer-right>.jigsaw-drawer-bar.emphasis-handler,
+    &.jigsaw-drawer-top>.jigsaw-drawer-bar.emphasis-handler,
+    &.jigsaw-drawer-bottom>.jigsaw-drawer-bar.emphasis-handler {
+        border-left-color: $border-color-shadow-cntr;
+
+        &>.iconfont {
+            color: $gray-8;
+        }
+    }
+}
+
+.jigsaw-table-host table tbody tr:nth-child(2n) {
+    background: var(--jigsaw-table-row-even, $gray-5);
+}
