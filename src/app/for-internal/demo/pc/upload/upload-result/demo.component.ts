@@ -27,6 +27,7 @@ export class UploadResultDemoComponent implements OnInit, AfterViewInit {
     fileType = ".png";
     maxSize: number = 1024;
     minSize: number = 0;
+    uploadMaxFileCount: number = 99;
 
     clear() {
         this.results.toArray().forEach(r => r.clear());

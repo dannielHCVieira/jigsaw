@@ -23,9 +23,14 @@
          最大限制 <jigsaw-numeric-input [min]="0" [(value)]="maxSize"></jigsaw-numeric-input> MB
         <br>
         <br>
+        文件个数限制：
+         最大限制 <jigsaw-numeric-input [min]="2" [(value)]="uploadMaxFileCount"></jigsaw-numeric-input> 个
+        <br>
+        <br>
         <j-button j-upload (uploadStart)="isButtonUploadWaiting = true" (uploadProgress)="getUploadFile($event)"
             (uploadComplete)="getAllUploadFiles($event, 'button')" [uploadMultiple]="multiple" [uploadMinSize]="minSize"
-            [uploadMaxSize]="maxSize" [uploadFileType]="fileType">
+            [uploadMaxSize]="maxSize" [uploadFileType]="fileType" [uploadMaxFileCount]="uploadMaxFileCount"
+            (uploadMaxFileCountExceeded)="uploadMaxFileCountExceeded()">
             上传
         </j-button>
     </div>
@@ -36,7 +41,8 @@
             <p class="hints-text">给上传组件添加Loading（符合规范的Loading信息请<a href="/#/pc/upload/upload-result">参考这个demo</a>）</p>
             <j-button j-upload (uploadStart)="isButtonUploadWaiting = true" (uploadProgress)="getUploadFile($event)"
                 (uploadComplete)="getAllUploadFiles($event, 'button')" [uploadMultiple]="multiple"
-                [uploadMinSize]="minSize" [uploadMaxSize]="maxSize" [uploadFileType]="fileType">
+                [uploadMinSize]="minSize" [uploadMaxSize]="maxSize" [uploadFileType]="fileType" [uploadMaxFileCount]="uploadMaxFileCount"
+                (uploadMaxFileCountExceeded)="uploadMaxFileCountExceeded()">
                 <j-font-loading *ngIf="isButtonUploadWaiting" width="16px" height="16px" color="#41addc">
                 </j-font-loading>
                 Upload
@@ -47,8 +53,8 @@
         <div>
             <p class="hints-text">指令可以自由赋予普通组件上传功能</p>
             <a j-upload (uploadStart)="isLinkUploadWaiting = true" [uploadMinSize]="minSize" [uploadMaxSize]="maxSize"
-                [uploadFileType]="fileType" [uploadMultiple]="multiple" (uploadProgress)="getUploadFile($event)"
-                (uploadComplete)="getAllUploadFiles($event, 'link')" class="link-upload">上传文件</a>
+                [uploadFileType]="fileType" [uploadMultiple]="multiple" [uploadMaxFileCount]="uploadMaxFileCount" (uploadProgress)="getUploadFile($event)"
+                (uploadComplete)="getAllUploadFiles($event, 'link')" (uploadMaxFileCountExceeded)="uploadMaxFileCountExceeded()" class="link-upload">上传文件</a>
             <j-font-loading *ngIf="isLinkUploadWaiting" width="16px" height="16px" color="#41addc"></j-font-loading>
         </div>
 
@@ -56,7 +62,7 @@
         <p class="hints-text">展示结果（符合规范的结果展示请<a href="/#/pc/upload/upload-result">参考这个demo</a>）</p>
         <a j-upload (uploadStart)="showUploadFileName()" (uploadComplete)="showUploadFileName($event)"
             [uploadMinSize]="minSize" [uploadMaxSize]="maxSize" [uploadFileType]="fileType" [uploadMultiple]="multiple"
-            class="link-upload">上传文件</a>
+            [uploadMaxFileCount]="uploadMaxFileCount" class="link-upload" (uploadMaxFileCountExceeded)="uploadMaxFileCountExceeded()">上传文件</a>
             <span>{{uploadedFile}}</span>
     </div>
 </div>

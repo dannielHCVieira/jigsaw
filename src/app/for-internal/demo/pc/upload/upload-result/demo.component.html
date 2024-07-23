@@ -48,10 +48,14 @@
     <span>最大限制</span>
     <jigsaw-numeric-input [min]="0" [(value)]="maxSize"></jigsaw-numeric-input>
     <span>MB</span>
+    <br>
+    <p style="display: inline-block; margin-bottom: 12px">文件个数：</p>
+    <span>最大限制</span>
+    <jigsaw-numeric-input [min]="0" [(value)]="uploadMaxFileCount"></jigsaw-numeric-input>
 </div>
 <div>
     <jigsaw-button j-upload #forth [uploadMultiple]="multiple" [uploadFileType]="fileType"
-                   [uploadMinSize]="minSize" [uploadMaxSize]="maxSize">上传</jigsaw-button>
+                   [uploadMinSize]="minSize" [uploadMaxSize]="maxSize" [uploadMaxFileCount]="uploadMaxFileCount">上传</jigsaw-button>
 </div>
 <jigsaw-upload-result [uploader]="uploader4" (change)="onChange('change', $event)"
                       (progress)="onChange('progress', $event)" (remove)="onChange('remove', $event)">
