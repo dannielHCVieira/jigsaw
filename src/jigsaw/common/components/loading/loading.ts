@@ -193,17 +193,17 @@ export class JigsawCircleLoading extends JigsawLoadingBase implements OnInit {
         }
     }
 
-    private _size: "small" | "medium" | "large" = "large";
+    private _size: "extra-small" | "small" | "medium" | "large" = "large";
 
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
-    public get size(): "small" | "medium" | "large" {
+    public get size(): "extra-small" | "small" | "medium" | "large" {
         return this._size;
     }
 
-    public set size(value: "small" | "medium" | "large") {
+    public set size(value: "extra-small" | "small" | "medium" | "large") {
         this._size = value;
         let circleWidth = 66;
         let currentStroke = 6;
@@ -221,6 +221,11 @@ export class JigsawCircleLoading extends JigsawLoadingBase implements OnInit {
             circumference = circleWidth * Math.PI;
         } else if (value === "small") {
             circleWidth = 22;
+            currentStroke = 2;
+            currentWidth = circleWidth + currentStroke * 2;
+            circumference = circleWidth * Math.PI;
+        } else if (value === "extra-small") {
+            circleWidth = 16;
             currentStroke = 2;
             currentWidth = circleWidth + currentStroke * 2;
             circumference = circleWidth * Math.PI;

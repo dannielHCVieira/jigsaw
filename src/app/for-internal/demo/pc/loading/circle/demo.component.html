@@ -29,65 +29,26 @@
     <j-button (click)="popupGlobalLoading()">弹出全屏Loading</j-button>
 
     <jigsaw-header>圆形Loading 各种size</jigsaw-header>
-
-    <div class="large-loading-cntr">
-        <jigsaw-circle-loading
-            [size]="'large'"
-            [label]="'这是large'"
-            [percent]="percent"
-        ></jigsaw-circle-loading>
-    </div>
-
-    <div class="medium-loading-cntr">
-        <jigsaw-circle-loading
-            [size]="'medium'"
-            [label]="'这是medium'"
-            [percent]="percent"
-        ></jigsaw-circle-loading>
-    </div>
-
-    <div class="small-loading-cntr">
-        <jigsaw-circle-loading
-            [size]="'small'"
-            [label]="'这是small'"
-            [percent]="percent"
-        ></jigsaw-circle-loading>
+    <div class="loading-demo-item">
+        <jigsaw-circle-loading [size]="'large'" [label]="'这是large'" [percent]="percent"></jigsaw-circle-loading>
+        <jigsaw-circle-loading [size]="'medium'" [label]="'这是medium'" [percent]="percent"></jigsaw-circle-loading>
+        <jigsaw-circle-loading [size]="'small'" [label]="'这是small'" [percent]="percent"></jigsaw-circle-loading>
+        <jigsaw-circle-loading [size]="'extra-small'" [label]="'这是xs'" [percent]="percent"></jigsaw-circle-loading>
     </div>
 
     <jigsaw-header>圆形Loading 不显示标签</jigsaw-header>
-
-    <div class="large-loading-cntr">
-        <jigsaw-circle-loading
-            [size]="'large'"
-            [percent]="percent"
-        ></jigsaw-circle-loading>
-    </div>
-
-    <div class="medium-loading-cntr">
-        <jigsaw-circle-loading
-            [size]="'medium'"
-            [percent]="percent"
-        ></jigsaw-circle-loading>
-    </div>
-
-    <div class="small-loading-cntr">
-        <jigsaw-circle-loading
-            [size]="'small'"
-            [percent]="percent"
-        ></jigsaw-circle-loading>
+    <div class="loading-demo-item">
+        <jigsaw-circle-loading [size]="'large'" [percent]="percent"></jigsaw-circle-loading>
+        <jigsaw-circle-loading [size]="'medium'" [percent]="percent"></jigsaw-circle-loading>
+        <jigsaw-circle-loading [size]="'small'" [percent]="percent"></jigsaw-circle-loading>
+        <jigsaw-circle-loading [size]="'extra-small'" [percent]="percent"></jigsaw-circle-loading>
     </div>
 
     <jigsaw-header>圆形Loading 不显示百分比</jigsaw-header>
-
-    <div class="large-loading-cntr">
+    <div class="loading-demo-item">
         <jigsaw-circle-loading [size]="'large'"></jigsaw-circle-loading>
-    </div>
-
-    <div class="medium-loading-cntr">
         <jigsaw-circle-loading [size]="'medium'"></jigsaw-circle-loading>
-    </div>
-
-    <div class="small-loading-cntr">
         <jigsaw-circle-loading [size]="'small'"></jigsaw-circle-loading>
+        <jigsaw-circle-loading [size]="'extra-small'"></jigsaw-circle-loading>
     </div>
 </div>

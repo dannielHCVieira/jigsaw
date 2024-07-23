@@ -9,38 +9,12 @@
     margin-bottom: 10px;
 }
 
-.large-loading-cntr {
-    display: inline-flex;
+.loading-demo-item {
+    display: flex;
     align-items: center;
-    position: relative;
-    width: 400px;
-    height: 200px;
-}
+    padding: 0 0 20px 0;
 
-.large-loading-cntr .jigsaw-circle-loading-host {
-    width: 100%;
-}
-
-.medium-loading-cntr {
-    display: inline-flex;
-    align-items: center;
-    position: relative;
-    width: 400px;
-    height: 200px;
-}
-
-.medium-loading-cntr .jigsaw-circle-loading-host {
-    width: 100%;
-}
-
-.small-loading-cntr {
-    display: inline-flex;
-    align-items: center;
-    position: relative;
-    width: 400px;
-    height: 200px;
-}
-
-.small-loading-cntr .jigsaw-circle-loading-host {
-    width: 100%;
+    >.jigsaw-circle-loading-host {
+        margin-right: 80px;
+    }
 }
