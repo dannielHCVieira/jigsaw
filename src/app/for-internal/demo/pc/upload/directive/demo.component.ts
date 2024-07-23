@@ -13,6 +13,7 @@ export class UploadDirectiveDemoComponent {
     uploadedFile: string = '';
     maxSize: number = 1024;
     minSize: number = 0;
+    uploadMaxFileCount: number = 99;
 
     getUploadFile(fileInfo: UploadFileInfo) {
         console.log('one file uploaded', fileInfo);
@@ -32,6 +33,10 @@ export class UploadDirectiveDemoComponent {
     showUploadFileName(files?: UploadFileInfo[]) {
         console.log(files);
         this.uploadedFile = !!files ? files.map(f => f.name).join(', ') : '正在上传...';
+    }
+
+    uploadMaxFileCountExceeded() {
+        console.log('uploadMaxFileCountExceeded');
     }
 
     // ====================================================================

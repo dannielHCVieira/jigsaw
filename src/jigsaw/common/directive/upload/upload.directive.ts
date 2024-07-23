@@ -103,6 +103,25 @@ export abstract class JigsawUploadBase extends AbstractJigsawComponent {
         this._maxSize = value;
     }
 
+    protected _maxFileCount: number;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input('uploadMaxFileCount')
+    public get maxFileCount(): number {
+        return this._maxFileCount;
+    }
+
+    public set maxFileCount(value: number) {
+        value = parseInt(<any>value);
+        if (isNaN(value)) {
+            console.error('maxFileCount property must be a number, please input a number or number string');
+            return;
+        }
+        this._maxFileCount = value > 1 ? value : 1;
+    }
+
     @Input('uploadImmediately')
     public uploadImmediately: boolean = true;
 
@@ -138,6 +157,9 @@ export abstract class JigsawUploadBase extends AbstractJigsawComponent {
 
     @Output('uploadChange')
     public change = new EventEmitter<UploadFileInfo[]>();
+
+    @Output('uploadMaxFileCountExceeded')
+    public maxFileCountExceeded = new EventEmitter<void>();
 }
 
 @Directive({
@@ -311,6 +333,12 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
     }
 
     private _checkFiles(files: File[]): UploadFileInfo[] {
+        if (this.multiple && this.maxFileCount && (this.files.length + files.length) > this.maxFileCount) {
+            const excessCount = (this.files.length + files.length) - this.maxFileCount;
+            files = files.slice(0, files.length - excessCount);
+            this.maxFileCountExceeded.emit();
+        }
+
         const fileTypes = this.fileType ? this.fileType.trim().split(/\s*,\s*/) : ['*'];
         return files.map(file => {
             const fileInfo: UploadFileInfo = {
