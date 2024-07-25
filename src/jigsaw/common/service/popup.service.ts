@@ -239,6 +239,11 @@ export class PopupInfo {
     }
 }
 
+export type PopupState = {
+    type: string;
+    popupInfo?: PopupInfo
+}
+
 // @dynamic
 @Injectable()
 export class PopupService {
@@ -258,6 +263,8 @@ export class PopupService {
     public get popups(): PopupInfo[] {
         return PopupService.allPopups;
     }
+
+    public popupStateChange: EventEmitter<PopupState> = new EventEmitter<PopupState>();
 
     public static mouseInPopupElement(mouseEvent: MouseEvent, element: HTMLElement): boolean {
         // 加1减1为了兼容有border的情况
@@ -356,6 +363,7 @@ export class PopupService {
             if (target && target.windowListener) {
                 target.windowListener();
             }
+            this.popupStateChange.emit({ type: 'closed', popupInfo });
         };
 
         //set popup
@@ -381,6 +389,7 @@ export class PopupService {
         result.dispose = disposer;
         result.answer = result.instance?.answer;
         PopupService._popups.push(result);
+        this.popupStateChange.emit({ type: 'opened', popupInfo: result });
         return result;
     }
 
