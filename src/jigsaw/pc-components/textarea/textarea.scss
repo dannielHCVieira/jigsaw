@@ -15,8 +15,8 @@ $jigsaw-textarea: #{$jigsaw-prefix}-textarea;
 
     .#{$jigsaw-textarea}-icon-end {
         position: absolute;
-        left: 2px;
         top: 0;
+        right: 2px;
         line-height: 1;
     }
 
@@ -52,6 +52,12 @@ $jigsaw-textarea: #{$jigsaw-prefix}-textarea;
             border-radius: 10px;
             border: 2px solid transparent;
             cursor: pointer;
+        }
+    }
+
+    &.#{$jigsaw-textarea}-max-length {
+        textarea {
+            height: calc(100% - 20px);
         }
     }
 
@@ -143,7 +149,14 @@ $jigsaw-textarea: #{$jigsaw-prefix}-textarea;
         color: $font-color-hint;
     }
 
+    &:hover {
+        .#{$jigsaw-textarea}-clear-bar {
+            display: flex;
+        }
+    }
+
     .#{$jigsaw-textarea}-clear-bar {
+        display: none;
         color: $icon-color-stress;
         font-size: 13px;
         line-height: 1;
@@ -151,10 +164,6 @@ $jigsaw-textarea: #{$jigsaw-prefix}-textarea;
 
         &:hover {
             color: $brand-default;
-        }
-
-        &[hidden] {
-            display: none !important;
         }
     }
 

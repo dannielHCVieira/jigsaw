@@ -40,6 +40,7 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
         '[class.jigsaw-textarea-resize-vertical]': 'resize === "vertical"',
         '[class.jigsaw-textarea-resize-horizontal]': 'resize === "horizontal"',
         '[class.jigsaw-textarea-resize-both]': 'resize === "both"',
+        '[class.jigsaw-textarea-max-length]': 'maxLength',
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawTextarea), multi: true},

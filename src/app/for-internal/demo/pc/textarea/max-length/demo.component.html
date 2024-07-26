@@ -7,12 +7,12 @@
     <div class="clearfix">
         <div class="demo-1 live-demo live-demo-block">
             <jigsaw-header [level]="2">不配置字符数限制</jigsaw-header>
-            <jigsaw-textarea (valueChange)="_$valueChange($event)"></jigsaw-textarea>
+            <jigsaw-textarea height="80" (valueChange)="_$valueChange($event)"></jigsaw-textarea>
         </div>
 
         <div class="demo-2 live-demo live-demo-block">
             <jigsaw-header [level]="2">限制30个字符（默认不包含回车换行符）</jigsaw-header>
-            <jigsaw-textarea maxLength="30" (valueChange)="_$valueChange($event)" [(value)]="_$value"></jigsaw-textarea>
+            <jigsaw-textarea height="80" maxLength="30" (valueChange)="_$valueChange($event)" [(value)]="_$value"></jigsaw-textarea>
         </div>
     </div>
 
@@ -21,7 +21,7 @@
             字符数是否包含回车换行符：
             <jigsaw-switch [(checked)]="_$includesCRLF" offLabel="不包含" onLabel="包含"></jigsaw-switch>
             <br><br>
-            <jigsaw-textarea [maxLength]="100" [includesCRLF]="_$includesCRLF" (valueChange)="_$valueChange($event)"></jigsaw-textarea>
+            <jigsaw-textarea height="80" [maxLength]="100" [includesCRLF]="_$includesCRLF" (valueChange)="_$valueChange($event)"></jigsaw-textarea>
         </div>
     </div>
 </div>
