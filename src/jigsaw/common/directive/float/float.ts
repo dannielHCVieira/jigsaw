@@ -597,7 +597,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
         const scale = CommonUtils.getScale(host);
         const popupPos = this._getElementPos(popupElement);
         const arrowOffset = options.showBorder ? 7 / 2 + 1 : 7 / 2;
-        const borderColor = options.borderColor ? options.borderColor : '#dcdcdc';
+        const borderColor = options.borderColor ? options.borderColor : 'var(--border-color-default, #dcdcdc)';
         const popupEleTop = popupPos.y;
         const popupEleBottom = popupPos.y + popupRect.height;
         const popupEleLeft = popupPos.x;

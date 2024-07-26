@@ -74,6 +74,16 @@ a {
     }
 }
 
-.jigsaw-table-host table tbody tr:nth-child(2n) {
-    background: var(--jigsaw-table-row-even, $gray-5);
+.jigsaw-table-host table tbody tr {
+    &:nth-child(2n) {
+        background: var(--jigsaw-table-row-even, $gray-5);
+    }
+
+    &:hover {
+        background: var(--jigsaw-table-row-hover, var(--bg-hover));
+    }
+
+    &.jigsaw-table-row-selected {
+        background: var(--jigsaw-table-row-selected, var(--brand-active-lighten));
+    }
 }
