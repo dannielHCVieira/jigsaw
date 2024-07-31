@@ -14,7 +14,8 @@ import {
     JigsawCheckBoxModule,
     JigsawNumericInputModule,
     JigsawSelectModule,
-    MajorStyle, JigsawThemeService
+    MajorStyle,
+    JigsawThemeService
 } from "jigsaw/public_api";
 import {AppComponent} from './app.component';
 import {AjaxInterceptor} from '../libs/app.interceptor';
