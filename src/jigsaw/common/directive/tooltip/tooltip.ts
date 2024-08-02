@@ -125,11 +125,11 @@ export class JigsawTooltip extends JigsawFloatBase {
     public set jigsawTooltipTheme(value: 'light' | 'dark') {
         if (value === 'dark') {
             this._theme = 'dark';
-            this.jigsawFloatOptions.borderColor = 'transparent';
+            this.jigsawFloatOptions.borderColor = 'var(--jigsaw-tooltip-border-color, transparent)';
             this.jigsawFloatInitData.theme = 'dark';
         } else {
             this._theme = 'light';
-            this.jigsawFloatOptions.borderColor = '#e5e5e5';
+            this.jigsawFloatOptions.borderColor = 'var(--jigsaw-tooltip-border-color, #e5e5e5)';
             this.jigsawFloatInitData.theme = 'light';
         }
     }

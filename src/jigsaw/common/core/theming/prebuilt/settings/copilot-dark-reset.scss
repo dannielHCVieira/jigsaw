@@ -87,3 +87,14 @@ a {
         background: var(--jigsaw-table-row-selected, var(--brand-active-lighten));
     }
 }
+
+.jigsaw-tooltip {
+    &.jigsaw-tooltip-light {
+        --jigsaw-tooltip-border-color: #e5e5e5;
+    }
+
+    &.jigsaw-tooltip-dark {
+        --jigsaw-tooltip-border-color: #1E3D69;
+        background: #08264D;
+    }
+}

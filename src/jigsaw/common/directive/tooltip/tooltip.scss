@@ -1,18 +1,21 @@
 $tooltip-prefix-cls: #{$jigsaw-prefix}-tooltip;
 
 .#{$tooltip-prefix-cls} {
+    --jigsaw-tooltip-border-color: transparent;
     min-height: $height-sm;
     padding: 3px 8px;
     max-width: 320px;
-    
+
     border-radius: $border-radius-sm;
     color: #4d4d4d;
 
     &.#{$tooltip-prefix-cls}-light {
+        --jigsaw-tooltip-border-color: #e5e5e5;
         background: #FFFFFF;
     }
 
     &.#{$tooltip-prefix-cls}-dark {
+        --jigsaw-tooltip-border-color: transparent;
         background: #4d4d4d;
         color: $font-color-white;
     }
