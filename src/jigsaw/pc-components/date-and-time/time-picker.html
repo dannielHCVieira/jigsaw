@@ -1,6 +1,6 @@
 <div class="jigsaw-time-picker-wrapper" jigsawFloat jigsawFloatOpenTrigger="none"
      jigsawFloatCloseTrigger="none" [jigsawFloatTarget]="_$floatTarget" [jigsawFloatInitData]="_$floatInitData"
-     [jigsawFloatOptions]="{borderType: 'pointer'}" [(jigsawFloatOpen)]='_$floatOpen'
+     [jigsawFloatOptions]="{borderType: 'pointer', showBorder: true}" [(jigsawFloatOpen)]='_$floatOpen'
      [jigsawFloatArrowElement]="_$floatArrowElement" [jigsawFloatPosition]="popDirection == 'up' ? 'topLeft' : 'bottomLeft'"
      (jigsawFloatAnswer)="_$popupSelect($event)">
     <input #hour *ngIf="gr == 6 || gr == 7 || gr == 9" [class.jigsaw-time-picker-input-selected]="_$selectMode == 'hour'"

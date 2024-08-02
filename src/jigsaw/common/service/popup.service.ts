@@ -624,10 +624,10 @@ export class PopupService {
         // 这里的逻辑有点绕，主要是因为showShadow的默认值必须是true
         if (!this._isModal(options) && this._isShowShadow(options)) {
             const shadow = {
-                inline: "0px 1px 2px hsla(0, 0%, 0%, 0.2)",
-                default: "0px 2px 12px hsla(0, 0%, 0%, 0.15)",
-                dialog: "0px 5px 15px hsla(0, 0%, 0%, 0.12)",
-                alert: "0px 5px 15px hsla(0, 0%, 0%, 0.12)"
+                inline: "var(--box-shadow-lv1, 0px 1px 2px hsla(0, 0%, 0%, 0.2))",
+                default: "var(--box-shadow-lv2, 0px 2px 12px hsla(0, 0%, 0%, 0.15))",
+                dialog: "var(--box-shadow-lv3, 0px 5px 15px hsla(0, 0%, 0%, 0.12))",
+                alert: "var(--box-shadow-lv3, 0px 5px 15px hsla(0, 0%, 0%, 0.12))"
             };
             const shadowValue = shadow[options.shadowType] || shadow.default;
             InternalUtils.renderer.setStyle(element, "box-shadow", shadowValue);

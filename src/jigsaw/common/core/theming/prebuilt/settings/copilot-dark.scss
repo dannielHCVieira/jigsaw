@@ -271,9 +271,9 @@ $icon-color-inactive: $gray-4;
 
 /* box-shadow 阴影（基于altitude）*/
 /*@public*/ $box-shadow-lv0: none;
-/*@public*/ $box-shadow-lv1: 0px 1px 2px hsla(0, 0%, 0%, 0.12);
-/*@public*/ $box-shadow-lv2: 0px 2px 8px hsla(0, 0%, 0%, 0.08);
-/*@public*/ $box-shadow-lv3: 0px 5px 12px hsla(0, 0%, 0%, 0.06);
+/*@public*/ $box-shadow-lv1: 0px 1px 2px hsla(0, 0%, 0%, 0.55);
+/*@public*/ $box-shadow-lv2: 0px 2px 8px hsla(0, 0%, 0%, 0.3);
+/*@public*/ $box-shadow-lv3: 0px 5px 12px hsla(0, 0%, 0%, 0.3);
 
 /* 导航色 */
 /*@public*/ $nav-header: $gray-2;
