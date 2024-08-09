@@ -98,3 +98,25 @@ a {
         background: #08264D;
     }
 }
+
+.jigsaw-menu-host[data-theme='dark'] {
+    .jigsaw-list-host {
+        border: #1E3D69 1px solid !important;
+
+        .jigsaw-list-option-host[data-theme='dark'] {
+            background: #08264D;
+
+            &.jigsaw-list-option-active {
+                background: #17364d;
+            }
+
+            &:hover {
+                background: #00223B;
+            }
+
+            &.jigsaw-list-option-disabled .jigsaw-list-option-wrapper .jigsaw-menu-list-title {
+                color: #43648D;
+            }
+        }
+    }
+}
