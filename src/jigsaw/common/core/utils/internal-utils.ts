@@ -23,6 +23,8 @@ export class InternalUtils {
     public static viewContainerRef: ViewContainerRef;
     public static renderer: Renderer2;
     public static zone: NgZone;
+    // JigsawMenu放到全局给JigsawCascadingMenu使用，防止循环引用
+    public static JigsawMenu: any;
 
     /*
      * 初始化对象标识，转化为数组

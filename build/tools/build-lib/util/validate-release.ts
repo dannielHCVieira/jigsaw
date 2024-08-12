@@ -14,7 +14,7 @@ const externalReferencesRegex = /(templateUrl|styleUrls): *["'[]/;
 
 /** Task that validates the given release package before releasing. */
 export function checkReleasePackage(packageName: string): string[] {
-  const bundlePath = join(releasesDir, packageName, 'fesm5', `rdkmaster-${packageName}.js`);
+  const bundlePath = join(releasesDir, packageName, 'fesm2015', `rdkmaster-${packageName}.mjs`);
   const bundleContent = readFileSync(bundlePath, 'utf8');
   let failures = [];
 
@@ -43,7 +43,8 @@ function checkJigsawPackage(packageName: string): string[] {
   }
 
   if (!existsSync(themingFilePath)) {
-    failures.push('The theming SCSS file is not present in the Jigsaw release output.');
+      console.error("themingFilePath: ",themingFilePath);
+      failures.push('The theming SCSS file is not present in the Jigsaw release output.');
   }
 
   return failures;

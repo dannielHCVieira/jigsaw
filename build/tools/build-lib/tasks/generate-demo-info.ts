@@ -1,4 +1,3 @@
-import {task} from 'gulp';
 import {join} from 'path';
 import {writeFileSync} from "fs"
 import {routerConfigPC} from "../../../../src/app/for-internal/router-config";
@@ -7,7 +6,7 @@ import {getRouterConfig} from "../util/get-router-config";
 /**
  * 生成demo列表的json数据给网站使用。
  */
-task('generate-demo-info', () => {
+export function generateDemoInfo() {
     let saveTo = './demo-info.json';
     process.argv.forEach((arg, index) => {
         if (arg !== '--save-to') {
@@ -19,7 +18,7 @@ task('generate-demo-info', () => {
         }
     });
 
-    const demoHome = join(__dirname, '../../../../src/app/demo');
+    const demoHome = join(__dirname, '../../../../src/app/for-internal/demo');
     let demos: any[] = [];
 
     routerConfigPC.forEach((router: any) => {
@@ -38,5 +37,5 @@ task('generate-demo-info', () => {
 
     console.log('the demo info file is saved to: ' + saveTo);
     writeFileSync(saveTo, JSON.stringify(demos));
-});
+}
 

@@ -40,20 +40,23 @@ import {ArrayCollection, JigsawSelect} from "@rdkmaster/jigsaw";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormlyFieldSelect extends FormlyFieldType<JigsawSelect> {
-    defaultOptions = {
-        templateOptions: {
-            valid: true,
-            width: '100%',
-            minWidth: '100%',
-            maxWidth: '100%',
-            labelField: 'label',
-            openTrigger: 'mouseenter',
-            closeTrigger: 'mouseleave',
-            showBorder: true,
-            useStatistics: true,
-            optionHeight: 32
-        },
-    };
+    constructor() {
+        super();
+        this.defaultOptions = {
+            templateOptions: {
+                valid: true,
+                width: '100%',
+                minWidth: '100%',
+                maxWidth: '100%',
+                labelField: 'label',
+                openTrigger: 'mouseenter',
+                closeTrigger: 'mouseleave',
+                showBorder: true,
+                useStatistics: true,
+                optionHeight: 32
+            },
+        };
+    }
 
     @ViewChild(JigsawSelect)
     protected _instance: JigsawSelect;

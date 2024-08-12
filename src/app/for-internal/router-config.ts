@@ -293,7 +293,7 @@ export const routerConfigPC = [
     },
     {
         path: "pc/form-display",
-        loadChildren: () => import('./demo/pc/form-display/demo-set-module').then(m => m.FormDisplayDemoModule),
+        loadChildren: () => import('./demo/pc/form-display/demo-set.module').then(m => m.FormDisplayDemoModule),
     },
     {
         path: "pc/auto-display",

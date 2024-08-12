@@ -6,15 +6,15 @@
     "lib": ["es2015", "dom"],
     "module": "commonjs",
     "moduleResolution": "node",
-    "outDir": "../../dist/tools/gulp",
+    "outDir": "../../dist/tools/build-lib",
     "noEmitOnError": true,
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "target": "es5",
     "types": [
       "node"
     ]
   },
   "files": [
-    "gulpfile.ts"
+    "tasks/**"
   ]
 }

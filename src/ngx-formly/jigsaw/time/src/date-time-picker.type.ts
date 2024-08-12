@@ -28,12 +28,15 @@ import {JigsawDateTimePicker, TimeGr} from '@rdkmaster/jigsaw';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormlyFieldDateTimePicker extends FormlyFieldType<JigsawDateTimePicker> {
-    defaultOptions = {
-        templateOptions: {
-            valid: true,
-            gr: TimeGr.date,
-        },
-    };
+    constructor() {
+        super();
+        this.defaultOptions = {
+            templateOptions: {
+                valid: true,
+                gr: TimeGr.date,
+            },
+        };
+    }
 
     @ViewChild(JigsawDateTimePicker)
     protected _instance: JigsawDateTimePicker;

@@ -34,13 +34,16 @@ import {FormlyFieldType} from "@rdkmaster/formly/form-field";
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormlyFieldTable extends FormlyFieldType<JigsawTable> {
-    defaultOptions = {
-        templateOptions: {
-            width: '100%',
-            height: '100%',
-            contentWidth: 'auto',
-        }
-    };
+    constructor() {
+        super();
+        this.defaultOptions = {
+            templateOptions: {
+                width: '100%',
+                height: '100%',
+                contentWidth: 'auto',
+            }
+        };
+    }
 
     @ViewChild(JigsawTable)
     protected _instance: JigsawTable;

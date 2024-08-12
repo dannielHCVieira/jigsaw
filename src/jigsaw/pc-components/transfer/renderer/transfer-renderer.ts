@@ -272,7 +272,7 @@ export abstract class TransferListRendererBase extends AbstractTransferRendererB
      */
     public _$destAddonIconClick(event: MouseEvent, item: ListOption): void {
         event.stopPropagation();
-        if (this.isDestRenderer) {
+        if (this.isDestRenderer()) {
             this.destAddonIconClick.emit(item);
         }
     }
@@ -280,8 +280,9 @@ export abstract class TransferListRendererBase extends AbstractTransferRendererB
     /**
      * @internal
      * 判断是否是目标列表渲染器，暂时只给目标渲染器添加图标点击按钮
+     * 不能用getter，会报错 Maximum call stack size exceeded
      */
-    public get isDestRenderer(): boolean {
+    public isDestRenderer(): boolean {
         return this instanceof TransferListDestRenderer;
     }
 }

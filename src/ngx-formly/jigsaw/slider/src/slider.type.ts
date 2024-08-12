@@ -26,15 +26,18 @@ import {JigsawSlider} from "@rdkmaster/jigsaw";
     },
 })
 export class FormlyFieldSlider extends FormlyFieldType<JigsawSlider> {
-    defaultOptions = {
-        templateOptions: {
-            valid: true,
-            min: 0,
-            max: 100,
-            step: 1,
-            marks: [],
-        },
-    };
+    constructor() {
+        super();
+        this.defaultOptions = {
+            templateOptions: {
+                valid: true,
+                min: 0,
+                max: 100,
+                step: 1,
+                marks: [],
+            },
+        };
+    }
 
     @ViewChild(JigsawSlider)
     protected _instance: JigsawSlider;

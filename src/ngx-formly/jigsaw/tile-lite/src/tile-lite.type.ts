@@ -26,12 +26,15 @@ import {JigsawTileLite} from "@rdkmaster/jigsaw";
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormlyFieldTileLite extends FormlyFieldType<JigsawTileLite> {
-    defaultOptions = {
-        templateOptions: {
-            valid: true,
-            labelField: 'label',
-        },
-    };
+    constructor() {
+        super();
+        this.defaultOptions = {
+            templateOptions: {
+                valid: true,
+                labelField: 'label',
+            },
+        };
+    }
 
     @ViewChild(JigsawTileLite)
     protected _instance: JigsawTileLite;

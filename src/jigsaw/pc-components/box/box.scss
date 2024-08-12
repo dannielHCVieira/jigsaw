@@ -2,10 +2,10 @@ $box-prefix-cls: #{$jigsaw-prefix}-box;
 $flex-prefix-cls: #{$jigsaw-prefix}-flex;
 
 .#{$box-prefix-cls} {
-    @include clearfix();
     display: block;
     flex: 1 0 0;
     overflow: auto;
+    @include clearfix();
     &-resize-line-wrapper {
         position: relative;
         display: block;

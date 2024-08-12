@@ -28,16 +28,19 @@ import {JigsawTextarea} from "@rdkmaster/jigsaw";
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormlyFieldTextArea extends FormlyFieldType<JigsawTextarea> {
-    defaultOptions = {
-        templateOptions: {
-            clearable: true,
-            showBorder: true,
-            valid: true,
-            width: '100%',
-            height: '100%',
-            maxContentLength: 0
-        }
-    };
+    constructor() {
+        super();
+        this.defaultOptions = {
+            templateOptions: {
+                clearable: true,
+                showBorder: true,
+                valid: true,
+                width: '100%',
+                height: '100%',
+                maxContentLength: 0
+            }
+        };
+    }
 
     @ViewChild(JigsawTextarea)
     protected _instance: JigsawTextarea;

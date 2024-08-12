@@ -100,7 +100,7 @@ $jigsaw-input: #{$jigsaw-prefix}-input;
 
             .#{$jigsaw-input}-clear-bar{
                 color: $bg-transparent;
-            } 
+            }
 
             &:hover,
             &.#{$jigsaw-input}-focused .#{$jigsaw-input}-wrapper{
@@ -117,6 +117,7 @@ $jigsaw-input: #{$jigsaw-prefix}-input;
         .#{$jigsaw-input}-wrapper,
         .#{$jigsaw-input}-wrapper:hover,
         &.#{$jigsaw-input}-focused .#{$jigsaw-input}-wrapper {
+            box-shadow: none;
             &.#{$jigsaw-input}-none {
                 border-color: $error-default;
             }
@@ -132,8 +133,6 @@ $jigsaw-input: #{$jigsaw-prefix}-input;
             &.#{$jigsaw-input}-both {
                 border-color: $error-default $border-color-default $error-default $border-color-default;
             }
-
-            box-shadow: none;
         }
 
         .#{$jigsaw-prefix}-prefix-suffix {

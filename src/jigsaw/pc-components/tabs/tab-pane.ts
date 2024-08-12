@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChild, Input, TemplateRef, Type, ViewChild} from '@angular/core';
-import {IJigsawTabTitleRenderer} from './tab-renderer';
+import {IJigsawTabTitleRenderer} from './tab-types';
 import {IDynamicInstantiatable} from "../../common/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 

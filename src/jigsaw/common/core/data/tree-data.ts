@@ -79,7 +79,7 @@ export class TreeData extends GeneralCollection<any> {
 export class SimpleNode {
     [prop: string]: any;
 
-    label: string;
+    label?: string;
     nodes?: SimpleNode[];
     iconUnicode?: string;
 }
@@ -170,8 +170,9 @@ export class SimpleTreeData extends GeneralCollection<any> {
 
     /**
      * 此属性的值一般用于显示在界面上
+     * tree data属性不能使用getter setter，会导致ztree无法显示节点
      */
-    label: string;
+    label?: string;
 
     /**
      * 子级节点，`SimpleZTreeData` 不是一个递归的结构，所以子节点是用户原生提供的

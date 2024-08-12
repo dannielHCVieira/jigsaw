@@ -1,5 +1,8 @@
 const fs = require("fs");
 const glob = require('glob').sync;
+const sass = require('sass');
+const CleanCSS = require('clean-css');
+const {join, basename, resolve} = require('path');
 
 console.log('开始创建 wings theme ...');
 
@@ -109,15 +112,6 @@ if (fs.existsSync(wingsThemeOutput)) {
 }
 
 const styleFiles = styleFilesParser();
-const angularJson = require(`../../angular.real.json`);
-const externalOptions = angularJson.projects["jigsaw-app-external"].architect.build.options;
-const internalOptions = angularJson.projects["jigsaw-app-internal"].architect.build.options;
-externalOptions.styles = externalOptions.styles.filter(style => typeof style === 'string' ||
-    (style.input && style.input.indexOf('/wings-theme/')) === -1);
-internalOptions.styles = internalOptions.styles.filter(style => typeof style === 'string' ||
-    (style.input && style.input.indexOf('/wings-theme/')) === -1);
-angularJson.projects["jigsaw-app-external"].architect.build.options.styles = externalOptions.styles;
-angularJson.projects["jigsaw-app-internal"].architect.build.options.styles = internalOptions.styles;
 
 const commonImport = `
         @import "../settings/paletx-pro-base.scss";
@@ -148,31 +142,18 @@ styleFiles.forEach(filePath => {
         scssCode.replace(/\$THEME/g, 'dark'));
     fs.writeFileSync(`common/core/theming/prebuilt/wings-theme/${wingsThemeId}-light.scss`,
         scssCode.replace(/\$THEME/g, 'light'));
-
-    externalOptions.styles.push({
-        "input": `src/jigsaw/common/core/theming/prebuilt/wings-theme/${wingsThemeId}-dark.scss`,
-        "bundleName": `themes/wings-theme/${wingsThemeId}-dark`, "inject": false
-    });
-    externalOptions.styles.push({
-        "input": `src/jigsaw/common/core/theming/prebuilt/wings-theme/${wingsThemeId}-light.scss`,
-        "bundleName": `themes/wings-theme/${wingsThemeId}-light`, "inject": false
-    });
-    internalOptions.styles.push({
-        "input": `src/jigsaw/common/core/theming/prebuilt/wings-theme/${wingsThemeId}-dark.scss`,
-        "bundleName": `themes/wings-theme/${wingsThemeId}-dark`, "inject": false
-    });
-    internalOptions.styles.push({
-        "input": `src/jigsaw/common/core/theming/prebuilt/wings-theme/${wingsThemeId}-light.scss`,
-        "bundleName": `themes/wings-theme/${wingsThemeId}-light`, "inject": false
-    });
 });
-fs.writeFileSync('../../angular.json', JSON.stringify(angularJson, null, 2));
 console.warn('警告：未被@WingsTheme引用的样式文件：\n', unrefScss.join('\n'));
 
 if (wingsThemeIds.length) {
     console.error('有@WingsTheme渲染器，但是all-theme.scss里没有引用的：\n', wingsThemeIds);
     process.exit(1);
 }
+
+console.log('编译wings-theme scss文件：src/jigsaw/common/core/theming/prebuilt/wings-theme/*.scss')
+compileScssFile(`${__dirname}/../../src/jigsaw/common/core/theming/prebuilt/wings-theme`);
+console.log('编译皮肤scss文件：src/jigsaw/common/core/theming/themes/*.scss')
+compileScssFile(`${__dirname}/../../src/jigsaw/common/core/theming/themes`);
 
 console.log('所有组件的 wings theme id 校验通过，wings theme 创建完毕！');
 
@@ -186,4 +167,13 @@ function styleFilesParser () {
             styleFiles.push(file);
         });
     return styleFiles;
+}
+
+function compileScssFile(path) {
+    glob(`${path}/*.scss`).forEach(file => {
+        const result = sass.renderSync({file, includePaths: [resolve(__dirname, '../../src')]});
+        const output = new CleanCSS().minify(result.css.toString()).styles;
+        const outputPath = join(path, basename(file).replace('.scss', '.css'));
+        fs.writeFileSync(outputPath, output);
+    })
 }

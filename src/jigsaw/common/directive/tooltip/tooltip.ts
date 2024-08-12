@@ -82,8 +82,29 @@ export class JigsawTooltip extends JigsawFloatBase {
     public renderAs: TooltipRenderAs = 'plain-text';
     @Input('jigsawTooltipContext')
     public context: any;
+
     @Input('jigsawTooltipOpen')
-    public jigsawFloatOpen: boolean;
+    public get jigsawFloatOpen(): boolean {
+        return this._opened;
+    }
+
+    public set jigsawFloatOpen(value: boolean) {
+        value = !!value;
+        if (value == this._opened) {
+            return;
+        }
+        this.callLater(() => {
+            // toggle open 外部控制时，用异步触发变更检查
+            // 初始化open，等待组件初始化后执行
+            // 这里必须使用setTimeout来跳过第一次冒泡上来的window.click
+            if (value) {
+                this.openFloat();
+            } else {
+                this.closeFloat();
+            }
+        });
+    }
+
     @Input('jigsawTooltipOpenTrigger')
     public jigsawFloatOpenTrigger: 'click' | 'mouseenter' | 'none' = 'mouseenter';
     @Input('jigsawTooltipCloseTrigger')
@@ -146,10 +167,21 @@ export class JigsawTooltip extends JigsawFloatBase {
         this.jigsawFloatInitData.wordBreak = value;
     }
 
+    private _jigsawTooltipFloatInitData: TooltipInitData = {};
+
     /**
      * @internal
      */
-    public jigsawFloatInitData: TooltipInitData = {};
+    public get jigsawFloatInitData(): TooltipInitData {
+        return this._jigsawTooltipFloatInitData;
+    }
+
+    public set jigsawFloatInitData(data: TooltipInitData) {
+        this._jigsawTooltipFloatInitData = data;
+        if (this.popupInstance && this.initialized) {
+            this.popupInstance.initData = data;
+        }
+    }
 
     protected _init(): void {
         this.jigsawFloatTarget = JigsawTooltipComponent;

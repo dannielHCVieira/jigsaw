@@ -8,6 +8,9 @@ import {FieldArrayType} from '@ngx-formly/core';
     `,
 })
 export class FormlyFieldRepeat extends FieldArrayType implements AfterViewInit {
+    constructor() {
+        super();
+    }
     ngAfterViewInit(): void {
         this.to.componentRef = this;
     }

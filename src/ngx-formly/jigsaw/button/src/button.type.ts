@@ -26,13 +26,16 @@ export enum SizeType {
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormlyFieldButton extends FormlyFieldType<JigsawButton> {
-    defaultOptions = {
-        templateOptions: {
-            hideLabel: false,
-            colorType: ColorType.default,
-            preSize: SizeType.default
-        },
-    };
+    constructor() {
+        super();
+        this.defaultOptions = {
+            templateOptions: {
+                hideLabel: false,
+                colorType: ColorType.default,
+                preSize: SizeType.default
+            },
+        };
+    }
 
     @ViewChild(JigsawButton)
     protected _instance: JigsawButton;

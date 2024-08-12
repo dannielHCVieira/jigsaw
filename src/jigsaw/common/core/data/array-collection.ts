@@ -291,13 +291,14 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
     protected _sortSubject = new Subject<DataSortInfo>();
     protected _dataSourceChanged: boolean = false;
 
-    constructor(public http: HttpClient, requestOptionsOrUrl: HttpClientOptions | string) {
+    constructor(http: HttpClient, requestOptionsOrUrl: HttpClientOptions | string) {
         super();
 
         if (!http) {
             throw new Error('invalid http!');
         }
 
+        this.http = http;
         this.pagingInfo = new PagingInfo();
         this.pagingInfo.subscribe(() => {
             this._ajax();

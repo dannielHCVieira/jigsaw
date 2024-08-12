@@ -51,14 +51,23 @@ export abstract class AbstractGraphData extends TableDataBase {
         return true;
     }
 
-    constructor(/**
-                 * 图形的数据，二维数组。
-                 */
-                public data: GraphDataMatrix = [],
-                public header: GraphDataHeader = [],
-                public rowDescriptor: GraphDataRowDescriptor = [],
-                public field: GraphDataField = []) {
+    /**
+     * 图形的数据，二维数组。
+     */
+    public data: GraphDataMatrix = [];
+    public header: GraphDataHeader = [];
+    public rowDescriptor: GraphDataRowDescriptor = [];
+    public field: GraphDataField = [];
+
+    constructor(data: GraphDataMatrix = [],
+                header: GraphDataHeader = [],
+                rowDescriptor: GraphDataRowDescriptor = [],
+                field: GraphDataField = []) {
         super(data, field, header);
+        this.data = data;
+        this.header = header;
+        this.field = field;
+        this.rowDescriptor = rowDescriptor;
         this._makeFields();
     }
 

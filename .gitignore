@@ -3,7 +3,7 @@
 # compiled output
 dist
 /tmp
-angular.json
+/src-tmp
 
 # dependencies
 node_modules
@@ -21,6 +21,7 @@ node_modules
 .vscode/*
 
 # misc
+/.angular/cache
 /.sass-cache
 /connect.lock
 /coverage/*
@@ -30,6 +31,7 @@ npm-debug.log
 testem.log
 src/jigsaw/common/core/theming/prebuilt/extraction/*
 src/jigsaw/common/core/theming/prebuilt/wings-theme/*
+src/jigsaw/common/core/theming/themes/*.css
 
 # e2e
 /e2e/*.js

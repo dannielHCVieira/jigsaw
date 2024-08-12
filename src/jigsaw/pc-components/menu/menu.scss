@@ -12,11 +12,10 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
             padding: 0px 8px;
 
             &.#{$jigsaw-list-option}-disabled {
+                cursor: not-allowed;
                 .#{$jigsaw-list-option}-wrapper .#{$jigsaw-menu}-list-title {
                     color: $font-color-disabled;
                 }
-
-                cursor: not-allowed;
             }
 
             &.#{$jigsaw-menu}-list-separator {
@@ -112,12 +111,10 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
 
                 &.#{$jigsaw-list-option}-disabled {
                     background: $nav-navigation;
-
+                    cursor: not-allowed;
                     .#{$jigsaw-menu}-navigation-title {
                         color: $nav-color-disabled;
                     }
-
-                    cursor: not-allowed;
                 }
 
                 &.#{$jigsaw-menu}-list-separator {

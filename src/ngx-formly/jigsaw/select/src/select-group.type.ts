@@ -37,21 +37,24 @@ import {JigsawSelectGroup} from '@rdkmaster/jigsaw';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormlyFieldSelectGroup extends FormlyFieldType<JigsawSelectGroup> {
-    defaultOptions = {
-        templateOptions: {
-            valid: true,
-            width: '100%',
-            minWidth: '100%',
-            maxWidth: '100%',
-            labelField: 'label',
-            showBorder: true,
-            openTrigger: 'mouseenter',
-            closeTrigger: 'mouseleave',
-            useStatistics: true,
-            groupField: "groupName",
-            optionHeight: 32
-        },
-    };
+    constructor() {
+        super();
+        this.defaultOptions = {
+            templateOptions: {
+                valid: true,
+                width: '100%',
+                minWidth: '100%',
+                maxWidth: '100%',
+                labelField: 'label',
+                showBorder: true,
+                openTrigger: 'mouseenter',
+                closeTrigger: 'mouseleave',
+                useStatistics: true,
+                groupField: "groupName",
+                optionHeight: 32
+            },
+        };
+    }
 
     @ViewChild(JigsawSelectGroup)
     protected _instance: JigsawSelectGroup;

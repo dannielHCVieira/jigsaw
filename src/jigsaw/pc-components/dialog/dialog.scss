@@ -12,7 +12,6 @@ $jigsaw-dialog: #{$jigsaw-prefix}-dialog;
         box-shadow: $box-shadow-lv3;
 
         .#{$jigsaw-dialog}-head {
-            @include clearfix;
             display: flex;
             align-items: center;
             position: relative;
@@ -27,6 +26,7 @@ $jigsaw-dialog: #{$jigsaw-prefix}-dialog;
             line-height: 20px;
             border-bottom: 1px solid $border-color-default;
             cursor: move;
+            @include clearfix;
 
             & > div {
                 display: flex;

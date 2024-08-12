@@ -58,17 +58,20 @@ import {JigsawInput, JigsawNumericInput} from "@rdkmaster/jigsaw";
 })
 
 export class FormlyFieldInput extends FieldType implements AfterViewInit {
-    defaultOptions = {
-        templateOptions: {
-            width: '100%',
-            valid: true,
-            clearable: true,
-            showBorder: true,
-            min: -Infinity,
-            max: Infinity,
-            step: 1
-        },
-    };
+    constructor() {
+        super();
+        this.defaultOptions = {
+            templateOptions: {
+                width: '100%',
+                valid: true,
+                clearable: true,
+                showBorder: true,
+                min: -Infinity,
+                max: Infinity,
+                step: 1
+            },
+        };
+    }
 
     @ViewChild(JigsawInput)
     private _input: JigsawInput;

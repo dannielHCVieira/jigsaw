@@ -31,16 +31,19 @@ import {JigsawRangeDateTimeSelect, TimeGr} from '@rdkmaster/jigsaw';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormlyFieldRangeDateTimeSelect extends FormlyFieldType<JigsawRangeDateTimeSelect> {
-    defaultOptions = {
-        templateOptions: {
-            width: '100%',
-            valid: true,
-            showBorder: true,
-            gr: TimeGr.date,
-            openTrigger: 'click',
-            closeTrigger: 'mouseleave'
-        },
-    };
+    constructor() {
+        super();
+        this.defaultOptions = {
+            templateOptions: {
+                width: '100%',
+                valid: true,
+                showBorder: true,
+                gr: TimeGr.date,
+                openTrigger: 'click',
+                closeTrigger: 'mouseleave'
+            },
+        };
+    }
 
     @ViewChild(JigsawRangeDateTimeSelect)
     protected _instance: JigsawRangeDateTimeSelect;

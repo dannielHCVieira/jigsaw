@@ -74,7 +74,7 @@ import {routerConfig as toastConfig} from "./demo/pc/toast/demo-set.module";
 import {routerConfig as noviceGuideConfig} from "./demo/pc/novice-guide/demo-set.module";
 import {routerConfig as chartIconConfig} from "./demo/pc/chart-icon/demo-set.module";
 import {routerConfig as largeTextConfig} from "./demo/pc/large-text/demo-set.module";
-import {routerConfig as fromDisplayConfig} from "./demo/pc/form-display/demo-set-module";
+import {routerConfig as fromDisplayConfig} from "./demo/pc/form-display/demo-set.module";
 import {routerConfig as autoDisplayConfig} from "./demo/pc/auto-display/demo-set.module";
 import {routerConfig as systemPromptConfig} from "./demo/pc/system-prompt/demo-set.module";
 import {routerConfigPC} from "./router-config";

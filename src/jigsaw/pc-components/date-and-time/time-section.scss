@@ -54,10 +54,10 @@ $jigsaw-tile: #{$jigsaw-prefix}-tile;
         }
 
         ul {
-            @include inline-block();
-            @include clearfix();
             margin-left: 18px;
             padding: 5px 0;
+            @include inline-block();
+            @include clearfix();
 
             li {
                 float: left;

@@ -1,4 +1,3 @@
-import {task} from 'gulp';
 import {join} from 'path';
 import {existsSync} from "fs"
 import {routerConfig} from "../../../../src/app/for-internal/router-config";
@@ -7,8 +6,8 @@ import {getRouterConfig} from "../util/get-router-config";
 /**
  * 确保demo的url和它的源码路径一致，这样在demo运行时，就可以直接跳转到它对应的plunker上了。
  */
-task('ensure-url-matches-path', () => {
-    const demoHome = join(__dirname, '../../../../src/app/demo');
+export function ensureUrlMatchesPath() {
+    const demoHome = join(__dirname, '../../../../src/app/for-internal/demo');
     const mismatchUrls: string[] = [], invalidPaths: string[] = [];
 
     routerConfig.forEach((router: any) => {
@@ -37,6 +36,6 @@ task('ensure-url-matches-path', () => {
     if (invalidPaths.length == 0 && mismatchUrls.length == 0) {
         console.log('great! all urls match their paths!');
     }
-});
+}
 
 
