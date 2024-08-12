@@ -13,7 +13,7 @@ const {
     buildGovernanceFormly, npmInstall
 } = require("./tasks/publish");
 
-const {cleanAndBuild, publish} = require('./tasks/build');
+const {cleanAndBuild, publishJigsaw} = require('./tasks/build');
 
 process.chdir(path.join(__dirname, '../../../'));
 
@@ -25,7 +25,7 @@ if (!task) {
     process.exit(1);
 }
 
-if(global.ngVersion && global.ngVersion != 'ng9' && global.ngVersion != 'ng13') {
+if(global.ngVersion && global.ngVersion !== 'ng9' && global.ngVersion !== 'ng13') {
     printUsage('ng版本输入错误！');
 }
 
@@ -50,33 +50,33 @@ function runBuildTask(task) {
     switch (task) {
         case 'formly':
             npmInstall('normal');
-            buildFormly();
+            buildFormly().then();
             break;
         case 'jigsaw':
         case 'jigsaw-mobile':
         case 'jigsaw-omni':
             npmInstall('normal');
-            cleanAndBuild(task);
+            cleanAndBuild(task).then();
             break;
         case 'governance-jigsaw':
             npmInstall('governance');
-            buildGovernanceJigsaw();
+            buildGovernanceJigsaw().then();
             break;
         case 'governance-formly':
             npmInstall('governance');
-            buildGovernanceFormly();
+            buildGovernanceFormly().then();
             break;
         case 'jigsaw-unified-paging':
         case 'jigsaw-mobile-unified-paging':
         case 'jigsaw-omni-unified-paging':
             npmInstall('normal');
-            buildUnifiedPaging(task.replace('-unified-paging', ''));
+            buildUnifiedPaging(task.replace('-unified-paging', '')).then();
             break;
         case 'jigsaw-novice-guide':
         case 'jigsaw-mobile-novice-guide':
         case 'jigsaw-omni-novice-guide':
             npmInstall('normal');
-            buildNoviceGuide(task.replace('-novice-guide', ''));
+            buildNoviceGuide(task.replace('-novice-guide', '')).then();
             break;
         default:
             printUsage('build参数错误！');
@@ -87,24 +87,24 @@ function runPublishTask(task) {
     switch (task) {
         case 'formly':
             npmInstall('normal');
-            publishFormly();
+            publishFormly().then();
             break;
         case 'jigsaw':
         case 'jigsaw-mobile':
         case 'jigsaw-omni':
             npmInstall('normal');
-            publish(task);
+            publishJigsaw().then();
             break;
         case 'all':
-            publishAll();
+            publishAll().then();
             break;
         case 'governance-jigsaw':
             npmInstall('governance');
-            publishGovernanceJigsaw();
+            publishGovernanceJigsaw().then();
             break;
         case 'governance-formly':
             npmInstall('governance');
-            publishGovernanceFormly();
+            publishGovernanceFormly().then();
             break;
         default:
             printUsage('publish参数错误！');
@@ -131,7 +131,3 @@ function printUsage(extra) {
     console.error(' - 检查demo url：node build-lib.js ensure-url-matches-path');
     console.error(' - 生成demo列表的json数据给网站使用：node build-lib.js generate-demo-info');
 }
-
-
-
-

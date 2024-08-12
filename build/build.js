@@ -1,9 +1,10 @@
 const fs = require('fs-extra');
-const {execSync, spawn} = require("child_process");
+const {spawn} = require("child_process");
 const chokidar = require("chokidar");
 const path = require("path");
 const generateGetterSetter = require("./scripts/generate-getter-setter");
 const processSource = require("./scripts/create-tmp-src");
+const {exec, npmInstall} = require("./npm-install");
 
 const app = process.argv[2];
 if (app !== 'jigsaw-app-external' && app !== 'jigsaw-app-internal') {
@@ -23,7 +24,7 @@ if (buildMode !== 'prod' && buildMode !== 'dev') {
 
 process.chdir(path.join(__dirname, '../'));
 
-npmInstall();
+npmInstall(ngVersion);
 
 console.log(`building app ${app} in ${buildMode} mode ...`);
 
@@ -41,7 +42,7 @@ if (app === 'jigsaw-app-external' && !fs.existsSync(docOutput)) {
     exec(`sh build/scripts/doc-generator/generate.sh ${docOutput}`);
 }
 processSource();
-if (ngVersion != 'ng9') {
+if (ngVersion !== 'ng9') {
     generateGetterSetter(['src-tmp']);
 }
 
@@ -50,28 +51,6 @@ if (buildMode === 'dev') {
     runNgServe();
 } else {
     runNgBuild();
-}
-
-function npmInstall() {
-    console.log(`installing ${ngVersion} dependencies ...`);
-    exec(`git checkout package.json`);
-    fs.removeSync('package-lock.json');
-    const packageJson = JSON.parse(fs.readFileSync('package.json'));
-    packageJson.dependencies = {...packageJson[`${ngVersion}Dependencies`], ...packageJson.dependencies};
-    packageJson.dependenciesGovernance = {...packageJson[`${ngVersion}Dependencies`], ...packageJson.dependenciesGovernance};
-    packageJson.devDependencies = {...packageJson[`${ngVersion}DevDependencies`], ...packageJson.devDependencies};
-    fs.writeFileSync('package.json', JSON.stringify(packageJson, null, 4));
-    exec(`npm install --force`);
-    exec('git checkout package.json package-lock.json', {stdio: 'inherit'});
-}
-
-function exec(cmd) {
-    try {
-        execSync(cmd, {stdio: 'inherit'});
-        return 0;
-    } catch (e) {
-        return e.status;
-    }
 }
 
 function watchFiles() {
@@ -95,11 +74,11 @@ function watchFiles() {
             const tmpPath = path.join(pt.replace(/^src[\/\\]/, 'src-tmp/'));
             console.log(`====Copy file ${pt} to ${tmpPath}`);
             fs.copySync(pt, tmpPath);
-            if (path.extname(tmpPath).toLowerCase() == '.ts') {
+            if (path.extname(tmpPath).toLowerCase() === '.ts') {
                 tmpTsPaths.push(tmpPath);
             }
         })
-        if (ngVersion != 'ng9') {
+        if (ngVersion !== 'ng9') {
             generateGetterSetter(tmpTsPaths);
         }
     }, 2000);

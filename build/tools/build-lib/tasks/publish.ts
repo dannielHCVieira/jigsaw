@@ -1,4 +1,4 @@
-import { exec, execSync, spawn } from 'child_process';
+import { execSync, spawn } from 'child_process';
 import { existsSync, statSync, writeFileSync, readFileSync, removeSync } from 'fs-extra';
 import * as path from 'path';
 import {join} from 'path';
@@ -6,7 +6,7 @@ import { green, grey, yellow } from 'chalk';
 import * as minimist from 'minimist';
 import { sync as glob } from "glob";
 import {buildConfig} from '../util/build-config';
-import {cleanAndBuild, publish, validateCheckBundles} from "./build";
+import {cleanAndBuild, publishFormly, publishJigsaw, validateCheckBundles} from "./build";
 import {runCommandSync} from "../util/exec";
 import {buildFormly} from "./build-formly";
 
@@ -75,12 +75,16 @@ export async function buildGovernanceFormly() {
 }
 
 export async function publishAll() {
+    if (!argv.nextVersion) {
+        argv.nextVersion = _readNextVersion();
+    }
     _checkEnv();
     whoami();
+
     npmInstall('normal');
     argv.tag = 'latest';
-    await publish('jigsaw');
-    await publish('formly');
+    await publishJigsaw();
+    await publishFormly();
 
     argv.nextVersion = argv.nextVersion + '-g1';
     argv.tag = 'governance';
@@ -120,13 +124,12 @@ function _execNpmPublish(label: string, packageName: string): Promise<void> {
     if (label) {
         args.push('--tag', label);
     }
+    if (argv.dry) {
+        args.push('--dry');
+    }
 
     return new Promise((resolve, reject) => {
         console.log(grey(`Executing: ${command} ${args.join(' ')}`));
-        if (argv['dry']) {
-            resolve();
-            return;
-        }
 
         const childProcess = spawn(command, args);
         childProcess.stdout.on('data', (data: Buffer) => {
@@ -159,7 +162,7 @@ export function npmInstall(target: 'normal' | 'governance') {
         writeFileSync('package.json', JSON.stringify(packageJson, null, 2));
     }
     try {
-        execSync('npm install --force', { stdio: 'inherit' });
+        execSync('npm install --force --registry=https://artsh.zte.com.cn/artifactory/api/npm/rnia-npm-virtual/', { stdio: 'inherit' });
     } catch (error) {
         console.error("An error occurred:", error);
     }
@@ -179,14 +182,22 @@ function _convertNgDependencies(ngVersion: 'ng9' | 'ng13') {
 }
 
 function _checkEnv() {
-    if (!process.version.startsWith('v10.')) {
-        throw new Error(`当前仅支持node10来构建和发布，请切换到node10。`);
+    if (!process.version.startsWith('v16.')) {
+        throw new Error(`当前仅支持node16来构建和发布，请切换到node16。`);
     }
     const nextVersion = argv.nextVersion;
-    console.log('Next Version from command line:', nextVersion);
     if (!/^(\d+)\.(\d+)\.(\d+)(-\w+\d+)?/.test(nextVersion)) {
-        throw new Error(`参数nextVersion("${nextVersion}")无效，用法：gulp publish:jigsaw --nextVersion 1.0.0`);
+        throw new Error(`参数nextVersion("${nextVersion}")无效，必须是 10.13.1 这样的格式。`);
     }
+}
+
+function _readNextVersion() {
+    execSync('npm show --registry=https://artsh.zte.com.cn/artifactory/api/npm/rnia-npm-virtual/ @rdkmaster/jigsaw', { stdio: 'inherit' });
+    const prompt = require('prompt-sync')({sigint: true});
+    console.log('请输入新版本号：');
+    const nextVersion = prompt('>> ');
+    console.log(`你输入的新版本号是：${nextVersion}`);
+    return nextVersion;
 }
 
 // 需要替换的import包名
@@ -224,10 +235,7 @@ function _replaceFiles(folder: string) {
         packages.forEach(pkg => {
             // 捕获所有的import语句，包含了不同的import模式
             const oldPkgRegex = new RegExp(`import\\s+([^;]*\\s+from\\s+['"]${pkg.oldPkgName}['"];?)`, 'g');
-            code = code.replace(oldPkgRegex, (match, importExpr) => {
-                // 直接替换import语句中的包名
-                return match.replace(pkg.oldPkgName, pkg.newPkgName);
-            });
+            code = code.replace(oldPkgRegex, (match) => match.replace(pkg.oldPkgName, pkg.newPkgName));
         })
         writeFileSync(filePath, code);
     });

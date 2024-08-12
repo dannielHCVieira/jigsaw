@@ -6,15 +6,17 @@ import {Bundler} from 'scss-bundle';
 import {green, red} from 'chalk';
 import * as glob from 'glob';
 import * as sass from 'sass';
-const CleanCSS = require('clean-css');
 import {copyFiles, removeDirOrFile} from '../util/file';
 import {bundleScopedScss, createScopedTheme, getScopedThemesConfig} from '../util/create-scoped-theme';
 import {buildCandidatePackage} from '../util/build-candidate-package';
 import {checkReleasePackage} from '../util/validate-release';
 import {publishPackage, whoami} from './publish';
 import {cleanAll} from "./clean";
+import {buildFormly} from "./build-formly";
+
 const generateGetterSetter = require("../../../scripts/generate-getter-setter.js");
 const processSource = require("../../../scripts/create-tmp-src.js");
+const CleanCSS = require('clean-css');
 
 const packageMap: {[prop: string]: {src: string, dist: string}} = {
     'jigsaw': {src: 'pc-components', dist: 'jigsaw'},
@@ -93,17 +95,6 @@ function copyMiscFiles(releasePath: string) {
     }
 }
 
-function buildAllComponentStyles(srcGlob: string, destPath: string) {
-    const files = glob.sync(srcGlob);
-    for (const file of files) {
-        const result = sass.renderSync({file});
-        const output = new CleanCSS().minify(result.css.toString()).styles;
-        const outputPath = join(destPath, file.replace(/^.*[\\\/]/, '').replace('.scss', '.css'));
-        mkdirpSync(dirname(outputPath));
-        writeFileSync(outputPath, output);
-    }
-}
-
 export function validateCheckBundles(packageName: string) {
     const releaseFailures = checkReleasePackage(packageName);
     releaseFailures.forEach(failure => console.error(red(`Failure (${packageName}): ${failure}`)));
@@ -175,34 +166,45 @@ async function build(packageName: string) {
 
     await bundleThemingScss(themingEntryPointPath, allScssGlob, themingBundlePath);
     copyPrebuiltThemeSettings(prebuiltThemeSettingsGlob, join(releasePath, 'prebuilt-themes', 'settings'));
-    buildAllComponentStyles(allComponentThemingStyleGlob, join(releasePath, 'prebuilt-themes', 'wings-theme'));
+    buildAllThemeFile(allComponentThemingStyleGlob, join(releasePath, 'prebuilt-themes', 'wings-theme'));
 
     console.log(`----- Run Task: build:${packageName}-copy-files -----`);
     copyMiscFiles(releasePath);
 
     console.log(`----- Run Task: build:${packageName}-novice-guide -----`);
-    buildNoviceGuide(packageName);
+    await buildNoviceGuide(packageName);
 
     console.log(`----- Run Task: build:${packageName}-unified-paging -----`);
-    buildUnifiedPaging(packageName);
+    await buildUnifiedPaging(packageName);
 
     console.log(`Build for package ${packageName} completed.`);
 }
 
 export async function cleanAndBuild(packageName: string) {
     cleanAll();
-    await build(packageName);
+    if (packageName === 'formly') {
+        await buildFormly();
+    } else {
+        await build(packageName);
+    }
 }
 
-export async function publish(packageName: string) {
+export async function publishFormly() {
     whoami();
+    await buildFormly();
+    await publishPackage('formly');
+}
+
+export async function publishJigsaw() {
+    whoami();
+    const packageName: string = 'jigsaw';
     await cleanAndBuild(packageName);
     validateCheckBundles(packageName);
     await publishPackage(packageName);
 }
 
-export function buildNoviceGuide(packageName: string) {
-    buildCandidatePackage({
+export async function buildNoviceGuide(packageName: string) {
+    await buildCandidatePackage({
         packageName: "novice-guide",
         entryPath: "src/jigsaw/common/novice-guide/exports.ts",
         rollupTo: "window.jigsaw=window.jigsaw||{};window.jigsaw",
@@ -210,8 +212,8 @@ export function buildNoviceGuide(packageName: string) {
     });
 }
 
-export function buildUnifiedPaging(packageName: string) {
-    buildCandidatePackage({
+export async function buildUnifiedPaging(packageName: string) {
+    await buildCandidatePackage({
         packageName: "unified-paging",
         entryPath: "src/jigsaw/common/core/data/unified-paging/exports.ts",
         rollupTo: "",

@@ -11,7 +11,7 @@ cd $home
 echo "preparing node_modules ...."
 tar xfz $AWADE_BUILD_RESOURCE/jigsaw_node_modules/node_modules.ng9.tgz -C ./
 chmod +x ./node_modules/.bin/*
-npm install --registry=https://artsh.zte.com.cn/artifactory/api/npm/rnia-npm-virtual/ || {
+node build/npm-install.js || {
     echo "Error: npm install failed"
     exit 1
 }
@@ -30,6 +30,7 @@ runShell() {
         exit 1
     }
 }
+
 runScript build/scripts/check-demo-import.js
 runScript build/scripts/check-html-element-type.js
 runScript build/scripts/check-import-path.js

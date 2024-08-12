@@ -24,7 +24,7 @@ function _copyLicense() {
 
 export async function publishFormly() {
     await whoami();
-    buildFormly();
+    await buildFormly();
     await publishPackage('formly');
 }
 

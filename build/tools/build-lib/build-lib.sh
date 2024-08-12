@@ -15,12 +15,15 @@ cd $scriptDir
 
 node -v
 npm -v
+if [ $? -ne 0 ]; then
+    echo "无效的node运行时！"
+    exit 1
+fi
 
 node build-lib.js "$@"
-
 if [ $? -ne 0 ]; then
     echo "构建脚本执行失败！"
     exit 1
-else
-    echo "构建脚本执行成功！"
 fi
+
+echo "构建脚本执行成功！"
