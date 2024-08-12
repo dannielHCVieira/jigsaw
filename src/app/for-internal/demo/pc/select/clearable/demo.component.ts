@@ -8,10 +8,13 @@ import { ArrayCollection } from "jigsaw/public_api";
 export class SelectClearableDemoComponent {
     public clearable: boolean = true;
     public selectedCityForSelect: string;
+    public openTrigger = "click";
+    public multipleSelect = false;
     public cityList: any = new ArrayCollection(["北京", "上海", "南京", "深圳", "长沙", "西安"]);
 
     public selectChange(selectedItem: any) {
         console.log("select city is: " + selectedItem);
+        console.log("valueChange ===>", selectedItem);
     }
 
     public changeData(has) {
