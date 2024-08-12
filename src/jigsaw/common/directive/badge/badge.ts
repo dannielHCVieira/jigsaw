@@ -6,6 +6,8 @@ import {BasePosition} from "./accessory-base";
 
 type Position = BasePosition & { badge?: BaseStyle }
 
+export type BadgePosition = 'leftTop' | 'rightTop' | 'leftBottom' | 'rightBottom' | 'left' | 'right';
+
 @Directive({
     selector: '[jigsawBadge], [jigsaw-badge]'
 })
@@ -14,17 +16,39 @@ export class JigsawBadgeDirective extends AccessoryBase implements AfterViewInit
         super(_render, _elementRef, zone);
     }
 
+    private _value: string | number | "dot";
+
     /**
      * @NoMarkForCheckRequired
      */
     @Input('jigsawBadgeValue')
-    public value: string | number | 'dot';
+    public get value(): string | number | "dot" {
+        return this._value
+    }
+
+    public set value(value: string | number | "dot") {
+        if (this._value != value) {
+            this._value = value;
+            this.addAccessory();
+        }
+    }
+
+    private _size: 'large' | 'normal' | 'small' = 'normal';
 
     /**
      * @NoMarkForCheckRequired
      */
     @Input('jigsawBadgeSize')
-    public size: 'large' | 'normal' | 'small' = 'normal';
+    public get size(): 'large' | 'normal' | 'small' {
+        return this._size
+    }
+
+    public set size(size: 'large' | 'normal' | 'small') {
+        if (this._size != size) {
+            this._size = size;
+            this.addAccessory();
+        }
+    }
 
     /**
      * @NoMarkForCheckRequired
@@ -95,17 +119,38 @@ export class JigsawBadgeDirective extends AccessoryBase implements AfterViewInit
     @Input()
     public jigsawBadgeTitle: string;
 
+    private _pointerCursor: boolean;
     /**
      * @NoMarkForCheckRequired
      */
     @Input('jigsawBadgePointerCursor')
-    public pointerCursor: boolean;
+    public get pointerCursor(): boolean {
+        return this._pointerCursor
+    }
+
+    public set pointerCursor(pointerCursor: boolean) {
+        if (this._pointerCursor != pointerCursor) {
+            this._pointerCursor = pointerCursor;
+            this.addAccessory();
+        }
+    }
+
+    private _position: BadgePosition = 'rightTop';
 
     /**
      * @NoMarkForCheckRequired
      */
     @Input('jigsawBadgePosition')
-    public position: 'leftTop' | 'rightTop' | 'leftBottom' | 'rightBottom' | 'left' | 'right' = 'rightTop';
+    public get position(): BadgePosition {
+        return this._position
+    }
+
+    public set position(position: BadgePosition) {
+        if (this._position != position) {
+            this._position = position;
+            this.addAccessory();
+        }
+    }
 
     @Output()
     public jigsawBadgeClick: EventEmitter<string | number | "dot"> = new EventEmitter<string | number | "dot">();

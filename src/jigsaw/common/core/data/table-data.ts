@@ -73,24 +73,30 @@ export class TableDataBase extends AbstractGeneralCollection {
      *
      */
     public static isTableData(data: any): boolean {
-        return data && data.hasOwnProperty('data') && data.data instanceof Array &&
-            data.hasOwnProperty('header') && data.header instanceof Array &&
-            data.hasOwnProperty('field') && data.field instanceof Array;
+        return data && data.data instanceof Array && data.header instanceof Array
+            && data.field instanceof Array;
     }
 
-    constructor(/**
-                 * 表格的数据，是一个二维数组。
-                 */
-                public data: TableDataMatrix = [],
-                /**
-                 * 表格数据的字段序列，这个序列决定了`JigsawTable`实际渲染出来哪些列。无效、重复的字段将被抛弃。
-                 */
-                public field: TableDataField = [],
-                /**
-                 * 表格的列头，这里的文本将会直接显示在界面上，请确保他们已经被正确国际化过。
-                 */
-                public header: TableDataHeader = []) {
+    /**
+     * 表格的数据，是一个二维数组。
+     */
+    public data: TableDataMatrix = [];
+    /**
+     * 表格数据的字段序列，这个序列决定了`JigsawTable`实际渲染出来哪些列。无效、重复的字段将被抛弃。
+     */
+    public field: TableDataField = [];
+    /**
+     * 表格的列头，这里的文本将会直接显示在界面上，请确保他们已经被正确国际化过。
+     */
+    public header: TableDataHeader = [];
+
+    constructor(data: TableDataMatrix = [],
+                field: TableDataField = [],
+                header: TableDataHeader = []) {
         super();
+        this.data = data;
+        this.field = field;
+        this.header = header;
         this._initOriginData();
     }
 
@@ -470,12 +476,13 @@ export class PageableTableData extends TableData implements IServerSidePageable,
     private _sortSubject = new Subject<DataSortInfo>();
     private _dataSourceChanged: boolean = false;
 
-    constructor(public http: HttpClient, requestOptionsOrUrl: HttpClientOptions | string) {
+    constructor(http: HttpClient, requestOptionsOrUrl: HttpClientOptions | string) {
         super();
 
         if (!http) {
             throw new Error('invalid http!');
         }
+        this.http = http;
         this.sourceRequestOptions = typeof requestOptionsOrUrl === 'string' ? {url: requestOptionsOrUrl} : requestOptionsOrUrl;
 
         this._initSubjects();
@@ -982,8 +989,9 @@ export class BigTableData extends PageableTableData implements ISlicedData {
      */
     protected reallyBusy = false;
 
-    constructor(public http: HttpClient, requestOptionsOrUrl: HttpClientOptions | string) {
+    constructor(http: HttpClient, requestOptionsOrUrl: HttpClientOptions | string) {
         super(http, requestOptionsOrUrl);
+        this.http = http;
         this.pagingInfo.pageSize = 1000;
     }
 

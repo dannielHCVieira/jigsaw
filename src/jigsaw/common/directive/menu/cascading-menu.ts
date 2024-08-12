@@ -3,9 +3,10 @@ import { Subscription } from 'rxjs';
 import {SimpleNode, SimpleTreeData} from "../../core/data/tree-data";
 import {PopupInfo, PopupOptions, PopupService} from "../../service/popup.service";
 import {DropDownTrigger, FloatPosition, JigsawFloatBase} from "../float/float";
-import {cascadingMenuFlag, closeAllContextMenu, JigsawMenu, MenuTheme} from "../../../pc-components/menu/menu";
 import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 import {JigsawThemeService} from "../../core/theming/theme";
+import {InternalUtils} from "../../core/utils/internal-utils";
+import {MenuTheme, cascadingMenuFlag, closeAllContextMenu} from "./menu-typings";
 
 @Directive({
     selector: '[jigsaw-cascading-menu],[j-cascading-menu],[jigsawCascadingMenu]',
@@ -34,7 +35,6 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
             this.jigsawFloatInitData.theme = themeInfo.majorStyle;
         })
     }
-
     private _jigsawCascadingMenuData: SimpleTreeData;
     private _jigsawCascadingMenuWidth: string | number;
     private _jigsawCascadingMenuHeight: string | number;
@@ -68,7 +68,7 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
         if (value instanceof SimpleTreeData) {
             this._removeOnRefreshListener?.();
             this._removeOnRefreshListener = value.onRefresh(() => {
-                if (this._popupService.popups[0]?.instance instanceof JigsawMenu) {
+                if (this._popupService.popups[0]?.instance instanceof InternalUtils.JigsawMenu) {
                     this._popupService.popups[0].instance.update();
                 }
             })
@@ -78,7 +78,7 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
             this.jigsawFloatInitData.data = value;
             if (this.initialized && CommonUtils.isUndefined(this.jigsawFloatTarget)) {
                 // 异步设置数据时，这里要获取一下target
-                this.jigsawFloatTarget = value && value.nodes && value.nodes.length > 0 ? JigsawMenu as any : null;
+                this.jigsawFloatTarget = value && value.nodes && value.nodes.length > 0 ? InternalUtils.JigsawMenu : null;
             }
         }
     }
@@ -164,11 +164,22 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
     @Input('jigsawCascadingMenuCloseTrigger')
     public jigsawFloatCloseTrigger: 'click' | 'mouseleave' | 'none' | DropDownTrigger = "mouseleave";
 
+    private _jigsawMenuFloatInitData: any = {};
+
     /**
      * @internal
      */
     @Input('jigsawCascadingMenuInitData')
-    public jigsawFloatInitData: any;
+    public get jigsawFloatInitData(): any {
+        return this._jigsawMenuFloatInitData;
+    }
+
+    public set jigsawFloatInitData(data: any) {
+        this._jigsawMenuFloatInitData = data;
+        if (this.popupInstance && this.initialized) {
+            this.popupInstance.initData = data;
+        }
+    }
 
     @Input()
     public get jigsawCascadingMenuOpen(): boolean {
@@ -196,7 +207,7 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
     ngOnInit() {
         super.ngOnInit();
         const data = this.jigsawCascadingMenuData;
-        this.jigsawFloatTarget = data && data.nodes && data.nodes.length > 0 ? JigsawMenu as any : null;
+        this.jigsawFloatTarget = data && data.nodes && data.nodes.length > 0 ? InternalUtils.JigsawMenu : null;
         this.jigsawFloatInitData.data = data;
         this.jigsawFloatInitData.width = this.jigsawCascadingMenuWidth;
         this.jigsawFloatInitData.height = this.jigsawCascadingMenuHeight;

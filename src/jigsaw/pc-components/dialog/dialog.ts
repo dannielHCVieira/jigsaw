@@ -122,7 +122,7 @@ export abstract class DialogBase<T = ButtonInfo> implements IDialog<T>, AfterVie
 
     public ngAfterViewInit() {
         if (this.dialog) {
-            this.dialog.answer.subscribe(answer => this.answer.emit(answer));
+            this.dialog.answer.subscribe(answer => this.answer.emit(answer as T));
         }
     }
 }

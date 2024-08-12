@@ -118,7 +118,7 @@ import { TranslateDemoModule } from "./demo/translate/demo.module";
                 },
                 { path: "**", component: PageNotFoundComponent }
             ],
-            { useHash: true }
+            { useHash: true, relativeLinkResolution: 'legacy' }
         ),
         TranslateModule.forRoot(),
         BrowserModule,

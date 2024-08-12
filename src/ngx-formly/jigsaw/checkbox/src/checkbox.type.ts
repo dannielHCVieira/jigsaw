@@ -23,12 +23,15 @@ import {JigsawCheckBox} from "@rdkmaster/jigsaw";
     },
 })
 export class FormlyFieldCheckbox extends FormlyFieldType<JigsawCheckBox> {
-    defaultOptions = {
-        templateOptions: {
-            hideLabel: false,
-            valid: true
-        },
-    };
+    constructor() {
+        super();
+        this.defaultOptions = {
+            templateOptions: {
+                hideLabel: false,
+                valid: true
+            },
+        };
+    }
 
     @ViewChild(JigsawCheckBox)
     protected _instance: JigsawCheckBox;

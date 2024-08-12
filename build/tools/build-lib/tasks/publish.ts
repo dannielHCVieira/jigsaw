@@ -1,53 +1,30 @@
-import {exec, execSync, spawn} from 'child_process';
-import {existsSync, statSync, writeFileSync, readFileSync} from 'fs-extra';
+import { exec, execSync, spawn } from 'child_process';
+import { existsSync, statSync, writeFileSync, readFileSync, removeSync } from 'fs-extra';
 import * as path from 'path';
 import {join} from 'path';
-import {task} from 'gulp';
-import {green, grey, yellow} from 'chalk';
+import { green, grey, yellow } from 'chalk';
 import * as minimist from 'minimist';
-import {sync as glob} from "glob";
-import {runTasks, sequenceTask} from '../util/task_helpers';
-import {buildConfig} from './build-config';
+import { sync as glob } from "glob";
+import {buildConfig} from '../util/build-config';
+import {cleanAndBuild, publish, validateCheckBundles} from "./build";
+import {runCommandSync} from "../util/exec";
+import {buildFormly} from "./build-formly";
 
 /** Parse command-line arguments for release task. */
 const argv = minimist(process.argv.slice(3));
 
 const npm = process.platform === "win32" ? "npm.cmd" : "npm";
 
-task('publish:all', publishAll);
-
-task(':publish:whoami', () => {
+export function whoami() {
     try {
         /** Make sure we're logged in. */
         execSync('npm whoami --registry=https://artsh.zte.com.cn/artifactory/api/npm/rnia-release-npm/', { stdio: 'inherit' });
     } catch (error) {
         console.error("An error occurred:", error);
-        throw '当前环境未登录到npm，无法发布，请先登录后再试';
+        console.error('当前环境未登录到npm，无法发布，请先登录后再试');
+        process.exit(1);
     }
-});
-
-task(`publish:governance:jigsaw`, sequenceTask(
-    ':publish:whoami',
-    `:governance:replace-import`,
-    `build:jigsaw-omni:clean`,
-    `validate:check-jigsaw-bundles`,
-    `:publish:jigsaw`,
-    `:governance:replace-import:restore`,
-));
-
-task(`publish:governance:formly`, sequenceTask(
-    ':publish:whoami',
-    `:governance:replace-import`,
-    `build:formly:clean`,
-    `:build:formly-copy-files`,
-    `:publish:formly`,
-    `:governance:replace-import:restore`,
-));
-
-// 处理代码中的import，改为从@rdkmaster下面引入，用于开源治理
-task(`:governance:replace-import`, async () => _replaceImport());
-
-task(`:governance:replace-import:restore`, async () => _restoreImport());
+}
 
 export async function publishPackage(packageName: string) {
     const label = argv['tag'];
@@ -67,29 +44,52 @@ export async function publishPackage(packageName: string) {
     process.chdir(currentDir);
 }
 
-async function publishAll() {
+export async function publishGovernanceJigsaw() {
+    whoami();
+    _replaceImport();
+    await cleanAndBuild('jigsaw-omni');
+    validateCheckBundles('jigsaw');
+    await publishPackage('jigsaw');
+    _restoreImport();
+}
+
+export async function buildGovernanceJigsaw() {
+    _replaceImport();
+    await cleanAndBuild('jigsaw-omni');
+    validateCheckBundles('jigsaw');
+    _restoreImport();
+}
+
+export async function publishGovernanceFormly() {
+    whoami();
+    _replaceImport();
+    await buildFormly();
+    await publishPackage('formly');
+    _restoreImport();
+}
+
+export async function buildGovernanceFormly() {
+    _replaceImport();
+    await buildFormly();
+    _restoreImport();
+}
+
+export async function publishAll() {
     _checkEnv();
-    let error = await runTasks([':publish:whoami']);
-    if (error) {
-        process.exit(1);
-    }
-    _npmInstall('normal');
+    whoami();
+    npmInstall('normal');
     argv.tag = 'latest';
-    error = await runTasks(['publish:jigsaw', 'publish:formly']);
-    if (error) {
-        process.exit(1);
-    }
+    await publish('jigsaw');
+    await publish('formly');
 
     argv.nextVersion = argv.nextVersion + '-g1';
     argv.tag = 'governance';
-    _npmInstall('governance');
-    error = await runTasks(['publish:governance:jigsaw', 'publish:governance:formly']);
-    if (error) {
-        process.exit(1);
-    }
+    npmInstall('governance');
+    await publishGovernanceJigsaw();
+    await publishGovernanceFormly();
 }
 
-function _execNpmPublish(label: string, packageName: string): Promise<{}> {
+function _execNpmPublish(label: string, packageName: string): Promise<void> {
     _checkEnv();
     const packageDir = join(buildConfig.outputDir, packageName);
     if (!statSync(packageDir).isDirectory()) {
@@ -146,11 +146,12 @@ function _execNpmPublish(label: string, packageName: string): Promise<{}> {
     });
 }
 
-function _npmInstall(target: 'normal' | 'governance') {
+export function npmInstall(target: 'normal' | 'governance') {
     const currentDir = process.cwd();
     process.chdir(`${__dirname}/../../../../`);
 
     execSync('git checkout package.json package-lock.json', { stdio: 'inherit' });
+    _convertNgDependencies((global as any).ngVersion);
     if (target == 'governance') {
         // 使用governance版的依赖配置
         const packageJson = JSON.parse(readFileSync('package.json').toString());
@@ -158,13 +159,23 @@ function _npmInstall(target: 'normal' | 'governance') {
         writeFileSync('package.json', JSON.stringify(packageJson, null, 2));
     }
     try {
-        execSync('npm install', { stdio: 'inherit' });
+        execSync('npm install --force', { stdio: 'inherit' });
     } catch (error) {
         console.error("An error occurred:", error);
     }
     // 恢复npm install过程所修改的文件
     execSync('git checkout package.json package-lock.json', { stdio: 'inherit' });
     process.chdir(currentDir);
+}
+
+function _convertNgDependencies(ngVersion: 'ng9' | 'ng13') {
+    console.log(`installing ${ngVersion} dependencies ...`);
+    removeSync('package-lock.json');
+    const packageJson = JSON.parse(readFileSync('package.json').toString());
+    packageJson.dependencies = {...packageJson[`${ngVersion}Dependencies`], ...packageJson.dependencies};
+    packageJson.dependenciesGovernance = {...packageJson[`${ngVersion}Dependencies`], ...packageJson.dependenciesGovernance};
+    packageJson.devDependencies = {...packageJson[`${ngVersion}DevDependencies`], ...packageJson.devDependencies};
+    writeFileSync('package.json', JSON.stringify(packageJson, null, 4));
 }
 
 function _checkEnv() {
@@ -187,12 +198,12 @@ const packages = [
     {oldPkgName: "ngx-color-picker", newPkgName: "@rdkmaster/ngx-color-picker"},
     {oldPkgName: "ngx-perfect-scrollbar", newPkgName: "@rdkmaster/ngx-perfect-scrollbar"},
     {oldPkgName: "web-animations-js", newPkgName: "@rdkmaster/web-animations-js"},
-    {oldPkgName: "file-saver", newPkgName: "@rdkmaster/file-saver"},
-    {oldPkgName: "zone.js", newPkgName: "@rdkmaster/zone.js"}
+    {oldPkgName: "zone.js", newPkgName: "@rdkmaster/zone.js"},
+    {oldPkgName: "file-saver", newPkgName: "@rdkmaster/file-saver"}
 ];
 const jigsawHome = buildConfig.projectDir;
 
-async function _replaceImport() {
+function _replaceImport() {
     console.log("replacing all imports ....");
     _replaceFiles(path.join(jigsawHome, "src/jigsaw"));
     _replaceFiles(path.join(jigsawHome, "src/ngx-formly"));
@@ -200,13 +211,9 @@ async function _replaceImport() {
     console.log("replace import all done");
 }
 
-async function _restoreImport() {
+function _restoreImport() {
     console.log("restoring source ....");
-    exec(`git checkout src`, error => {
-        if (error) {
-            console.error("restoring source result error, detail:", error);
-        }
-    });
+    runCommandSync(`git checkout src`);
     console.log("restore import all done");
 }
 
@@ -215,18 +222,19 @@ function _replaceFiles(folder: string) {
         const filePath = path.join(folder, fileName);
         let code = readFileSync(filePath).toString();
         packages.forEach(pkg => {
-            const oldPkgRegex = new RegExp(`(\\bimport\\s+(\\{[^}]+}|\\*\\s+as\\s+\\w+)\\s+from\\s*['"]${pkg.oldPkgName}['"];?)`, 'g');
-            if (!oldPkgRegex.test(code)) {
-                return;
-            }
-            code = code.replace(oldPkgRegex, (temp, importExpr) => importExpr.replace(pkg.oldPkgName, pkg.newPkgName));
+            // 捕获所有的import语句，包含了不同的import模式
+            const oldPkgRegex = new RegExp(`import\\s+([^;]*\\s+from\\s+['"]${pkg.oldPkgName}['"];?)`, 'g');
+            code = code.replace(oldPkgRegex, (match, importExpr) => {
+                // 直接替换import语句中的包名
+                return match.replace(pkg.oldPkgName, pkg.newPkgName);
+            });
         })
         writeFileSync(filePath, code);
     });
 }
 
 function _replacePackageJson() {
-    let pkgPath = path.join(jigsawHome, "src/jigsaw/pc-components/package.json");
+    let pkgPath = path.join(jigsawHome, "src/jigsaw/omni-components/package.json");
     let packageInfo = JSON.parse(readFileSync(pkgPath).toString());
     packageInfo.peerDependencies = packageInfo.peerDependenciesGovernance;
     delete packageInfo.peerDependenciesGovernance;

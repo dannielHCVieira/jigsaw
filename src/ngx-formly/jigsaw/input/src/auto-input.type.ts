@@ -40,17 +40,20 @@ import {JigsawAutoCompleteInput} from "@rdkmaster/jigsaw";
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormlyFieldAutoInput extends FormlyFieldType<JigsawAutoCompleteInput> {
-    defaultOptions = {
-        templateOptions: {
-            width: '100%',
-            valid: true,
-            clearable: true,
-            showBorder: true,
-            maxDropDownWidth: '100%',
-            maxDropDownHeight: '300px',
-            closeDropDownOnSelect: true
-        },
-    };
+    constructor() {
+        super();
+        this.defaultOptions = {
+            templateOptions: {
+                width: '100%',
+                valid: true,
+                clearable: true,
+                showBorder: true,
+                maxDropDownWidth: '100%',
+                maxDropDownHeight: '300px',
+                closeDropDownOnSelect: true
+            },
+        };
+    }
 
     @ViewChild(JigsawAutoCompleteInput)
     protected _instance: JigsawAutoCompleteInput;

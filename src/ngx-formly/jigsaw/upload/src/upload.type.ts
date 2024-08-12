@@ -48,25 +48,28 @@ import {FormlyUploadComponent} from "./upload.component";
 })
 
 export class FormlyFieldUpload extends FormlyFieldType<FormlyUploadComponent> {
-    defaultOptions = {
-        templateOptions: {
-            hideLabel: false,
-            content: '上传',
-            showUploadResult: true,
-            clearable: true,
-            valid: true,
-            icon: 'iconfont iconfont-e015',
-            colorType: ColorType.default,
-            preSize: SizeType.default,
-            uploadTargetUrl: '/rdk/service/common/upload',
-            uploadMultiple: true,
-            uploadContentField: 'file',
-            uploadFileNameField: 'filename',
-            uploadImmediately: false,
-            uploadMaxSize: 1024,
-            uploadMinSize: 0
-        },
-    };
+    constructor() {
+        super();
+        this.defaultOptions = {
+            templateOptions: {
+                hideLabel: false,
+                content: '上传',
+                showUploadResult: true,
+                clearable: true,
+                valid: true,
+                icon: 'iconfont iconfont-e015',
+                colorType: ColorType.default,
+                preSize: SizeType.default,
+                uploadTargetUrl: '/rdk/service/common/upload',
+                uploadMultiple: true,
+                uploadContentField: 'file',
+                uploadFileNameField: 'filename',
+                uploadImmediately: false,
+                uploadMaxSize: 1024,
+                uploadMinSize: 0
+            },
+        };
+    }
 
     @ViewChild(FormlyUploadComponent)
     protected _instance: FormlyUploadComponent;

@@ -27,9 +27,8 @@ import {JigsawTabContent, JigsawTabLabel} from "./tab-item";
 import {AbstractJigsawComponent, IDynamicInstantiatable, WingsTheme} from "../../common/common";
 import {Subscription} from "rxjs";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
-import {IJigsawTabTitleRenderer} from "./tab-renderer";
 import {CommonUtils} from '../../common/core/utils/common-utils';
-import {TabBarData, TabBarStyleOptions, TabStyleOptions, TabTitleInfo} from './tab-types';
+import {IJigsawTabTitleRenderer, TabBarData, TabBarStyleOptions, TabStyleOptions, TabTitleInfo} from './tab-types';
 
 @Directive()
 export abstract class JigsawTabBase extends AbstractJigsawComponent implements AfterViewInit, AfterViewChecked {

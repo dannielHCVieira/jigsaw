@@ -24,13 +24,16 @@ import {JigsawButtonBar} from "@rdkmaster/jigsaw";
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormlyFieldButtonBar extends FormlyFieldType<JigsawButtonBar> {
-    defaultOptions = {
-        templateOptions: {
-            valid: true,
-            labelField: 'label',
-            colorType: ColorType.primary
-        },
-    };
+    constructor() {
+        super();
+        this.defaultOptions = {
+            templateOptions: {
+                valid: true,
+                labelField: 'label',
+                colorType: ColorType.primary
+            },
+        };
+    }
 
     @ViewChild(JigsawButtonBar)
     protected _instance: JigsawButtonBar;

@@ -484,7 +484,9 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
             return;
         }
         this.current = pageNum;
-        this._input.value = String(pageNum);
+        if (this._input) {
+            this._input.value = String(pageNum);
+        }
         this._changeDetectorRef.markForCheck();
     }
 

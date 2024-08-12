@@ -25,15 +25,18 @@ import {JigsawTimePicker, TimeGr} from '@rdkmaster/jigsaw';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormlyFieldTimePicker extends FormlyFieldType<JigsawTimePicker> {
-    defaultOptions = {
-        templateOptions: {
-            valid: true,
-            step: 1,
-            showBorder: true,
-            gr: TimeGr.time,
-            popDirection: 'down',
-        },
-    };
+    constructor() {
+        super();
+        this.defaultOptions = {
+            templateOptions: {
+                valid: true,
+                step: 1,
+                showBorder: true,
+                gr: TimeGr.time,
+                popDirection: 'down',
+            },
+        };
+    }
 
     @ViewChild(JigsawTimePicker)
     protected _instance: JigsawTimePicker;

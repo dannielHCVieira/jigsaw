@@ -18,8 +18,7 @@ import {
     ViewContainerRef
 } from '@angular/core';
 import {AbstractJigsawComponent} from "../../common/common";
-import {IJigsawTabTitleRenderer} from "./tab-renderer";
-import { TabTitleInfo } from './tab-types';
+import {IJigsawTabTitleRenderer, TabTitleInfo} from './tab-types';
 
 @Directive()
 export abstract class JigsawTabItemBase extends AbstractJigsawComponent implements OnDestroy {

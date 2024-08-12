@@ -30,14 +30,17 @@ import {JigsawRangeDateTimePicker, TimeGr} from '@rdkmaster/jigsaw';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormlyFieldRangeDateTimePicker extends FormlyFieldType<JigsawRangeDateTimePicker> {
-    defaultOptions = {
-        templateOptions: {
-            valid: true,
-            gr: TimeGr.date,
-            beginDate: 'now-3d',
-            endDate: 'now',
-        },
-    };
+    constructor() {
+        super();
+        this.defaultOptions = {
+            templateOptions: {
+                valid: true,
+                gr: TimeGr.date,
+                beginDate: 'now-3d',
+                endDate: 'now',
+            },
+        };
+    }
 
     @ViewChild(JigsawRangeDateTimePicker)
     protected _instance: JigsawRangeDateTimePicker;

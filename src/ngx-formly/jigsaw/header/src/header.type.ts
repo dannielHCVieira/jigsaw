@@ -17,12 +17,15 @@ import {FormlyFieldType} from "@rdkmaster/formly/form-field";
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormlyFieldHeader extends FormlyFieldType<JigsawHeader> {
-    defaultOptions = {
-        templateOptions: {
-            content: '标题',
-            level:2
-        }
-    };
+    constructor() {
+        super();
+        this.defaultOptions = {
+            templateOptions: {
+                content: '标题',
+                level:2
+            }
+        };
+    }
 
     @ViewChild(JigsawHeader)
     protected _instance: JigsawHeader;

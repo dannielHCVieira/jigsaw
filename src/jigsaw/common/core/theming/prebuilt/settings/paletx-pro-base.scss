@@ -102,7 +102,6 @@ $animation-duration-fast: 0.1s; // Tooltip
 }
 
 @mixin clearfix() {
-    *zoom: 1;
     &:after {
         clear: both;
         content: "";
@@ -112,8 +111,6 @@ $animation-duration-fast: 0.1s; // Tooltip
 
 @mixin inline-block() {
     display: inline-block;
-    *zoom: 1;
-    *display: inline;
     vertical-align: middle;
 }
 

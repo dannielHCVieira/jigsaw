@@ -26,13 +26,16 @@ import {JigsawListLite} from "@rdkmaster/jigsaw";
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormlyFieldListLite extends FormlyFieldType<JigsawListLite> {
-    defaultOptions = {
-        templateOptions: {
-            width: '200px',
-            valid: true,
-            labelField: 'label',
-        },
-    };
+    constructor() {
+        super();
+        this.defaultOptions = {
+            templateOptions: {
+                width: '200px',
+                valid: true,
+                labelField: 'label',
+            },
+        };
+    }
 
     @ViewChild(JigsawListLite)
     protected _instance: JigsawListLite;

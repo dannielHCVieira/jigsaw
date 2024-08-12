@@ -26,16 +26,19 @@ import {JigsawTimeSection} from '@rdkmaster/jigsaw';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormlyFieldTimeSection extends FormlyFieldType<JigsawTimeSection> {
-    defaultOptions = {
-        templateOptions: {
-            layout: 'vertical',
-            showHour: true,
-            showWeek: true,
-            showDate: true,
-            multipleHour: true,
-            multipleDate: true,
-        },
-    };
+    constructor() {
+        super();
+        this.defaultOptions = {
+            templateOptions: {
+                layout: 'vertical',
+                showHour: true,
+                showWeek: true,
+                showDate: true,
+                multipleHour: true,
+                multipleDate: true,
+            },
+        };
+    }
 
     @ViewChild(JigsawTimeSection)
     protected _instance: JigsawTimeSection;

@@ -81,7 +81,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
             this._cdr.markForCheck();
         });
     }
-     
+
     /**
      * 设置边框显隐开关。
      * @NoMarkForCheckRequired
@@ -163,18 +163,17 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
      * $demo = time-picker/gr
      */
     @Input()
-    public get gr(): TimePickerGR | string {
+    public get gr(): TimePickerGR {
         return this._gr;
     }
 
-    public set gr(gr: TimePickerGR | string) {
-        if (typeof gr === 'string') {
-            gr = TimeGr[gr];
-        }
-        if (gr != TimeGr.time && gr != TimeGr.time_hour_minute && gr != TimeGr.time_minute_second && gr != TimeGr.time_hour) {
+    public set gr(gr: TimePickerGR) {
+        const grConvert = typeof gr === 'string' ? TimeGr[gr] : gr;
+        if (grConvert != TimeGr.time && grConvert != TimeGr.time_hour_minute && grConvert != TimeGr.time_minute_second
+            && grConvert != TimeGr.time_hour) {
             return;
         }
-        this._gr = gr;
+        this._gr = grConvert;
         if (this.initialized) {
             this._updateValue.emit();
         }

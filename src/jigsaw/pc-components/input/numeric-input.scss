@@ -36,6 +36,7 @@ $jigsaw-numeric-input: #{$jigsaw-prefix}-numeric-input;
         .#{$jigsaw-numeric-input}-wrapper,
         .#{$jigsaw-numeric-input}-wrapper:hover,
         &.#{$jigsaw-numeric-input}-focused .#{$jigsaw-numeric-input}-wrapper {
+            box-shadow: none;
             &.#{$jigsaw-numeric-input}-none {
                 border-color: $error-default;
             }
@@ -51,8 +52,6 @@ $jigsaw-numeric-input: #{$jigsaw-prefix}-numeric-input;
             &.#{$jigsaw-numeric-input}-both {
                 border-color: $error-default $border-color-default $error-default $border-color-default;
             }
-
-            box-shadow: none;
         }
 
         .#{$jigsaw-prefix}-prefix-suffix {
@@ -65,6 +64,7 @@ $jigsaw-numeric-input: #{$jigsaw-prefix}-numeric-input;
         .#{$jigsaw-numeric-input}-wrapper,
         .#{$jigsaw-numeric-input}-wrapper:hover,
         &.#{$jigsaw-numeric-input}-focused .#{$jigsaw-numeric-input}-wrapper {
+            box-shadow: none;
             &.#{$jigsaw-numeric-input}-none {
                 border-color: $error-default;
             }
@@ -80,8 +80,6 @@ $jigsaw-numeric-input: #{$jigsaw-prefix}-numeric-input;
             &.#{$jigsaw-numeric-input}-both {
                 border-color: $error-default $border-color-default $error-default $border-color-default;
             }
-
-            box-shadow: none;
         }
 
     }
@@ -90,7 +88,7 @@ $jigsaw-numeric-input: #{$jigsaw-prefix}-numeric-input;
         .#{$jigsaw-numeric-input}-wrapper {
             border-color: $bg-transparent;
         }
-        
+
         .#{$jigsaw-numeric-input}-wrapper:hover,
         &.#{$jigsaw-numeric-input}-focused .#{$jigsaw-numeric-input}-wrapper {
             border-color: $brand-default;

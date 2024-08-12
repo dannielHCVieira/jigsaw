@@ -11,9 +11,9 @@ $jigsaw-dot-bar: #{$jigsaw-prefix}-dot-bar;
         position: relative;
         display: block;
         overflow: hidden;
-        @include clearfix;
         color: $font-color-default;
         background: $bg-transparent;
+        @include clearfix;
 
         &.#{$jigsaw-tabs}-vertical-response {
             display: flex;
@@ -52,12 +52,12 @@ $jigsaw-dot-bar: #{$jigsaw-prefix}-dot-bar;
 }
 
 .#{$jigsaw-tabs-bar}-host {
-    @include clearfix;
     display: block;
     position: relative;
     overflow: hidden;
     color: $font-color-default;
     background: $bg-transparent;
+    @include clearfix;
 
     .#{$jigsaw-tabs-bar} {
         border-bottom-width: 1px;
@@ -104,9 +104,9 @@ $jigsaw-dot-bar: #{$jigsaw-prefix}-dot-bar;
             }
 
             .#{$jigsaw-tabs}-nav-wrap {
-                @include clearfix();
                 width: 100%;
                 overflow: hidden;
+                @include clearfix();
 
                 .#{$jigsaw-tabs}-nav {
                     position: relative;

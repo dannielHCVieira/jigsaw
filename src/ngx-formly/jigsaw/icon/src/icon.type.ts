@@ -24,12 +24,15 @@ import {JigsawIcon} from "@rdkmaster/jigsaw";
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormlyFieldIcon extends FormlyFieldType<JigsawIcon> {
-    defaultOptions = {
-        templateOptions: {
-            hideLabel: false,
-            iconPosition: 'left',
-        },
-    };
+    constructor() {
+        super();
+        this.defaultOptions = {
+            templateOptions: {
+                hideLabel: false,
+                iconPosition: 'left',
+            },
+        };
+    }
 
     @ViewChild(JigsawIcon)
     protected _instance: JigsawIcon;

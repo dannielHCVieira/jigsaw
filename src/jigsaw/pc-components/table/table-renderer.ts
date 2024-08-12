@@ -97,7 +97,7 @@ export class TableCellRendererBase implements OnInit, OnDestroy {
     public editorMode: 'when-activated' | 'always-show' = 'when-activated';
     protected targetData: TableData;
 
-    private _removeTableDataRefresh: Function;
+    protected _removeTableDataRefresh: Function;
     private _removeAdditionalDataRefresh: Function;
     private _column: number = -1;
 
@@ -112,7 +112,7 @@ export class TableCellRendererBase implements OnInit, OnDestroy {
         this.cellDataChange.emit(value)
     }
 
-    private _tableData: TableData;
+    protected _tableData: TableData;
 
     /**
      * @NoMarkForCheckRequired
@@ -150,7 +150,7 @@ export class TableCellRendererBase implements OnInit, OnDestroy {
         this._initTargetData();
     }
 
-    private _initTargetData(): void {
+    protected _initTargetData(): void {
         if (!this.tableData || !this.additionalData) {
             return;
         }
@@ -585,6 +585,7 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase {
 /**
  * @internal
  */
+@Directive()
 export class TableCellToggleRendererBase extends TableCellRendererBase {
     constructor(protected _changeDetectorRef: ChangeDetectorRef,
                 // @RequireMarkForCheck 需要用到，勿删
@@ -1038,7 +1039,25 @@ export type TreeTableCellData = { id: string, open: boolean, isParent: boolean, 
 })
 export class TreeTableCellRenderer extends TableCellRendererBase {
     public cellData: TreeTableCellData;
-    public tableData: PageableTreeTableData;
+
+    protected _tableData: PageableTreeTableData;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public get tableData(): PageableTreeTableData {
+        return this._tableData;
+    }
+
+    public set tableData(value: PageableTreeTableData) {
+        this._tableData = value;
+        this._initTargetData();
+        if (this._removeTableDataRefresh) {
+            this._removeTableDataRefresh();
+        }
+        this._removeTableDataRefresh = this._tableData.onRefresh(this.onDataRefresh, this);
+    }
 
     public get indent(): string {
         if (typeof this.cellData.id !== 'string') {

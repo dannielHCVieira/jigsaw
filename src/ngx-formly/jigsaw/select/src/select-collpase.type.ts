@@ -37,21 +37,24 @@ import {JigsawSelectCollapse} from '@rdkmaster/jigsaw';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormlyFieldSelectCollapse extends FormlyFieldType<JigsawSelectCollapse> {
-    defaultOptions = {
-        templateOptions: {
-            valid: true,
-            width: '100%',
-            minWidth: '100%',
-            maxWidth: '100%',
-            labelField: 'label',
-            openTrigger: 'mouseenter',
-            closeTrigger: 'mouseleave',
-            useStatistics: true,
-            showBorder: true,
-            groupField: "groupName",
-            optionHeight: 32
-        },
-    };
+    constructor() {
+        super();
+        this.defaultOptions = {
+            templateOptions: {
+                valid: true,
+                width: '100%',
+                minWidth: '100%',
+                maxWidth: '100%',
+                labelField: 'label',
+                openTrigger: 'mouseenter',
+                closeTrigger: 'mouseleave',
+                useStatistics: true,
+                showBorder: true,
+                groupField: "groupName",
+                optionHeight: 32
+            },
+        };
+    }
 
     @ViewChild(JigsawSelectCollapse)
     protected _instance: JigsawSelectCollapse;

@@ -53,13 +53,13 @@ textarea {
 }
 
 div.intcases {
-    font-family: arial; 
+    font-family: arial;
     font-size: 12px;
-    text-align:left; 
-    border:1px solid #AAA; 
-    background:#FFF none repeat scroll 0% 0%; 
-    z-index:9999; 
-    visibility:hidden; 
+    text-align:left;
+    border:1px solid #AAA;
+    background:#FFF none repeat scroll 0% 0%;
+    z-index:9999;
+    visibility:hidden;
     position:absolute;
     padding: 0px;
     border-radius: 3px;
@@ -70,7 +70,7 @@ div.intcaselink {
     cursor: pointer;
     padding: 3px 8px 3px 8px;
     margin: 5px;
-    background:#EEE none repeat scroll 0% 0%; 
+    background:#EEE none repeat scroll 0% 0%;
     border:1px solid #AAA;
     border-radius: 3px;
 }
@@ -92,11 +92,7 @@ div.annnoteimage {
     left: 0px;
     top: 0px;
     font-size: 0px;
-    /*width: 16px;
-    height: 12px;*/
     cursor: help;
-    /*background-image: url(images/note.gif);*/
-    /*background-repeat: no-repeat;*/
     width: 13px;
     height: 12px;
     padding-top: 1px;
@@ -121,7 +117,7 @@ div.annnotelabel {
     top: 0px;*/
     font-family: Helvetica,Arial;
     white-space: nowrap;
-    
+
     padding-top: 1px;
     background-color: #fff849;
     font-size: 10px;
@@ -206,7 +202,7 @@ div.annnote {
     box-shadow: 0 0 20px #15d6ba;
   }
 }
- 
+
 @-moz-keyframes pulsate {
   from {
     -moz-box-shadow: 0 0 10px #15d6ba;
@@ -219,8 +215,6 @@ div.annnote {
 }
 
 .legacyPulsateBorder {
-    /*border: 5px solid #15d6ba;
-    margin: -5px;*/
     -moz-box-shadow: 0 0 10px 3px #15d6ba;
     box-shadow: 0 0 10px 3px #15d6ba;
 }
@@ -231,7 +225,7 @@ div.annnote {
   animation-duration: 0.9s;
   animation-iteration-count: infinite;
   animation-direction: alternate;
-  
+
   -webkit-animation-name: pulsate;
   -webkit-animation-timing-function: ease-in-out;
   -webkit-animation-duration: 0.9s;
@@ -253,10 +247,6 @@ div.annnote {
 .widgetNoteSelected {
     -moz-box-shadow: 0 0 10px 3px #138CDD;
     box-shadow: 0 0 10px 3px #138CDD;
-    /*-moz-box-shadow: 0 0 20px #3915d6;
-    box-shadow: 0 0 20px #3915d6;*/
-    /*border: 3px solid #3915d6;*/
-    /*margin: -3px;*/
 }
 
 

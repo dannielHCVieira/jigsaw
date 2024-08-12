@@ -23,6 +23,13 @@ runScript() {
         exit 1
     }
 }
+runShell() {
+    echo "Running shell: $@"
+    sh "$@" || {
+        echo "Error: Shell failed - $@"
+        exit 1
+    }
+}
 runScript build/scripts/check-demo-import.js
 runScript build/scripts/check-html-element-type.js
 runScript build/scripts/check-import-path.js
@@ -38,20 +45,12 @@ runScript build/scripts/generate-external-demo-info.js
 runScript build/scripts/generate-external-navigation-info.js
 runScript build/scripts/create-omni-components.js
 
-./node_modules/.bin/gulp build:jigsaw-novice-guide || {
-    echo "Error: gulp task failed - build:novice-guide"
-    exit 1
-}
+runShell build/tools/build-lib/build-lib.sh build:jigsaw ng9
+runShell build/tools/build-lib/build-lib.sh build:formly ng9
 
-./node_modules/.bin/gulp build:formly:clean || {
-    echo "Error: gulp task failed - build:formly:clean"
-    exit 1
-}
-
-./node_modules/.bin/gulp build:jigsaw-omni:clean || {
-    echo "Error: gulp task failed - build:jigsaw-omni:clean"
-    exit 1
-}
+runShell build/tools/build-lib/build-lib.sh build:jigsaw-novice-guide
+runShell build/tools/build-lib/build-lib.sh build:formly
+runShell build/tools/build-lib/build-lib.sh build:jigsaw-omni
 
 npm test || {
     echo "Error: npm test failed"

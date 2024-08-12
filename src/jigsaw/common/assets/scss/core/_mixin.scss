@@ -1,5 +1,4 @@
 @mixin clearfix() {
-    *zoom: 1;
     &:after {
         clear: both;
         content: "";
@@ -9,8 +8,6 @@
 
 @mixin inline-block() {
     display: inline-block;
-    *zoom: 1;
-    *display: inline;
     vertical-align: middle;
 }
 

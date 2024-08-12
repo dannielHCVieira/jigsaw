@@ -49,10 +49,10 @@ $jigsaw-time-popup: #{$jigsaw-prefix}-time-popup;
     }
 
     .#{$jigsaw-time-popup}-control {
-        @include clearfix();
         position: absolute;
         bottom: 12px;
         right: 20px;
+        @include clearfix();
 
         span {
             float: right;

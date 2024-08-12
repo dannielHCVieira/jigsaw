@@ -42,6 +42,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
      */
     public _jigsawFloatOpenDelay: number = 100;
 
+    @Input()
     public get jigsawFloatOpenDelay(): number {
         return this._jigsawFloatOpenDelay;
     }
@@ -55,6 +56,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
      */
     private _jigsawFloatCloseDelay: number = 400;
 
+    @Input()
     public get jigsawFloatCloseDelay(): number {
         return this._jigsawFloatCloseDelay;
     }
@@ -71,24 +73,21 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
         return this._popupInfo ? this._popupInfo.instance : null;
     }
 
-    private _jigsawFloatArrowElement: HTMLElement;
+    private _jigsawFloatArrowElement: any;
 
-    /**
-     * @internal
-     */
-    public get jigsawFloatArrowElement(): HTMLElement {
+    @Input()
+    public get jigsawFloatArrowElement(): any {
         return this._jigsawFloatArrowElement;
     }
 
-    public set jigsawFloatArrowElement(el: HTMLElement) {
+    public set jigsawFloatArrowElement(el: any) {
         this._jigsawFloatArrowElement = el;
         this._setArrow(this.popupElement);
     }
 
     private _jigsawFloatInitData: any;
-    /**
-     * @internal
-     */
+
+    @Input()
     public get jigsawFloatInitData(): any {
         return this._jigsawFloatInitData;
     }
@@ -103,8 +102,9 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
     private _floatTarget: Type<IPopupable> | TemplateRef<any>;
 
     /**
-     * @internal
+     * $demo = float/target
      */
+    @Input()
     public get jigsawFloatTarget(): Type<IPopupable> | TemplateRef<any> {
         return this._floatTarget;
     }
@@ -134,11 +134,9 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
      */
     public jigsawFloatPosition: FloatPosition = 'bottomLeft';
 
-    private _opened: boolean = false;
+    protected _opened: boolean = false;
 
-    /**
-     * @internal
-     */
+    @Input()
     public get jigsawFloatOpen(): boolean {
         return this._opened;
     }
@@ -905,21 +903,6 @@ export class JigsawFloat extends JigsawFloatBase implements OnDestroy {
         }
     }
 
-    @Input()
-    public jigsawFloatArrowElement: any;
-
-    @Input()
-    public jigsawFloatInitData: any;
-
-    @Input()
-    public jigsawFloatOpen: boolean;
-
-    @Input()
-    public jigsawFloatOpenDelay: number = 100;
-
-    @Input()
-    public jigsawFloatCloseDelay: number = 400;
-
     /**
      * $demo = float/option
      */
@@ -934,12 +917,6 @@ export class JigsawFloat extends JigsawFloatBase implements OnDestroy {
      */
     @Input()
     public jigsawFloatPosition: FloatPosition = 'bottomLeft';
-
-    /**
-     * $demo = float/target
-     */
-    @Input()
-    public jigsawFloatTarget: Type<IPopupable> | TemplateRef<any>;
 
     @Output()
     public jigsawFloatOpenChange: EventEmitter<boolean> = new EventEmitter<boolean>();

@@ -23,13 +23,16 @@ import {JigsawRadiosLite} from "@rdkmaster/jigsaw";
     },
 })
 export class FormlyFieldRadio extends FormlyFieldType<JigsawRadiosLite> {
-    defaultOptions = {
-        templateOptions: {
-            valid: true,
-            data: [],
-            labelField: 'label'
-        }
-    };
+    constructor() {
+        super();
+        this.defaultOptions = {
+            templateOptions: {
+                valid: true,
+                data: [],
+                labelField: 'label'
+            }
+        };
+    }
 
     @ViewChild(JigsawRadiosLite)
     protected _instance: JigsawRadiosLite;

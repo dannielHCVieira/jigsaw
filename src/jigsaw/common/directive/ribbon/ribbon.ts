@@ -13,6 +13,8 @@ type Style = BaseStyle & {
 }
 type Position = BasePosition & { ribbon?: Style }
 
+export type RibbonPosition = 'leftTop' | 'rightTop' | 'leftBottom' | 'rightBottom' | 'top' | 'bottom' | 'center';
+
 @Directive({
     selector: '[jigsawRibbon], [jigsaw-ribbon]'
 })
@@ -21,29 +23,70 @@ export class JigsawRibbonDirective extends AccessoryBase {
         super(_render, _elementRef, zone);
     }
 
+    private _value: string = 'A ribbon';
     /**
      * 勋带内容
      */
     @Input('jigsawRibbonValue')
-    public value: string = 'A ribbon';
+    public get value(): string {
+        return this._value
+    }
+
+    public set value(value: string) {
+        if (this._value != value) {
+            this._value = value;
+            this.addAccessory();
+        }
+    }
+
+    private _size: 'large' | 'normal' | 'small' = 'normal';
 
     /**
      * 勋带大小
      */
     @Input('jigsawRibbonSize')
-    public size: 'large' | 'normal' | 'small' = 'normal';
+    public get size(): 'large' | 'normal' | 'small' {
+        return this._size
+    }
 
+    public set size(size: 'large' | 'normal' | 'small') {
+        if (this._size != size) {
+            this._size = size;
+            this.addAccessory();
+        }
+    }
+
+    private _pointerCursor: boolean;
     /**
      * 鼠标悬浮鼠标样式改变
      */
     @Input('jigsawRibbonPointerCursor')
-    public pointerCursor: boolean;
+    get pointerCursor(): boolean {
+        return this._pointerCursor
+    }
 
+    set pointerCursor(pointerCursor: boolean) {
+        if (this._pointerCursor != pointerCursor) {
+            this._pointerCursor = pointerCursor;
+            this.addAccessory();
+        }
+    }
+
+    private _position: RibbonPosition = 'rightTop';
     /**
      * 勋带位置定位
      */
     @Input('jigsawRibbonPosition')
-    public position: 'leftTop' | 'rightTop' | 'leftBottom' | 'rightBottom' | 'top' | 'bottom' | 'center' = 'rightTop';
+    public get position(): RibbonPosition {
+        return this._position
+    }
+
+    public set position(position: RibbonPosition) {
+        if (this._position != position) {
+            this._position = position;
+            this.addAccessory();
+        }
+    }
 
     private _jigsawPositionOffset: number = 0;
 
@@ -83,7 +126,7 @@ export class JigsawRibbonDirective extends AccessoryBase {
      * 勋带内容颜色
      */
     private _fontColor: string = "";
-    
+
     @Input()
     public get jigsawRibbonFontColor(): string {
         return this._fontColor ? this._fontColor : this._getFontColor();

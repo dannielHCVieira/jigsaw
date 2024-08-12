@@ -1,16 +1,10 @@
-import {AbstractJigsawViewBase, IDynamicInstantiatable} from "../../common/common";
+import {AbstractJigsawViewBase} from "../../common/common";
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, NgZone, ViewChild} from "@angular/core";
 import {JigsawInput} from "../input/input";
 import {JigsawTabLabel} from "./tab-item";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {JigsawTabBar} from "./tab";
-
-/**
- * 自定义Tab标题渲染器需要实现该接口，并将界面显示的标题放在title属性上
- */
-export interface IJigsawTabTitleRenderer extends IDynamicInstantiatable {
-    title: string;
-}
+import {IJigsawTabTitleRenderer} from "./tab-types";
 
 /**
  * @internal

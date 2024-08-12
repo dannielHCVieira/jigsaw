@@ -70,21 +70,6 @@ import {ArrayCollection, JigsawCascade, JigsawComboSelect} from "@rdkmaster/jigs
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormlyFieldCascade extends FormlyFieldType<FormlyFieldCascade> implements OnInit {
-    defaultOptions = {
-        templateOptions: {
-            width: '100%',
-            labelField: 'label',
-            openTrigger: 'mouseenter',
-            closeTrigger: 'mouseleave',
-            showBorder: true,
-            searchKeyword: '',
-            searchBoxMinWidth: 40,
-            valid: true,
-            pageSize: Infinity,
-            autoWidth: true,
-        },
-    };
-
     public _$comboValue: any[];
 
     @ViewChild(JigsawComboSelect)
@@ -94,6 +79,20 @@ export class FormlyFieldCascade extends FormlyFieldType<FormlyFieldCascade> impl
 
     constructor(private _cdr: ChangeDetectorRef) {
         super();
+        this.defaultOptions = {
+            templateOptions: {
+                width: '100%',
+                labelField: 'label',
+                openTrigger: 'mouseenter',
+                closeTrigger: 'mouseleave',
+                showBorder: true,
+                searchKeyword: '',
+                searchBoxMinWidth: 40,
+                valid: true,
+                pageSize: Infinity,
+                autoWidth: true,
+            },
+        };
     }
 
     public _$selectItemsChange(selectedItems: any[]): void {

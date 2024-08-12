@@ -1,5 +1,12 @@
 import { Type } from '@angular/core';
-import { IJigsawTabTitleRenderer } from "./tab-renderer";
+import {IDynamicInstantiatable} from "../../common/common";
+
+/**
+ * 自定义Tab标题渲染器需要实现该接口，并将界面显示的标题放在title属性上
+ */
+export interface IJigsawTabTitleRenderer extends IDynamicInstantiatable {
+    title: string;
+}
 
 export type TabBarData = {
     /**

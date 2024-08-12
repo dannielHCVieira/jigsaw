@@ -17,8 +17,8 @@ import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {CommonUtils} from '../../common/core/utils/common-utils';
 import {JigsawList, JigsawListOption} from "../list-and-tile/list";
 import { JigsawThemeService } from "../../common/core/theming/theme";
-
-export type MenuTheme = 'light' | 'dark' | 'navigation';
+import {cascadingMenuFlag, closeAllContextMenu, MenuTheme} from "../../common/directive/menu/menu-typings";
+import {InternalUtils} from "../../common/core/utils/internal-utils";
 
 export class MenuOptions {
     data?: SimpleTreeData;
@@ -29,20 +29,6 @@ export class MenuOptions {
     options?: PopupOptions;
     showBorder?: boolean;
     select?: EventEmitter<SimpleNode>;
-}
-
-/**
- * @internal
- */
-export const cascadingMenuFlag = class CascadingMenuFlag {
-};
-
-/**
- * @internal
- */
-export function closeAllContextMenu(popups: PopupInfo[]): void {
-    popups.filter(popup => popup.extra === cascadingMenuFlag)
-        .forEach(popup => popup.dispose());
 }
 
 /**
@@ -195,7 +181,7 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
     @ViewChild('menuList')
     private _menuListInstance: JigsawList;
 
-    constructor(private _renderer: Renderer2, private _elementRef: ElementRef,
+    constructor(private _elementRef: ElementRef,
                 private _changeDetectorRef: ChangeDetectorRef,
                 private _themeService: JigsawThemeService) {
         super();
@@ -298,3 +284,5 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
         this._changeDetectorRef.detectChanges();
     }
 }
+
+InternalUtils.JigsawMenu = JigsawMenu;

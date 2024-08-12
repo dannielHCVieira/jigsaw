@@ -38,7 +38,7 @@ import { LoadingCustomizeDemoComponent } from "./customize/demo.component";
         JigsawMarkdownModule,
         JigsawHeaderModule
     ],
-    providers: [{ provide: LoadingService }]
+    providers: [{ provide: LoadingService, useValue: undefined }]
 })
 export class LoadingDemoModule {
 }

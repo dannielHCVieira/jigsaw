@@ -1,6 +1,7 @@
-import {Component, ViewEncapsulation} from "@angular/core";
+import { Component, ViewEncapsulation, Directive } from "@angular/core";
 import {TableCellRendererBase, TableData, DropDownTrigger} from "jigsaw/public_api";
 
+@Directive()
 export class OfficeRendererBase extends TableCellRendererBase {
     officeList = [
         {label: 'Online Prod I'}, {label: 'Online Prod II'},

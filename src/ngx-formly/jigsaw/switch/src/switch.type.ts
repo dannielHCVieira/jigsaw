@@ -24,13 +24,16 @@ import {JigsawSwitch} from "@rdkmaster/jigsaw";
     },
 })
 export class FormlyFieldSwitch extends FormlyFieldType<JigsawSwitch> {
-    defaultOptions = {
-        templateOptions: {
-            hideLabel: false,
-            valid: true,
-            size: 'default',
-        }
-    };
+    constructor() {
+        super();
+        this.defaultOptions = {
+            templateOptions: {
+                hideLabel: false,
+                valid: true,
+                size: 'default',
+            }
+        };
+    }
 
     @ViewChild(JigsawSwitch)
     protected _instance: JigsawSwitch;
