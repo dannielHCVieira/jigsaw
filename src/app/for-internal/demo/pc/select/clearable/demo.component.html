@@ -11,6 +11,10 @@
         <jigsaw-switch [(checked)]="clearable"></jigsaw-switch>
     </li>
     <li class="demo-options-item">
+        <span>多选：</span>
+        <jigsaw-switch [(checked)]="multipleSelect"></jigsaw-switch>
+    </li>
+    <li class="demo-options-item">
         <span>数据：</span>
         <jigsaw-button (click)="changeData(false)">切换无空字符串数据</jigsaw-button>
         <jigsaw-button (click)="changeData(true)">切换有空字符串数据</jigsaw-button>
@@ -21,10 +25,15 @@
         <jigsaw-button (click)="selectedCityForSelect = ''">设置为空字符串</jigsaw-button>
         <jigsaw-button (click)="selectedCityForSelect = undefined">设置为undefined</jigsaw-button>
     </li>
+    <li class="demo-options-item">
+        <span>openTrigger：</span>
+        <jigsaw-button (click)="openTrigger = 'click'">设置为click</jigsaw-button>
+        <jigsaw-button (click)="openTrigger = 'mouseenter'">设置为mouseenter</jigsaw-button>
+    </li>
 </ul>
 
 <p>注意placeholder的变化</p>
 <jigsaw-select [(value)]="selectedCityForSelect" (valueChange)="selectChange($event)" placeholder="请选择城市"
-    [data]="cityList" [clearable]="clearable">
+    [data]="cityList" [clearable]="clearable" [openTrigger]="openTrigger" [multipleSelect]="multipleSelect">
 </jigsaw-select>
 <p class="message">选择的城市是 <span>{{selectedCityForSelect}}</span></p>
