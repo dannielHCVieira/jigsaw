@@ -20,6 +20,8 @@ import { UploadFallbackDemoComponent } from "./upload-fallback/demo.component";
 import { UploadFallbackDemoModule } from "./upload-fallback/demo.module";
 import { UploadOfflineDemoModule } from "./offline/demo.module";
 import { UploadOfflineDemoComponent } from "./offline/demo.component";
+import { UploadPasteDemoModule } from "./paste/demo.module";
+import { UploadPasteDemoComponent } from "./paste/demo.component";
 
 
 export const routerConfig = [
@@ -52,6 +54,9 @@ export const routerConfig = [
     },
     {
         path: 'offline', component: UploadOfflineDemoComponent
+    },
+    {
+        path: 'paste', component: UploadPasteDemoComponent
     }
 ];
 
@@ -60,7 +65,7 @@ export const routerConfig = [
         RouterModule.forChild(routerConfig),
         UploadBasicDemoModule, UploadResultDemoModule, UploadContentFieldDemoModule, UploadAutoUploadDemoModule,
         UploadChangeTargetUrlDemoModule, UploadDirectiveDemoModule, UploadGetFileUrlsModule, UploadFallbackDemoModule,
-        UploadDirectiveErrorDemoModule, UploadOfflineDemoModule
+        UploadDirectiveErrorDemoModule, UploadOfflineDemoModule, UploadPasteDemoModule
     ]
 })
 export class UploadDemoModule {

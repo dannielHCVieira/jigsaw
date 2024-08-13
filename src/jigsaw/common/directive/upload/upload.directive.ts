@@ -134,6 +134,9 @@ export abstract class JigsawUploadBase extends AbstractJigsawComponent {
     @Input('uploadOffline')
     public offline: boolean = false;
 
+    @Input('uploadPasteTargets')
+    public pasteTargets: HTMLElement[] = [];
+
     /**
      * 每个文件上传完成（无论成功还是失败）之后发出，此事件给出的进度为文件个数来计算
      */
@@ -186,8 +189,43 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
             return;
         }
 
+        this._initializeFileInputElement();
+
         const e = document.createEvent("MouseEvent");
         e.initEvent("click", true, true);
+        this._fileInputElement.dispatchEvent(e);
+    }
+
+    @HostListener('document:paste', ['$event'])
+    onPaste($event: ClipboardEvent) {
+        const target = $event.target as HTMLElement;
+        const items = $event.clipboardData?.items;
+
+        if (this.pasteTargets.length == 0 || !this.pasteTargets.some(element => element === target) || !items) {
+            return;
+        }
+
+        const files: File[] = Array.from(items)
+            .filter(item => item.kind == 'file')
+            .map(item => item.getAsFile() as File)
+            .filter(file => CommonUtils.isDefined(file));
+
+        if (files.length == 0){
+            return;
+        }
+
+        $event.preventDefault();
+        this._initializeFileInputElement();
+
+        const dataTransfer = new DataTransfer();
+        files.forEach(file => dataTransfer.items.add(file));
+        (this._fileInputElement as HTMLInputElement).files = dataTransfer.files;
+
+        const changeEvent = new Event('change', { bubbles: true });
+        this._fileInputElement.dispatchEvent(changeEvent);
+    }
+
+    private _initializeFileInputElement() {
         if (!this._fileInputElement) {
             this._fileInputElement = document.createElement('input');
             this._fileInputElement.setAttribute('type', 'file');
@@ -213,8 +251,6 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
                     this._appendFiles();
                 }
             });
-
-        this._fileInputElement.dispatchEvent(e);
     }
 
     private _fileInputElement: HTMLElement;
