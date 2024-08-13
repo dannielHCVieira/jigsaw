@@ -5,6 +5,10 @@ if [[ "$AWADE_BUILD_RESOURCE" == "" || ! -d "$AWADE_BUILD_RESOURCE" ]]; then
     exit 1
 fi
 
+nodeHome="$AWADE_BUILD_RESOURCE/node-env/node-v16.17.0-linux-x64/bin"
+echo "nodeHome: $nodeHome"
+export PATH="$nodeHome:$PATH"
+
 home=$(cd `dirname $0`/..; pwd);
 cd $home
 
@@ -46,6 +50,11 @@ runScript build/scripts/generate-external-demo-info.js
 runScript build/scripts/generate-external-navigation-info.js
 runScript build/scripts/create-omni-components.js
 
+npm test || {
+    echo "Error: npm test failed"
+    exit 1
+}
+
 runShell build/tools/build-lib/build-lib.sh build:jigsaw ng9
 runShell build/tools/build-lib/build-lib.sh build:formly ng9
 
@@ -53,7 +62,3 @@ runShell build/tools/build-lib/build-lib.sh build:jigsaw-novice-guide
 runShell build/tools/build-lib/build-lib.sh build:formly
 runShell build/tools/build-lib/build-lib.sh build:jigsaw-omni
 
-npm test || {
-    echo "Error: npm test failed"
-    exit 1
-}
