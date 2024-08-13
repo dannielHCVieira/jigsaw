@@ -2,7 +2,7 @@ const fs = require("fs-extra");
 const {execSync} = require("child_process");
 
 if (require.main === module) {
-    npmInstall('ng13');
+    npmInstall('ng9');
 }
 
 module.exports = {npmInstall, exec};

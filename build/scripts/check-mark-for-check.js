@@ -108,7 +108,7 @@ function transformProperty(propertyNode, context, className) {
             }
 
             const docNode = propertyChildren.find(item => ts.isJSDoc(item));
-            const hasNoMarkRequired = docNode && docNode.getChildren().findIndex(item => item.getText().replace(/[\s|*]/g, '') === '@NoMarkForCheckRequired') > -1;
+            const hasNoMarkRequired = docNode && docNode.getChildren().some(c => c.getText().split(/\r?\n/).some(d => d.replace(/[\s|*]/g, '') === '@NoMarkForCheckRequired'));
             let hasRequireMark = false;
             propertyChildren.filter(item => item.kind === ts.SyntaxKind.SyntaxList).forEach(item => {
                 if (!hasRequireMark) {
