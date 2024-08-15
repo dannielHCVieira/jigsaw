@@ -20,6 +20,7 @@ export class RangeDatePickerTimeOptionsDemoComponent {
     public limitSpanInput: number = 3;
     public gr = ['date'];
     public showGrItems = false;
+    public showConfirmButton = false;
 
     public grItems: GrItem[] = [
         { label: "Day", value: TimeGr.date },

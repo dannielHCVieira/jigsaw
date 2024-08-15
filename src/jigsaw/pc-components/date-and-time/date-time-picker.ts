@@ -230,6 +230,14 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
     public dateChange = new EventEmitter<WeekTime>();
 
     /**
+     * @internal
+     *
+     * 当时间被用户切换之后，且有确认按钮但尚未点击时，Jigsaw会发出此事件。
+     */
+    @Output()
+    public unconfirmedDateChange = new EventEmitter<WeekTime>();
+
+    /**
      * 当前日期控件内的内容被点击时，发出此事件，告知点击的日期格的类型
      */
     @Output()
@@ -426,7 +434,7 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
      * @internal
      */
     public _$handleDateChange(update?: boolean) {
-        if (!update && this.showConfirmButton && !!this._$timeGr && this._$datePicker._$touched) {
+        if (!update && this._handleUnconfirmedDateChange() && !!this._$timeGr && this._$datePicker._$touched) {
             // 确认按钮只有在粒度是 时分秒 的时候起作用
             return;
         }
@@ -437,10 +445,31 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
      * @internal
      */
     public _$handleTimeChange(update?: boolean) {
-        if (!update && this.showConfirmButton && (this._$datePicker._$touched || (this._$timePicker && this._$timePicker._$touched))) {
+        if (!update && this._handleUnconfirmedDateChange() && (this._$datePicker._$touched || (this._$timePicker && this._$timePicker._$touched))) {
             return;
         }
         this._updateValueCombine.emit();
+    }
+
+    private _handleUnconfirmedDateChange(): boolean {
+        if (!this.showConfirmButton) {
+            return false;
+        }
+        const newDate = this._$date === "" ? this._$date : this._createDate();
+        this.unconfirmedDateChange.emit(newDate);
+        return true;
+    }
+
+    private _createDate(): WeekTime {
+        let newDate: WeekTime = this._$date;
+        const convertedValue = TimeService.convertValue(this._$date, this._gr);
+        if (TimeService.isWeekDate(this._$date) && typeof convertedValue == 'string' && convertedValue.includes(' ')) {
+            newDate = convertedValue.split(' ')[0];
+        }
+        if (this.gr == TimeGr.hour || this.gr == TimeGr.minute || this.gr == TimeGr.second) {
+            newDate += ` ${this._$time ? this._$time : this._getDefaultTime()}`
+        }
+        return newDate = this.gr == TimeGr.week ? TimeService.getWeekDate(newDate) : newDate;
     }
 
     private _getDefaultLimitStart() {

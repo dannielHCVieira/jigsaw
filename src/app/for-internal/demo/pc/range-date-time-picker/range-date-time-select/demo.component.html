@@ -140,4 +140,9 @@
         <jigsaw-range-date-time-select limitSpan="5d" limitStart="now-10d" limitEnd="now+10d"
             (dateChange)="dateChange($event)"></jigsaw-range-date-time-select>
     </div>
+
+    <div class="demo-12 live-demo">
+        <jigsaw-header [level]="2">确认按钮</jigsaw-header>
+        <jigsaw-range-date-time-select [gr]="'second'" [showConfirmButton]="true" (dateChange)="dateChange($event)"></jigsaw-range-date-time-select>
+    </div>
 </div>
