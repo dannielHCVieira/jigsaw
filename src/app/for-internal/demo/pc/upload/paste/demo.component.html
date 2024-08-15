@@ -1,0 +1,31 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<ul class="demo-options">
+    <li class="demo-options-item">
+        <span>文件类型：</span>
+        <jigsaw-radios-lite [(value)]="fileType"
+            [data]="['.png, .jpg, .jpeg, .gif, .bmp, .svg, .webp', '.docx', '.json', '.txt']">
+        </jigsaw-radios-lite>
+    </li>
+    <li class="demo-options-item">
+        <span>多选：</span>
+        <jigsaw-switch [(checked)]="multiple"></jigsaw-switch>
+    </li>
+</ul>
+
+<j-button #first j-upload [uploadPasteTargets]="pasteTargets" [uploadFileType]="fileType"
+    [uploadMultiple]="multiple">上传图片</j-button>
+<br>
+<jigsaw-upload-result [uploader]="uploader" width="200px" height="200px" (change)="onChange('change', $event)"
+    (progress)="onChange('progress', $event)" (remove)="onChange('remove', $event)">
+</jigsaw-upload-result>
+<jigsaw-header>文本框</jigsaw-header>
+<jigsaw-textarea width="200" placeholder="可以接收上传文件"></jigsaw-textarea>
+<jigsaw-header>普通div</jigsaw-header>
+<div class="paste-area">可以接收上传文件</div>
+<jigsaw-header>输入框</jigsaw-header>
+<jigsaw-input width="200" placeholder="不可以接收上传文件"></jigsaw-input>
