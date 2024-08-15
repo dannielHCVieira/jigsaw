@@ -53,13 +53,18 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
         this._removeDateItemChangeSubscriber = this._$dateItemChange.pipe(debounceTime(100)).subscribe(() => {
             let value = {beginDate: this._$beginDate, endDate: this._$endDate};
             this._$setComboValue(value);
-            this.writeValue(value)
+            this.writeValue(value);
+            if (!this._$confirmed) {
+                return;
+            }
+            this._$confirmed = false;
+            this._comboSelect.open = false;
         });
         this._removeMulInputsChangeSubscriber = this._multipleInputsChange.pipe(debounceTime(100)).subscribe(() => {
             this._changeRangeDateByGr();
         })
     }
-    
+
     /**
      * 设置边框显隐开关。
      * @NoMarkForCheckRequired
@@ -247,6 +252,11 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
     private _removeDateItemChangeSubscriber: Subscription;
     private _multipleInputsChange = new EventEmitter();
     private _removeMulInputsChangeSubscriber: Subscription;
+
+    /**
+     * @internal
+     */
+    public _$confirmed = false;
 
     /**
      * @internal

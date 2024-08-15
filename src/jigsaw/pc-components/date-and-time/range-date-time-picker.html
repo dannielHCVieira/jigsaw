@@ -1,14 +1,15 @@
 <div class="jigsaw-range-date-time-picker">
     <jigsaw-date-time-picker #timeStart [theme]="theme" [date]="beginDate" [(gr)]="_$gr" [limitStart]="_$beginDateLimitStart"
                              [limitEnd]="_$beginDateLimitEnd" [grItems]="grItems" [markDates]="markDates" [showConfirmButton]="showConfirmButton"
-                             (dateChange)="_$dateChange('beginDate',$event)" (grChange)="_$grChange($event)" [rangeDate]="endDate"
-                             [step]="step" [weekStart]="weekStart" [firstWeekMustContains]="firstWeekMustContains" class="jigsaw-range-date-time-picker-startTime">
+                             (dateChange)="_$dateChange('beginDate',$event)" (grChange)="_$grChange($event)" [rangeDate]="_$endRangeDate"
+                             [step]="step" [weekStart]="weekStart" [firstWeekMustContains]="firstWeekMustContains"
+                             (unconfirmedDateChange)="_$dateChange('beginDate', $event, false)" class="jigsaw-range-date-time-picker-startTime">
     </jigsaw-date-time-picker>
     <jigsaw-date-time-picker #timeEnd [theme]="theme" [date]="endDate" [(gr)]="_$gr" [limitStart]="_$endDateLimitStart"
                              [showConfirmButton]="showConfirmButton" (confirm)="_$updateBeginDate()"
-                             [limitEnd]="_$endDateLimitEnd" [markDates]="markDates" [grItems]="grItems" [rangeDate]="beginDate"
+                             [limitEnd]="_$endDateLimitEnd" [markDates]="markDates" [grItems]="grItems" [rangeDate]="_$beginRangeDate"
                              (dateChange)="_$dateChange('endDate',$event)" [step]="step" [weekStart]="weekStart" [firstWeekMustContains]="firstWeekMustContains"
-                             class="jigsaw-range-date-time-picker-endTime">
+                             (unconfirmedDateChange)="_$dateChange('endDate', $event, false)" class="jigsaw-range-date-time-picker-endTime">
     </jigsaw-date-time-picker>
     <div *ngIf="_$shortcuts && _$shortcuts.length" class="jigsaw-range-date-time-picker-shortcuts">
         <span *ngFor="let item of _$shortcuts" (click)="_changeShortcut(item)" [class.active]="item.label == _$selectedShortcutLabel">

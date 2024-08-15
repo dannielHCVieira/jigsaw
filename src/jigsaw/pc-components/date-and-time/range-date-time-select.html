@@ -5,7 +5,7 @@
     <ng-template>
         <jigsaw-range-date-time-picker #rangeDateTimePicker [theme]="theme" [(beginDate)]="_$beginDate" [(endDate)]="_$endDate" [gr]="gr"
             [limitStart]="limitStart" [limitEnd]="limitEnd" [limitSpan]="limitSpan" [grItems]="grItems" [markDates]="markDates" [step]="step"
-            [weekStart]="weekStart" [firstWeekMustContains]="firstWeekMustContains"
+            [weekStart]="weekStart" [firstWeekMustContains]="firstWeekMustContains" (confirm)="_$confirmed = true"
             [showConfirmButton]="showConfirmButton" (change)="_$dateItemChange.emit()" (grChange)="_$grChange($event)">
         </jigsaw-range-date-time-picker>
     </ng-template>

@@ -29,6 +29,10 @@
         <jigsaw-switch [(checked)]="showGrItems"></jigsaw-switch>
     </li>
     <li class="demo-options-item">
+        <span>showConfirmButton：</span>
+        <jigsaw-switch [(checked)]="showConfirmButton"></jigsaw-switch>
+    </li>
+    <li class="demo-options-item">
         <span>limitStart：</span>
         <jigsaw-date-time-select [(date)]="limitStartPicker" [clearable]="true"
             (dateChange)="limitStart = limitStartPicker"></jigsaw-date-time-select>
@@ -70,7 +74,7 @@
     </li>
 </ul>
 <jigsaw-range-date-time-picker #rangeDateTimePicker [(beginDate)]="beginDate" [(endDate)]="endDate" [gr]="gr[0]"
-    [limitStart]="limitStart" [limitEnd]="limitEnd" [limitSpan]="limitSpan"
+    [limitStart]="limitStart" [limitEnd]="limitEnd" [limitSpan]="limitSpan" [showConfirmButton]="showConfirmButton"
     [grItems]="showGrItems ? grItems : undefined" (change)="change($event)" (grChange)="grChange($event)">
 </jigsaw-range-date-time-picker>
 <div>

@@ -126,7 +126,19 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
     /**
      * @internal
      */
-    public _$dateChange(key: string, value: WeekTime) {
+    public _$dateChange(key: string, value: WeekTime, confirmed = true) {
+        if (!confirmed) {
+            if (key == 'beginDate') {
+                this._$beginRangeDate = value;
+                this._updateEndDateLimit(value);
+            } else if (key == 'endDate') {
+                this._$endRangeDate = value;
+                this._updateBeginDateLimit(value);
+            }
+            this._cdr.markForCheck();
+            return;
+        }
+
         if (key == 'beginDate') {
             this._beginDate = value;
             this._updateEndDateLimit();
@@ -160,6 +172,7 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
                 return;
             }
             this._beginDate = date;
+            this._$beginRangeDate = date;
             this._updateEndDateLimit();
             this._updateValue.emit();
         } else {
@@ -185,11 +198,44 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
             let date = TimeService.getDateByGr(value, this._$gr);
             if (date == this._endDate) return;
             this._endDate = date;
+            this._$endRangeDate = date;
             this._updateBeginDateLimit();
             this._updateValue.emit();
         } else {
             this._endDate = value;
         }
+    }
+
+    private _beginRangeDate: WeekTime;
+
+    /**
+     * @internal
+     */
+    public get _$beginRangeDate(): WeekTime {
+        return this._beginRangeDate;
+    }
+
+    public set _$beginRangeDate(value: WeekTime) {
+        if (!value || value == this._beginRangeDate) {
+            return
+        };
+        this._beginRangeDate = value;
+    }
+
+    private _endRangeDate: WeekTime;
+
+    /**
+     * @internal
+     */
+    public get _$endRangeDate(): WeekTime {
+        return this._endRangeDate;
+    }
+
+    public set _$endRangeDate(value: WeekTime) {
+        if (!value || value == this._endRangeDate) {
+            return
+        };
+        this._endRangeDate = value;
     }
 
     /**
@@ -304,19 +350,20 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
         return {startTime, endTime};
     }
 
-    private _updateBeginDateLimit() {
+    private _updateBeginDateLimit(value?: WeekTime) {
         let {startTime, endTime} = this._calcStartAndEndTime();
+        const endDate = CommonUtils.isDefined(value) ? value : this.endDate;
 
-        if (this.endDate) {
+        if (endDate) {
             if (this._limitSpanValue?.value >= 0) {
                 const number = this._limitSpanValue.value;
                 const unit = this._limitSpanValue.unit;
-                const calcStartTime = number == 0 ? TimeService.getDate(TimeService.convertValue(this.endDate, this._$gr), this._$gr)
-                    : TimeService.addDate(TimeService.convertValue(this.endDate, this._$gr), 0 - number, unit);
+                const calcStartTime = number == 0 ? TimeService.getDate(TimeService.convertValue(endDate, this._$gr), this._$gr)
+                    : TimeService.addDate(TimeService.convertValue(endDate, this._$gr), 0 - number, unit);
                 startTime = startTime ? (startTime < calcStartTime ? calcStartTime : startTime) : calcStartTime;
             }
 
-            let calcEndTime = TimeService.getDate(TimeService.convertValue(this.endDate, this._$gr), this._$gr);
+            let calcEndTime = TimeService.getDate(TimeService.convertValue(endDate, this._$gr), this._$gr);
             if (this._$gr == TimeGr.week) {
                 calcEndTime = TimeService.addDate(calcEndTime, 6, TimeUnit.d);
             }
@@ -331,11 +378,12 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
         }
     }
 
-    private _updateEndDateLimit() {
-        let {startTime, endTime} = this._calcStartAndEndTime();
+    private _updateEndDateLimit(value?: WeekTime) {
+        let { startTime, endTime } = this._calcStartAndEndTime();
+        const beginDate = CommonUtils.isDefined(value) ? value : this.beginDate;
 
-        if (this.beginDate) {
-            let calcStartTime = TimeService.getDate(TimeService.convertValue(this.beginDate, this._$gr), this._$gr)
+        if (beginDate) {
+            let calcStartTime = TimeService.getDate(TimeService.convertValue(beginDate, this._$gr), this._$gr)
             if (!startTime || startTime < calcStartTime) {
                 startTime = calcStartTime;
             }
@@ -343,8 +391,8 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
             if (this._limitSpanValue?.value >= 0) {
                 const number = this._limitSpanValue.value;
                 const unit = this._limitSpanValue.unit;
-                let calcEndTime = number == 0 ? TimeService.getDate(TimeService.convertValue(this.beginDate, this._$gr), this._$gr)
-                    : TimeService.addDate(TimeService.convertValue(this.beginDate, this._$gr), number, unit);
+                let calcEndTime = number == 0 ? TimeService.getDate(TimeService.convertValue(beginDate, this._$gr), this._$gr)
+                    : TimeService.addDate(TimeService.convertValue(beginDate, this._$gr), number, unit);
                 if (this._$gr == TimeGr.week) {
                     calcEndTime = TimeService.addDate(calcEndTime, 6, TimeUnit.d);
                 }
@@ -474,6 +522,12 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
     @Output()
     public endDateChange = new EventEmitter<WeekTime>();
 
+    /**
+     * @internal
+     */
+    @Output()
+    public confirm = new EventEmitter();
+
     private _updateValue = new EventEmitter();
     private _removeUpdateValueSubscriber: Subscription;
 
@@ -587,6 +641,7 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
         // 当配置了确认按钮时，如果只改变了开始时间，没有改变结束时间，此时点击确认按钮，需要通知开始时间的更新
         this._$timeStart._$handleDateChange(true);
         this._$timeStart._$handleTimeChange(true);
+        this.confirm.emit();
     }
 
     public writeValue(value: any): void {

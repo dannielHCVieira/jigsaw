@@ -51,6 +51,11 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
         super();
         this._removeUpdateValueSubscriber = this._$updateValue.pipe(debounceTime(100)).subscribe(date => {
             this.writeValue(date);
+            if (!this._$confirmed) {
+                return;
+            }
+            this._$confirmed = false;
+            this._comboSelect.open = false;
         });
         this._removeMulInputsChangeSubscriber = this._multipleInputsChange.pipe(debounceTime(100)).subscribe(() => {
             this._changeDateByGr();
@@ -245,6 +250,11 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
      * @internal
      */
     public _$dateComboValue: ArrayCollection<ComboSelectValue>;
+
+    /**
+     * @internal
+     */
+    public _$confirmed = false;
 
     public clearDate() {
         if (this._date == '' || CommonUtils.isUndefined(this._date)) {
