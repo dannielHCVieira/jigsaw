@@ -26,7 +26,7 @@
         "ztree": "~3.5.24",
         "font-awesome": "~4.7.0",
         "ngx-perfect-scrollbar": "~5.0.2",
-        "@rdkmaster/icon-font": "^1.0.4",
+        "@rdkmaster/icon-font": "^7.0.0",
         "@angular/animations": "~13.3.11",
         "@angular/common": "~13.3.11",
         "@angular/compiler": "~13.3.11",

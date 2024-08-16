@@ -21,8 +21,6 @@ export class ChangeTargetUrlDemoComponent extends AsyncDescription implements On
 
     public multiple: boolean;
     public fileType = ".png";
-    public maxSize: number = 1024;
-    public minSize: number = 0;
 
     public toBeChangedUrl1 = "/rdk/service/common";
     public uploadConfirm() {
