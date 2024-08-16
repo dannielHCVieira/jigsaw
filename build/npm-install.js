@@ -1,4 +1,4 @@
-const fs = require("fs-extra");
+const fs = require("fs");
 const {execSync} = require("child_process");
 
 if (require.main === module) {
@@ -13,7 +13,7 @@ function npmInstall(ngVersion) {
     }
     console.log(`installing ${ngVersion} dependencies ...`);
     exec(`git checkout package.json`);
-    fs.removeSync('package-lock.json');
+    fs.unlinkSync('package-lock.json');
     const packageJson = JSON.parse(fs.readFileSync('package.json').toString());
     packageJson.dependencies = {...packageJson[`${ngVersion}Dependencies`], ...packageJson.dependencies};
     packageJson.dependenciesGovernance = {...packageJson[`${ngVersion}Dependencies`], ...packageJson.dependenciesGovernance};
