@@ -395,7 +395,7 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
             }
             if (!isNaN(this.maxSize) && file.size > this.maxSize * 1024 * 1024) {
                 fileInfo.errorType = "fileMaxSizeError";
-                fileInfo.message = this._translateService.instant(`upload.fileMaxSizeError`);
+                fileInfo.message = this._translateService.instant(`upload.fileMaxSizeError`, {maxSize: this.maxSize});
                 this._statusLog(fileInfo, fileInfo.message);
                 return fileInfo;
             }
