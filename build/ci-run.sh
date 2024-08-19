@@ -5,6 +5,9 @@ if [[ "$AWADE_BUILD_RESOURCE" == "" || ! -d "$AWADE_BUILD_RESOURCE" ]]; then
     exit 1
 fi
 
+change=$1
+patch=$2
+
 nodeHome="$AWADE_BUILD_RESOURCE/node-env/node-v16.17.0-linux-x64/bin"
 echo "nodeHome: $nodeHome"
 export PATH="$nodeHome:$PATH"
@@ -62,3 +65,10 @@ runShell build/tools/build-lib/build-lib.sh build:jigsaw-novice-guide
 runShell build/tools/build-lib/build-lib.sh build:formly
 runShell build/tools/build-lib/build-lib.sh build:jigsaw-omni
 
+sh node16.sh build/build.js jigsaw-app-internal ng13 prod dist /jigsaw/change-$change-$patch/dist/
+
+echo "====================================================================================================="
+echo "常用命令"
+echo "cd /data/jigsaw-build/; tar xf change-$change-$patch.tar;"
+echo "完成之后，用这个url来访问调试环境 https://$CI_SERVER_HOST:8083/jigsaw/change-$change-$patch/dist/"
+echo "====================================================================================================="

@@ -18,6 +18,7 @@ import {TimeGr, TimeService} from '../../service/time.service';
 import {IUploader, UploadFileInfo} from "./uploader-typings";
 
 declare const JSEncrypt: any;
+declare const ClipboardEvent: any;
 
 const maxConcurrencyUpload = 5;
 

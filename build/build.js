@@ -110,11 +110,11 @@ function debouncePathChange(func, wait) {
 
 function runNgServe() {
     const port = process.argv[5] || 4200;
-    const bh = process.argv[6] ? '--base-href=' + process.argv[6] : '';
+    const servePath = process.argv[6] ? '--serve-path=' + process.argv[6] : '';
     const ngServeParams = ['serve', app, '--poll', '500', '--disable-host-check', '--host', '0.0.0.0',
         '--port', port, '--proxy-config', 'proxy-config.json'];
-    if (bh) {
-        ngServeParams.push(bh);
+    if (servePath) {
+        ngServeParams.push(servePath);
     }
     console.log('running ng serve in spawn ...');
     const ngServe = spawn('node', [
