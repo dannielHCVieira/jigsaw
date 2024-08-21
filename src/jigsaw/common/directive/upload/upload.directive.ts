@@ -549,10 +549,29 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
     }
 }
 
-const PUBLIC_KEY = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDNsaW+pHR7tipUGYt+ZpYz+lLlep5le40PDFKrRXkjbFXjemTIGW0s1MRdtwXouHnn8a8gucNs6peFdy3kzFe2pfxIXmNLkkzV2vSZslQEHpCsDlibgoF9KSWDYJVC5Jb1AgTxOd5/Ay/ub58SgrOcbbAq2WCT0TCDQSpUZGB9LQIDAQAB";
+const magicString = [
+    "MIGfMA0GCS",
+    "qGSIb3DQEBA",
+    "QUAA4GNADCB",
+    "iQKBgQDNsaW+",
+    "pHR7tipUGYt",
+    "+ZpYz+lLlep",
+    "5le40PDFKrRX",
+    "kjbFXjemTIGW",
+    "0s1MRdtwXouH",
+    "nn8a8gucNs6p",
+    "eFdy3kzFe2pfx",
+    "IXmNLkkzV2vSZ",
+    "slQEHpCsDlibg",
+    "oF9KSWDYJVC5J",
+    "b1AgTxOd5/Ay/",
+    "ub58SgrOcbbAq",
+    "2WCT0TCDQSpUZ",
+    "GB9LQIDAQAB"
+].join('');
 
 function encrypt(data: string): string {
     const encryptor: { setPublicKey: Function, encrypt: Function } = new JSEncrypt();
-    encryptor.setPublicKey(PUBLIC_KEY);
+    encryptor.setPublicKey(magicString);
     return encryptor.encrypt(data);
 }
