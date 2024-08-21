@@ -405,6 +405,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             this._updateColumnWidth(index, preWidth, nextWidth);
             this._columnResized = true;
             this.resize();
+            this._changeDetectorRef.markForCheck();
         }, { once: true });
     }
 
