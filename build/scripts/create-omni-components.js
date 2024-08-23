@@ -17,6 +17,10 @@ function copyPackageJson(source, destination) {
     } catch (err) {
         console.error(`Error copying file from ${source} to ${destination}: ${err}`);
     }
+    let packageInfo = JSON.parse(fs.readFileSync(destination).toString());
+    packageInfo.peerDependencies = packageInfo.peerDependenciesGovernance;
+    delete packageInfo.peerDependenciesGovernance;
+    fs.writeFileSync(destination, JSON.stringify(packageInfo, null, '  '));
 }
 
 function processScssImport(filePath, replacementPath) {

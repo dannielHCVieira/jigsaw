@@ -11,7 +11,6 @@ if (require.main === module) {
 }
 
 function generateGetterSetter(targetPaths) {
-    console.log('Generate getter setter for ', targetPaths);
     targetPaths.forEach(targetPath => {
         if (isDirectorySync(targetPath)) {
             translateDirectory(targetPath);

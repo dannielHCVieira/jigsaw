@@ -243,7 +243,8 @@ function _replaceFiles(folder: string) {
 
 function _replacePackageJson() {
     let pkgPath = path.join(jigsawHome, "src/jigsaw/omni-components/package.json");
-    let packageInfo = JSON.parse(readFileSync(pkgPath).toString());
+    const pkgPcPath = path.join(jigsawHome, "src/jigsaw/pc-components/package.json");
+    let packageInfo = JSON.parse(readFileSync(pkgPcPath).toString());
     packageInfo.peerDependencies = packageInfo.peerDependenciesGovernance;
     delete packageInfo.peerDependenciesGovernance;
     writeFileSync(pkgPath, JSON.stringify(packageInfo, null, '  '));
