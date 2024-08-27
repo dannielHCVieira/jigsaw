@@ -8,7 +8,8 @@ import {
     TranslateHelper,
     JigsawNotification,
     JigsawButtonBarModule,
-    JigsawThemeService
+    JigsawThemeService,
+    JigsawIconModule
 } from "jigsaw/public_api";
 import { JigsawMarkdownModule } from "../../libs/markdown/markdown";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -91,6 +92,15 @@ export class JigsawDemoDescription implements OnInit, OnDestroy {
         this.showDetail = !this.showDetail;
     }
 
+    home() {
+        const isPc = this._router.url.startsWith('/pc');
+        if (isPc) {
+            this._router.navigate(['/pc']);
+        } else {
+            this._router.navigate(['/mobile']);
+        }
+    }
+
     ngOnInit() {
         if (this.showDetail === undefined) {
             this.showDetail = urlParams['open-desc'] == 'true';
@@ -147,7 +157,7 @@ export class JigsawDemoDescription implements OnInit, OnDestroy {
 
 @NgModule({
     declarations: [JigsawDemoDescription],
-    imports: [JigsawMarkdownModule, CommonModule, JigsawFloatModule, JigsawButtonBarModule],
+    imports: [JigsawMarkdownModule, CommonModule, JigsawFloatModule, JigsawButtonBarModule, JigsawIconModule],
     exports: [JigsawDemoDescription]
 })
 export class JigsawDemoDescriptionModule {
