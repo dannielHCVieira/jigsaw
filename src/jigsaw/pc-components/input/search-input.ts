@@ -23,7 +23,7 @@ import {TranslateHelper} from '../../common/core/utils/translate-helper';
 import {RequireMarkForCheck} from '../../common/decorator/mark-for-check';
 import {DropDownTrigger, FloatPosition, JigsawFloatModule} from '../../common/directive/float/float';
 import {JigsawListModule} from '../list-and-tile/list';
-import {JigsawAutoCompleteInputModule} from './auto-complete-input';
+import {JigsawAutoCompleteInput, JigsawAutoCompleteInputModule} from "./auto-complete-input";
 
 @WingsTheme('search-input.scss')
 @Component({
@@ -162,12 +162,16 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
         this.value = '';
     }
 
+    @ViewChild('autoCompleteInput')
+    private _autoCompleteInput: JigsawAutoCompleteInput;
+
     /**
      * @internal
      */
     public _$enterSearch() {
         this.search.emit(this.value);
         this._saveSearchHistory(this.value);
+        this._autoCompleteInput._$propertyListOpen = false;
     }
 
     /**
