@@ -65,10 +65,13 @@ runShell build/tools/build-lib/build-lib.sh build:jigsaw-novice-guide
 runShell build/tools/build-lib/build-lib.sh build:formly
 runShell build/tools/build-lib/build-lib.sh build:jigsaw-omni
 
-sh node16.sh build/build.js jigsaw-app-internal ng13 prod dist /jigsaw/change-$change-$patch/dist/
+sh node16.sh build/build.js jigsaw-app-internal ng13 prod dist /lui-dev/jigsaw/change-$change-$patch/
 
 echo "====================================================================================================="
 echo "常用命令"
 echo "cd /data/jigsaw-build/; tar xf change-$change-$patch.tar;"
-echo "完成之后，用这个url来访问调试环境 https://$CI_SERVER_HOST:8083/jigsaw/change-$change-$patch/dist/"
+echo "-----------------------------------------------------------------------------------------------------"
+echo "快速测试环境，点击可立即启动"
+echo "外网：http://rais.zte.com.cn:18770/lui-dev/jigsaw/change-$change-$patch/"
+echo "内网：http://$CI_SERVER_HOST:8080/lui-dev/jigsaw/change-$change-$patch/"
 echo "====================================================================================================="
