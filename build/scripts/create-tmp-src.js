@@ -12,9 +12,9 @@ function processSource() {
     const srcTmpDir = 'src-tmp';
     try {
         copyDirectory(srcDir, srcTmpDir, 10);
-        console.log('Copied src to src-pc successfully');
+        console.log('Copied src to src-tmp successfully');
     } catch (err) {
-        console.error(`Failed to copy src to src-pc: ${err}`);
+        console.error(`Failed to copy src to src-tmp: ${err}`);
         process.exit(1);
     }
 }
