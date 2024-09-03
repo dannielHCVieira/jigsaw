@@ -162,7 +162,7 @@ export function npmInstall(target: 'normal' | 'governance') {
         writeFileSync('package.json', JSON.stringify(packageJson, null, 2));
     }
     try {
-        execSync('npm install --force --registry=https://artsh.zte.com.cn/artifactory/api/npm/rnia-npm-virtual/', { stdio: 'inherit' });
+        execSync('npm install --force --ignore-scripts --registry=https://artsh.zte.com.cn/artifactory/api/npm/rnia-npm-virtual/', { stdio: 'inherit' });
     } catch (error) {
         console.error("An error occurred:", error);
     }

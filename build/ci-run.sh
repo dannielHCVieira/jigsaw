@@ -18,7 +18,7 @@ cd $home
 echo "preparing node_modules ...."
 tar xfz $AWADE_BUILD_RESOURCE/jigsaw_node_modules/node_modules.ng9.tgz -C ./
 chmod +x ./node_modules/.bin/*
-node build/npm-install.js || {
+node build/npm-install.js ng9 || {
     echo "Error: npm install failed"
     exit 1
 }
