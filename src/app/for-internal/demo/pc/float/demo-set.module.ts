@@ -18,6 +18,8 @@ import {FloatOverlappingDemo} from "./overlapping/demo.component";
 import {FloatOverlappingDemoModule} from "./overlapping/demo.module";
 import {FloatInitDataDemo} from "./init-data/demo.component";
 import {FloatInitDataDemoModule} from "./init-data/demo.module";
+import { FloatStopPropagationModule } from "./stop-propagation/demo.module";
+import { FloatStopPropagationDemo } from "./stop-propagation/demo.component";
 
 export const routerConfig = [
     {
@@ -47,13 +49,16 @@ export const routerConfig = [
     {
         path: 'init-data', component: FloatInitDataDemo
     },
+    {
+        path: 'stop-propagation', component: FloatStopPropagationDemo
+    },
 ];
 
 @NgModule({
     imports: [
         RouterModule.forChild(routerConfig), FloatPosReviserModule, FloatMultiLevelModule, FloatOverlappingDemoModule,
         FloatBasicModule, FloatTriggerDemoModule, FloatPositionDemoModule, FloatTargetDemoModule, FloatOptionDemoModule,
-        FloatInitDataDemoModule
+        FloatInitDataDemoModule, FloatStopPropagationModule
     ]
 })
 export class FloatDemoModule {

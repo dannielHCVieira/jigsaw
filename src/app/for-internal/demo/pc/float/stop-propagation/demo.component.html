@@ -1,0 +1,26 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<ul class="demo-options">
+    <li class="demo-options-item">
+        <span>是否阻止冒泡：</span>
+        <jigsaw-switch [(checked)]="jigsawFloatStopPropagation"></jigsaw-switch>
+    </li>
+</ul>
+<div class="demo-cntr" (click)="onClick()">
+    <p>父元素，点击打印在控制台</p>
+    <span class="iconfont iconfont-e9d8 target-text" jigsaw-float [jigsawFloatTarget]="jigsawFloatArea"
+        [jigsawFloatStopPropagation]="jigsawFloatStopPropagation" jigsawFloatOpenTrigger="click"
+        [jigsawFloatOpen]="jigsawFloatOpen"> Click Me!
+</span>
+</div>
+
+<ng-template #jigsawFloatArea>
+    <div class="jigsawFloatArea">
+        float 内容
+        <a (click)="closeFloat()">关闭</a>
+    </div>
+</ng-template>

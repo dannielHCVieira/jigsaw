@@ -1,0 +1,19 @@
+.demo-cntr {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 100px;
+    background: #acb9fa;
+}
+
+.demo-cntr>span {
+    background: #ffaaa6;
+    cursor: pointer;
+}
+
+.demo-cntr>p {
+    position: absolute;
+    top: 0;
+}

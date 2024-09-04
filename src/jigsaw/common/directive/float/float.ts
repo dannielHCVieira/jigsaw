@@ -289,6 +289,9 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
         }
     }
 
+    @Input()
+    public jigsawFloatStopPropagation: boolean = false;
+
     /**
      * @internal
      */
@@ -840,7 +843,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
     host: {
         '(mouseenter)': "_$openByHover($event)",
         '(mouseleave)': "_$closeByHover($event, 1)",
-        '(click)': "_$onHostClick()"
+        '(click)': "_$onFloatHostClick($event)"
     }
 })
 export class JigsawFloat extends JigsawFloatBase implements OnDestroy {
@@ -924,6 +927,16 @@ export class JigsawFloat extends JigsawFloatBase implements OnDestroy {
     @Output()
     public jigsawFloatAnswer = new EventEmitter<any>();
 
+    /**
+     * @internal
+     */
+    public _$onFloatHostClick(event: Event) {
+        super._$onHostClick();
+
+        if (this.jigsawFloatStopPropagation) {
+            event.stopPropagation();
+        }
+    }
 }
 
 @NgModule({
