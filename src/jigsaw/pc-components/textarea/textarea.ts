@@ -283,6 +283,15 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
         this._value = this._updateCurrentLength(this.value);
     }
 
+    /* Started by AICoder, pid:x382fbf9b5u2fdd147d40bfb6047db044266577b */
+    /**
+     * 默认情况下，maxLength的值有效时就会显示长度统计，通过showLengthStats属性可以隐藏统计信息
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public showLengthStats: boolean = true;
+    /* Ended by AICoder, pid:x382fbf9b5u2fdd147d40bfb6047db044266577b */
+
     private _updateValue(value: string): string {
         if (this.includesCRLF) {
             value = value.substring(0, this._maxLength);

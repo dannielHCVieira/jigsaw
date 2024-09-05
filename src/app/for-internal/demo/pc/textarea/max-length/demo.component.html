@@ -4,15 +4,22 @@
 
 <!-- start to learn the demo from here -->
 <div class="live-demo-wrap">
+    <!-- Started by AICoder, pid:df297r0c7da97e2143c809a210de4524b2b80cfa -->
+    <div class="clearfix">
+        显示隐藏长度统计：<jigsaw-switch [(checked)]="_$showLengthStats" offLabel="不包含" onLabel="包含"></jigsaw-switch>
+    </div>
     <div class="clearfix">
         <div class="demo-1 live-demo live-demo-block">
             <jigsaw-header [level]="2">不配置字符数限制</jigsaw-header>
-            <jigsaw-textarea height="80" (valueChange)="_$valueChange($event)"></jigsaw-textarea>
+            <jigsaw-textarea height="80" [showLengthStats]="_$showLengthStats" (valueChange)="_$valueChange($event)">
+            </jigsaw-textarea>
         </div>
 
         <div class="demo-2 live-demo live-demo-block">
             <jigsaw-header [level]="2">限制30个字符（默认不包含回车换行符）</jigsaw-header>
-            <jigsaw-textarea height="80" maxLength="30" (valueChange)="_$valueChange($event)" [(value)]="_$value"></jigsaw-textarea>
+            <jigsaw-textarea height="80" maxLength="30" (valueChange)="_$valueChange($event)"
+                             [(value)]="_$value" [showLengthStats]="_$showLengthStats">
+            </jigsaw-textarea>
         </div>
     </div>
 
@@ -21,9 +28,12 @@
             字符数是否包含回车换行符：
             <jigsaw-switch [(checked)]="_$includesCRLF" offLabel="不包含" onLabel="包含"></jigsaw-switch>
             <br><br>
-            <jigsaw-textarea height="80" [maxLength]="100" [includesCRLF]="_$includesCRLF" (valueChange)="_$valueChange($event)"></jigsaw-textarea>
+            <jigsaw-textarea height="80" [maxLength]="100" [includesCRLF]="_$includesCRLF"
+                             [showLengthStats]="_$showLengthStats" (valueChange)="_$valueChange($event)">
+            </jigsaw-textarea>
         </div>
     </div>
+    <!-- Ended by AICoder, pid:df297r0c7da97e2143c809a210de4524b2b80cfa -->
 </div>
 
 
