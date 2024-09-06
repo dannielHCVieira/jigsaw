@@ -8,6 +8,7 @@ $jigsaw-system-prompt: #{$jigsaw-prefix}-system-prompt;
     height: 32px;
     padding: 0 20px 0 16px;
     margin-bottom: 2px;
+    border-radius: 3px;
 
     .system-prompt-text {
         white-space: nowrap;
@@ -29,34 +30,42 @@ $jigsaw-system-prompt: #{$jigsaw-prefix}-system-prompt;
     }
 
     &.jigsaw-system-prompt-error {
-        background: var(--error-disabled);
+        background: $error-lighten;
+        border: 1px solid $red-3;
 
         .system-prompt-icon {
-            color: var(--error-default);
+            color: $error-default;
         }
     }
 
     &.jigsaw-system-prompt-info {
-        background: var(--primary-disabled);
+        background: $brand-lighten;
+        border: 1px solid $blue-3;
 
         .system-prompt-icon {
-            color: var(--primary-default);
+            color: $brand-default;
         }
     }
 
     &.jigsaw-system-prompt-warning {
-        background: var(--warning-disabled);
+        background: $warning-lighten;
+        border: 1px solid $yellow-3;
 
         .system-prompt-icon {
-            color: var(--warning-default);
+            color: $warning-default;
         }
     }
 
     &.jigsaw-system-prompt-success {
-        background: var(--success-disabled);
+        background: $success-lighten;
+        border: 1px solid $green-3;
 
         .system-prompt-icon {
-            color: var(--success-default);
+            color: $success-default;
         }
+    }
+
+    &.jigsaw-system-prompt-custom {
+        padding: unset;
     }
 }

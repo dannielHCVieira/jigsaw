@@ -255,7 +255,7 @@ export class DemoListManager {
         this._addRouterConfig(routerConfig, 'large-text', largeTextConfig);
         this._addRouterConfig(routerConfig, 'form-display', fromDisplayConfig);
         this._addRouterConfig(routerConfig, 'auto-display', autoDisplayConfig);
-        this._addRouterConfig(routerConfig, 'system-prompt', autoDisplayConfig);
+        this._addRouterConfig(routerConfig, 'system-prompt', systemPromptConfig);
     }
 
     private static _addRouterConfig(routerConfig: any[], path: string, childConfig: any[]) {
