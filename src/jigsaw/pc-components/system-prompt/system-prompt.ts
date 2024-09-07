@@ -16,10 +16,12 @@ import { CommonUtils } from "../../common/core/utils/common-utils";
 import { NoticeLevel } from "../dialog/dialog";
 import { RequireMarkForCheck } from '../../common/decorator/mark-for-check';
 import { AbstractJigsawComponent} from "../../common/common";
+import { JigsawTrustedHtmlModule } from "../../common/directive/trusted-html/trusted-html"
 
 export class SystemPromptMessage {
     type?: NoticeLevel;
     timeout?: number;
+    innerHtmlContext?: any;
 }
 
 @Component({
@@ -30,7 +32,8 @@ export class SystemPromptMessage {
         '[class.jigsaw-system-prompt-error]': 'type == "error"',
         '[class.jigsaw-system-prompt-info]': 'type == "info"',
         '[class.jigsaw-system-prompt-warning]': 'type == "warning"',
-        '[class.jigsaw-system-prompt-success]': 'type == "success"'
+        '[class.jigsaw-system-prompt-success]': 'type == "success"',
+        '[class.jigsaw-system-prompt-custom]': 'type == "custom"'
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -52,6 +55,16 @@ export class JigsawSystemPrompt extends AbstractJigsawComponent implements OnDes
     public type: NoticeLevel = 'error';
 
     /**
+     * 当`message`里包含html交互动作时，`JigsawSystemPrompt`在执行给定的回调函数时，会将这个对象作为函数的上下文。
+     * 简单的说，这个属性值和回调函数里的`this`是同一个对象。
+     *
+     * @NoMarkForCheckRequired
+
+     */
+    @Input()
+    public innerHtmlContext: any;
+
+    /**
      * @NoMarkForCheckRequired
      */
     @Input()
@@ -69,6 +82,7 @@ export class JigsawSystemPrompt extends AbstractJigsawComponent implements OnDes
         instance.type = options?.type || 'error';
         instance.timeout = CommonUtils.isDefined(options?.timeout) ? options.timeout : 8000;
         instance.message = message;
+        instance.innerHtmlContext = options?.innerHtmlContext;
         instance._componentRef = componentRef;
         instance._setupTimeout();
         containerRef.element.nativeElement.appendChild(componentRef.location.nativeElement);
@@ -136,7 +150,7 @@ export class JigsawSystemPrompt extends AbstractJigsawComponent implements OnDes
 }
 
 @NgModule({
-    imports: [CommonModule],
+    imports: [CommonModule, JigsawTrustedHtmlModule],
     declarations: [JigsawSystemPrompt],
     exports: [JigsawSystemPrompt]
 })
