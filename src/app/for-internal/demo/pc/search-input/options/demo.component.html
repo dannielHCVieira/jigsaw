@@ -1,0 +1,28 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description"> </jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+
+<ul class="demo-options">
+    <li class="demo-options-item">
+        <span>获得焦点后自动执行过滤：</span>
+        <jigsaw-switch [(checked)]="filterOnFocus"></jigsaw-switch>
+        <span>不自动过滤则会显示全部历史</span>
+    </li>
+    <li class="demo-options-item">
+        <span>清空搜索框内容：</span>
+        <jigsaw-button (click)="clear()">清空</jigsaw-button>
+    </li>
+</ul>
+
+<jigsaw-header>自动搜索</jigsaw-header>
+<jigsaw-search-input width="200px" [(value)]="_$value1" (search)="_$value1 = $event" [searchDebounce]="1000"
+    [filterOnFocus]="filterOnFocus" placeholder="这里是占位文本">
+</jigsaw-search-input>
+<div> {{ " 搜索值为：" + _$value1 }} </div>
+
+<jigsaw-header>手动搜索</jigsaw-header>
+<jigsaw-search-input width="200px" [(value)]="_$value2" [autoSearch]="false" [filterOnFocus]="filterOnFocus"
+    (search)="_$value3 = $event">
+</jigsaw-search-input>
+<div> {{ " 搜索值为：" + _$value3 }} </div>

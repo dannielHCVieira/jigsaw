@@ -151,6 +151,12 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
      * @NoMarkForCheckRequired
      */
     @Input()
+    public filterOnFocus: boolean = true;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
     public maxDropDownWidth: string;
 
     public clearHistory(): void {

@@ -12,6 +12,8 @@ import { SearchInputMaxWidthDemoModule } from "./max-width-height/demo.module";
 import { SearchInputMaxWidthDemoComponent } from "./max-width-height/demo.component";
 import { SearchInputShowBorderDemoComponent } from "./show-border/demo.component";
 import { SearchInputShowBorderDemoModule } from "./show-border/demo.module";
+import { SearchInputOptionsDemoModule } from "./options/demo.module";
+import { SearchInputOptionsDemoComponent } from "./options/demo.component";
 
 export const routerConfig = [
     {
@@ -31,6 +33,9 @@ export const routerConfig = [
     },
     {
         path: "max-width-height", component: SearchInputMaxWidthDemoComponent
+    },
+    {
+        path: "options", component: SearchInputOptionsDemoComponent
     }
 ];
 
@@ -42,7 +47,8 @@ export const routerConfig = [
         SearchInputDebounceDemoModule,
         SearchInputHistoryStorageKeyDemoModule,
         SearchInputMaxWidthDemoModule,
-        SearchInputShowBorderDemoModule
+        SearchInputShowBorderDemoModule,
+        SearchInputOptionsDemoModule
     ]
 })
 export class SearchInputDemoModule {}
