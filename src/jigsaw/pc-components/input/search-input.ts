@@ -328,6 +328,14 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
         this.value = CommonUtils.isDefined(value) ? value.toString() : "";
     }
 
+    public openHistoryDropdown(): void {
+        this._autoCompleteInput?.openDropdown();
+    }
+
+    public closeHistoryDropdown(): void {
+        this._autoCompleteInput?.closeDropdown();
+    }
+
     /**
      * 组件表单友好需支持接口
      */

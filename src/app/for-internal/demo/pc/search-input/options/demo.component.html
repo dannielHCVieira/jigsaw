@@ -13,16 +13,21 @@
         <span>清空搜索框内容：</span>
         <jigsaw-button (click)="clear()">清空</jigsaw-button>
     </li>
+    <li class="demo-options-item">
+        <span>历史记录：</span>
+        <jigsaw-button (click)="open()">打开</jigsaw-button>
+        <jigsaw-button (click)="close()">关闭</jigsaw-button>
+    </li>
 </ul>
 
 <jigsaw-header>自动搜索</jigsaw-header>
-<jigsaw-search-input width="200px" [(value)]="_$value1" (search)="_$value1 = $event" [searchDebounce]="1000"
+<jigsaw-search-input #search1 width="200px" [(value)]="_$value1" (search)="_$value1 = $event" [searchDebounce]="1000"
     [filterOnFocus]="filterOnFocus" placeholder="这里是占位文本">
 </jigsaw-search-input>
 <div> {{ " 搜索值为：" + _$value1 }} </div>
 
 <jigsaw-header>手动搜索</jigsaw-header>
-<jigsaw-search-input width="200px" [(value)]="_$value2" [autoSearch]="false" [filterOnFocus]="filterOnFocus"
+<jigsaw-search-input #search2 width="200px" [(value)]="_$value2" [autoSearch]="false" [filterOnFocus]="filterOnFocus"
     (search)="_$value3 = $event">
 </jigsaw-search-input>
 <div> {{ " 搜索值为：" + _$value3 }} </div>
