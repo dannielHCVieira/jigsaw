@@ -229,7 +229,7 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
     }
 
     private _getZTreeNodeIcon(data: SimpleTreeData | TreeData, resArr: string[]) {
-        if (!data.nodes) {
+        if (!data?.nodes) {
             return;
         }
         data.nodes.forEach((node: SimpleTreeData | TreeData) => {
