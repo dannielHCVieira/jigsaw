@@ -79,7 +79,7 @@ function processModuleImport(filePath, replacementPath) {
         return [];
     }
     const content = fs.readFileSync(filePath).toString();
-    return content.split('\n').map(line => {
+    return content.split(/\r?\n/).map(line => {
         return line.replace(/from\s+["'](\.\.\/common\/[^"']+)["'];/g, (match, p1) => `from "${p1}";`)
             // 去掉起始的"./"后再拼接路径
             .replace(/from\s+["'](\.\/[^"']+)["'];/g, (match, p1) => `from "${replacementPath + p1.slice(2)}";`);
