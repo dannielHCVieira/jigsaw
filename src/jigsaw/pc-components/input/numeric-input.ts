@@ -109,7 +109,7 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
     @Input()
     public showOption: boolean = false;
 
-    private _min: number = -Infinity;
+    private _min: number = Number.MIN_SAFE_INTEGER;
 
     /**
      * 最小值
@@ -135,7 +135,7 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
         }
     }
 
-    private _max: number = Infinity;
+    private _max: number = Number.MAX_SAFE_INTEGER;
 
     /**
      * 最大值
@@ -230,7 +230,7 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
 
     private _checkValue(value: number) {
         if (isNaN(value) && <any>value !== "-") {
-            value = this.min == -Infinity ? 0 : this.min;
+            value = this.min == Number.MIN_SAFE_INTEGER ? 0 : this.min;
             console.error('value property must be a number, please input a number or number string');
         }
 
@@ -247,6 +247,8 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
         }
 
         this._value = Number(value);
+        this._value = Math.min(this._value, Number.MAX_SAFE_INTEGER);
+        this._value = Math.max(this._value, Number.MIN_SAFE_INTEGER);
     }
 
     /**
@@ -332,7 +334,7 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
         this._onTouched();
         if (CommonUtils.isUndefined(this.value) || this._value < this.min || isNaN(this._value) || <any>this._value === "") {
             // 非法的value取最小值
-            this.value = this.min == -Infinity ? 0 : this.min;
+            this.value = this.min == Number.MIN_SAFE_INTEGER ? 0 : this.min;
         } else {
             this.value = this._toPrecisionAsStep((this._precisionFactor * this._value +
                 this._precisionFactor * this._step) / this._precisionFactor);
@@ -352,7 +354,7 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
         this._onTouched();
         if (CommonUtils.isUndefined(this.value) || this._value < this.min || isNaN(this._value) || <any>this._value === "") {
             // 非法的value取最小值
-            this.value = this.min == -Infinity ? 0 : this.min;
+            this.value = this.min == Number.MIN_SAFE_INTEGER ? 0 : this.min;
         } else {
             let tempValue = this._toPrecisionAsStep((this._precisionFactor * this._value -
                 this._precisionFactor * this._step) / this._precisionFactor);
@@ -411,7 +413,7 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
         let {value, needUpdate} = this._applyDefaultValue(this._value, true);
         this._value = value;
         if (<any>this._value !== "" && (this._value < this.min || isNaN(this._value))) {
-            this._value = this.min == -Infinity ? 0 : this.min;
+            this._value = this.min == Number.MIN_SAFE_INTEGER ? 0 : this.min;
             needUpdate = true;
         }
         this._value = Number(this._value);
