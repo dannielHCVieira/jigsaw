@@ -600,8 +600,18 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
             this._removeSelectedItemsChangeListener = null;
         }
 
-        this._removeSelectedItemsChangeListener = this._$selectedItems.onRefresh(() => {
+        this._removeSelectedItemsChangeListener = this._$selectedItems.onChange(() => {
             this._updateSourceComponent();
+            this._updateStatus();
+            this.changeDetectorRef.markForCheck();
+        })
+
+        if (this._removeSelectedItemsRefreshListener) {
+            this._removeSelectedItemsRefreshListener();
+            this._removeSelectedItemsRefreshListener = null;
+        }
+
+        this._removeSelectedItemsRefreshListener = this._$selectedItems.onRefresh(() => {
             this._checkDestSelectAll();
             this.changeDetectorRef.markForCheck();
         })
@@ -962,6 +972,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
     private _removeOnRefreshListener: CallbackRemoval;
     private _removeOnValueRefreshListener: CallbackRemoval;
     private _removeSelectedItemsChangeListener: CallbackRemoval;
+    private _removeSelectedItemsRefreshListener: CallbackRemoval;
     private _removeInputDataChangeListener: CallbackRemoval;
     private _removeFilterSubscriber: Subscription;
 
@@ -993,6 +1004,10 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
         if (this._removeSelectedItemsChangeListener) {
             this._removeSelectedItemsChangeListener();
             this._removeSelectedItemsChangeListener = null;
+        }
+        if (this._removeSelectedItemsRefreshListener) {
+            this._removeSelectedItemsRefreshListener();
+            this._removeSelectedItemsRefreshListener = null;
         }
         if (this._removeInputDataChangeListener) {
             this._removeInputDataChangeListener();
