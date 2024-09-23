@@ -19,6 +19,7 @@ import {FormlyTemplateModule} from "@rdkmaster/formly/template";
 import {FormlyJigsawHeaderModule} from "@rdkmaster/formly/header";
 import {FormlyJigsawUploadModule} from "@rdkmaster/formly/upload";
 import {FormlyFieldRepeatModule} from '@rdkmaster/formly/repeat';
+import {FormlyJigsawTreeExtModule} from '@rdkmaster/formly/tree';
 
 @NgModule({
     imports: [
@@ -42,6 +43,7 @@ import {FormlyFieldRepeatModule} from '@rdkmaster/formly/repeat';
         FormlyJigsawHeaderModule,
         FormlyJigsawUploadModule,
         FormlyFieldRepeatModule,
+        FormlyJigsawTreeExtModule
     ]
 })
 export class FormlyJigsawModule {
