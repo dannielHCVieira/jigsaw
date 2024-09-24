@@ -23,7 +23,7 @@
         <!-- 这里用一个div来控制弹出列表的宽度，否则Jigsaw-List自带300px的宽度，只要不设置optionWidth，每次在初始计算position时，获取的宽度都是300px -->
         <div class="jigsaw-select-list-cntr-host" [attr.data-theme]="theme" [ngStyle]="{'width': optionWidth ? optionWidth : '100%'}">
             <jigsaw-search-input *ngIf="searchable" [theme]="theme" width="100%" (search)="_$handleSearching($event)" historyStorageSize="0"
-                [searchDebounce]="manualSearch ? searchDebounce : 'none'" [placeholder]="searchPlaceholder">
+                                 [searchDebounce]="manualSearch ? searchDebounce : 'none'" [placeholder]="searchPlaceholder">
             </jigsaw-search-input>
             <jigsaw-list #contentList width="100%"
                          [ngClass]="{
@@ -52,10 +52,10 @@
                         [enableIndeterminate]="true">
                         <span>{{'select.selectAll' | translate}}</span>
                     </jigsaw-checkbox>
-                    <div class="jigsaw-select-show-selected" *ngIf="!_$showSelected && _$showNumStatistics()" (click)="_$showSelected = true">
+                    <div class="jigsaw-select-show-selected" *ngIf="!_$showSelected && _$showNumStatistics()" (click)="_$switchViewMode(true)">
                         <span>{{'select.checkSelected' | translate}}</span>
                     </div>
-                    <div class="jigsaw-select-show-all" *ngIf="_$showSelected" (click)="_$showSelected = false">
+                    <div class="jigsaw-select-show-all" *ngIf="_$showSelected" (click)="_$switchViewMode(false)">
                         <i class="iconfont iconfont-e9ac"></i>
                         <span>{{'select.checkAll' | translate}}</span>
                     </div>

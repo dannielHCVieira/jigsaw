@@ -8,6 +8,10 @@
             <span>搜索框占位文本</span>
             <jigsaw-input [(value)]="searchPlaceholder"></jigsaw-input>
         </li>
+        <li class="demo-options-item">
+            <span>使用统计</span>
+            <jigsaw-switch [(checked)]="useStatistics"></jigsaw-switch>
+        </li>
     </ul>
 </div>
 
@@ -27,9 +31,11 @@
     <div class="live-demo">
         <jigsaw-header [level]="2">本地数据过滤</jigsaw-header>
         <j-button style="margin-bottom: 6px" (click)="changeData2()">change data</j-button>
+        <j-button style="margin-bottom: 6px" (click)="clearData2()">clear data</j-button>
         <br>
         <jigsaw-select [optionCount]="4" [data]="lpaCountries" labelField="enName" (valueChange)="selectChange2($event)"
-                       [multipleSelect]="true" [searchable]="true" [searchPlaceholder]="searchPlaceholder"></jigsaw-select>
+                       [multipleSelect]="true" [searchable]="true" [searchPlaceholder]="searchPlaceholder" placeholder="请输入"
+                       [useStatistics]="useStatistics"></jigsaw-select>
         <p class="message">选中的条目是: <span>{{selectedCountries}}</span></p>
     </div>
 
