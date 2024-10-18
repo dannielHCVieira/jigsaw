@@ -1,3 +1,4 @@
 $jigsaw-dialog: #{$jigsaw-prefix}-dialog;
-$jigsaw-dialog-selector: #{$jigsaw-prefix}-dialog;
+$jigsaw-mobile-dialog-selector: jigsaw-mobile-dialog;
+
 @import "../../common/components/base/dialog/dialog";

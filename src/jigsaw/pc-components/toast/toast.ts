@@ -3,8 +3,9 @@ import { CommonModule } from '@angular/common';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PopupInfo, PopupEffect, PopupPositionType, PopupPositionValue, PopupService } from '../../common/service/popup.service';
 import { CommonUtils } from '../../common/core/utils/common-utils';
-import { AbstractDialogComponentBase, NoticeLevel } from "../dialog/dialog";
+import { NoticeLevel } from "../dialog/dialog";
 import {WingsTheme} from "../../common/common";
+import {AbstractDialogComponentBase} from "../../common/components/base/dialog/dialog";
 
 export class ToastMessage {
     /**

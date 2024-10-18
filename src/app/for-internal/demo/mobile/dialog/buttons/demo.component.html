@@ -1,0 +1,33 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<jigsaw-mobile-button style="color: red;" width="300px" (click)="popupDialog1(dialog1)">点击我</jigsaw-mobile-button>
+<jigsaw-mobile-button style="color: red;" width="300px" (click)="popupDialog1(dialog2)">点击我</jigsaw-mobile-button>
+
+
+{{message}}
+<ng-template #dialog1>
+    <jigsaw-mobile-dialog class="dialog-container" width="40%" caption="dialog title" icon="iconfont iconfont-e3f0" (close)="showInfo()" >
+        <ul class="dialog-content">
+            <li>这是一个测试对话框...</li>
+        </ul>
+        <div jigsaw-mobile-button-bar>
+            <jigsaw-mobile-button colorType="primary" (click)="showInfo('OK')">OK</jigsaw-mobile-button>
+            <jigsaw-mobile-button (click)="showInfo('Cancel')">Cancel</jigsaw-mobile-button>
+        </div>
+    </jigsaw-mobile-dialog>
+</ng-template>
+<ng-template #dialog2>
+    <jigsaw-mobile-dialog class="dialog-container" width="40%" caption="dialog title" icon="iconfont iconfont-e3f0" (close)="showInfo()" >
+        <ul class="dialog-content">
+            <li>这是一个测试对话框...</li>
+        </ul>
+        <div jigsaw-mobile-button-bar>
+            <jm-button colorType="primary" (click)="showInfo('OK')">OK</jm-button>
+            <jm-button (click)="showInfo('Cancel')">Cancel</jm-button>
+        </div>
+    </jigsaw-mobile-dialog>
+</ng-template>

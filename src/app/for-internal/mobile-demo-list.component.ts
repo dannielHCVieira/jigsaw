@@ -1,7 +1,7 @@
 import {Component} from "@angular/core";
 import {routerConfigMobile} from "./router-config";
 import {routerConfig as buttonConfig} from "./demo/mobile/button/demo-set.module";
-
+import {routerConfig as dialogConfig} from "./demo/mobile/dialog/demo-set.module";
 
 @Component({
     template: `
@@ -46,6 +46,7 @@ export class MobileDemoListManager {
 
     private static _mergeRoutes(routerConfig: any[]) {
         this._addRouterConfig(routerConfig, 'button', buttonConfig);
+        this._addRouterConfig(routerConfig, 'dialog', dialogConfig);
     }
 
     private static _addRouterConfig(routerConfig: any[], path: string, childConfig: any[]) {

@@ -308,6 +308,10 @@ export const routerConfigMobile = [
     {
         path: "mobile/button",
         loadChildren: () => import('./demo/mobile/button/demo-set.module').then(m => m.ButtonMobileDemoModule),
+    },
+    {
+        path: "mobile/dialog",
+        loadChildren: () => import('./demo/mobile/dialog/demo-set.module').then(m => m.DialogMobileDemoModule),
     }
 ];
 export const routerConfig = [...routerConfigPC, ...routerConfigMobile];

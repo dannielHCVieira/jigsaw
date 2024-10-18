@@ -31,4 +31,5 @@ export * from "./common/service/time.service";
 export * from "./common/service/time.types";
 export * from "./mobile-components/module";
 export * from "./mobile-components/button/button";
+export * from "./mobile-components/dialog/dialog";
 

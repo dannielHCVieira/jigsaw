@@ -15,7 +15,8 @@ import { filter, map, take } from 'rxjs/operators';
 import { Subscription } from "rxjs";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
-import { AbstractDialogComponentBase, DialogCallback, NoticeLevel } from "../dialog/dialog";
+import { DialogCallback, NoticeLevel } from "../dialog/dialog";
+import {AbstractDialogComponentBase} from "../../common/components/base/dialog/dialog";
 import {
     ButtonInfo,
     PopupEffect,

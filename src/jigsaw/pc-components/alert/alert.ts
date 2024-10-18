@@ -17,7 +17,8 @@ import {
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {TranslateModule} from "@ngx-translate/core";
-import {AbstractDialogComponentBase, DialogBase, DialogCallback, JigsawDialog, JigsawDialogModule} from "../dialog/dialog";
+import {DialogBase, DialogCallback, JigsawDialog, JigsawDialogModule} from "../dialog/dialog";
+import {AbstractDialogComponentBase} from "../../common/components/base/dialog/dialog";
 import {JigsawButton, JigsawButtonModule} from "../button/button";
 import {JigsawMovableModule} from "../../common/directive/movable/index";
 import {ButtonInfo, PopupEffect, PopupInfo, PopupOptions, PopupService} from "../../common/service/popup.service";
