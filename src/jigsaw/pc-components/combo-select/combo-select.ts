@@ -364,9 +364,9 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     /**
      * @internal
      */
-    public _$clearValue(event) {
-        event.stopPropagation();
-        event.preventDefault();
+    public _$clearValue(event?) {
+        event?.stopPropagation();
+        event?.preventDefault();
         this._value.splice(0, this._value.length);
         this._value.refresh();
         this._autoWidth();
