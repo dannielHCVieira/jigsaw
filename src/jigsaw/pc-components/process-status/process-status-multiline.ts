@@ -56,12 +56,13 @@ type ProcessStatusData = {
                                 'jigsaw-process-status-item-last': data && index * _$numInlineActual + ind == data.length - 1
                             }"
                         >
-                            <div jigsaw-title class="jigsaw-process-status-multiline-title" [title]="step.title">
-                                {{ step.title }}
-                            </div>
+                            <div jigsaw-title class="jigsaw-process-status-multiline-title"
+                                [trustedHtml]="step.title"
+                                [trustedHtmlContext]="step.context"
+                            ></div>
                             <div
                                 jigsaw-sub-title
-                                trustedHtml="{{ step.subTitle }}"
+                                [trustedHtml]="step.subTitle"
                                 [trustedHtmlContext]="step.context"
                             ></div>
                         </jigsaw-process-status-item>
