@@ -18,11 +18,15 @@ export class ProcessStatusMultilineComponent {
         this.steps[idx] = this._createStepData(idx);
     }
 
+    public alertStatus($event: string) {
+        alert($event);
+    }
+
     private _createStepData(index: number) {
         const statuses = ["done", "error", "processing", "warning", "skipped", "waiting"];
         const status = statuses[InternalUtils.randomNumber(0, statuses.length - 1)];
         return {
-            title: `This is a ${status} node`,
+            title: `This is a ${status} node <a (click)="alertStatus('${status}')">click me</a>`,
             status: status,
             subTitle: `#${index + 1} - <a (click)="changeStatus(${index})">click here</a> to change a random status.`,
             context: this
