@@ -20,6 +20,7 @@ export type SelectOption = {
 
 @Directive()
 export abstract class JigsawSelectBase extends AbstractJigsawComponent implements IJigsawFormControl, ControlValueAccessor, OnDestroy {
+    private _$filteredSelectedItems: ArrayCollection<SelectOption> | SelectOption[];
     public constructor(
         protected _changeDetector: ChangeDetectorRef,
         protected _injector: Injector,
@@ -454,18 +455,20 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
      * @internal
      */
     public _$selectAll() {
-        const disabledSelectedItems = [];
-        if (CommonUtils.isUndefined(this._$selectedItems)) {
-            this._$selectedItems = new ArrayCollection([]);
-        }
-        if (this._$selectedItems.length > 0) {
-            disabledSelectedItems.push(...this._$selectedItems.filter(item => item.disabled));
-        }
+        const disabledSelectedItems = this._$selectedItems?.filter(item => item.disabled) || [];
+        const searchResults = this._getValidData();
+        // 获取搜索范围外的已选项（排除禁用项）
+        const selectedExcludingCurrent = this._$selectedItems?.filter(item =>
+            !item.disabled && !searchResults.some(searchItem =>
+                CommonUtils.compareValue(searchItem, item, this.trackItemBy)
+            )) || [];
         if (this._allSelectCheck() || this._$maxSelectionReached) {
-            this._$selectedItems = new ArrayCollection(disabledSelectedItems);
+            // 取消选中搜索范围内的项，保留范围外和禁用项
+            this._$selectedItems = new ArrayCollection([...disabledSelectedItems, ...selectedExcludingCurrent]);
             this._$selectAllChecked = CheckBoxStatus.unchecked;
         } else {
-            const availableOptions = this._getValidData().concat(disabledSelectedItems);
+            // 合并所有需要选中的选项
+            const availableOptions = [...selectedExcludingCurrent, ...disabledSelectedItems, ...searchResults];
             if (!isNaN(this.maxSelectionLimit) && this.maxSelectionLimit > 0 && this.maxSelectionLimit < availableOptions.length && this._$selectedItems.length < this.maxSelectionLimit) {
                 for (const element of availableOptions) {
                     if (this._$selectedItems.includes(element)) {
@@ -496,10 +499,15 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
             this._$selectAllChecked = CheckBoxStatus.unchecked;
             return;
         }
-        if (this._allSelectCheck() || this._$maxSelectionReached) {
-            this._$selectAllChecked = CheckBoxStatus.checked;
-        } else if (this._allDisabledCheck()) {
+        const validData = this._getValidData();
+        const selectedCount = validData.filter(data =>
+            this._$selectedItems.find(item => CommonUtils.compareValue(item, data, this.trackItemBy))
+        ).length;
+
+        if (selectedCount === 0 || this._allDisabledCheck()) {
             this._$selectAllChecked = CheckBoxStatus.unchecked;
+        } else if (selectedCount === validData.length || this._allSelectCheck() || this._$maxSelectionReached) {
+            this._$selectAllChecked = CheckBoxStatus.checked;
         } else {
             this._$selectAllChecked = CheckBoxStatus.indeterminate;
         }
@@ -537,8 +545,8 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
      * @internal
      */
     public _$showAllStatistics(): boolean {
-        if (!this.multipleSelect || !this.useStatistics || !this._$selectedItems || !this._$selectedItems.length) {
-            return false
+        if (!this.multipleSelect || !this.useStatistics || !this._$selectedItems || !this._$selectedItems.length || this._searchKey) {
+            return false;
         }
         if (this._$infiniteScroll) {
             // this._$infiniteScroll为真就确保是滚动分页数据类型了
@@ -558,7 +566,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         if (!this.multipleSelect || !this.useStatistics || !this._$selectedItems || !this._$selectedItems.length) {
             return false;
         }
-        if (!this.data.length) {
+        if (!this.data?.length && !this._searchKey) {
             return false;
         }
         return !this._$showAllStatistics();
@@ -590,8 +598,8 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     /**
      * @internal
      */
-    public get _$viewData() {
-        return this._$showSelected ? this._$selectedItems : this._data;
+    public get _$viewData(): SelectOption[] | ArrayCollection<SelectOption> | InfiniteScrollLocalPageableArray<SelectOption> | InfiniteScrollPageableArray | SelectOption[][] {
+        return this._$showSelected ? this._$filteredSelectedItems : this._data;
     }
 
     /**
@@ -777,6 +785,11 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
 
         // 为了消除统计的闪动，需要先把搜索字段临时存放在bak里面
         this._searchKeyBak = filterKey;
+        if (this._$showSelected) {
+            this._$filteredSelectedItems = this._filterSelectedData(filterKey);
+            return;
+        }
+
         if (this.data instanceof InfiniteScrollLocalPageableArray || this.data instanceof InfiniteScrollPageableArray) {
             this._filterData(filterKey);
             return;
@@ -794,10 +807,26 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         data.fromArray(this.data);
     }
 
+    protected _filterSelectedData(filterKey?: string) {
+        filterKey = filterKey ? filterKey.trim() : '';
+        return this._$selectedItems.filter(item => {
+            if (!item) {
+                return false;
+            }
+            const label = String(item.hasOwnProperty(this.labelField) ? item[this.labelField] : item);
+            return label.toLowerCase().indexOf(filterKey.toLowerCase()) !== -1;
+        });
+    }
+
     protected _filterData(filterKey?: string) {
         filterKey = filterKey ? filterKey.trim() : '';
         (<InfiniteScrollLocalPageableArray<any> | InfiniteScrollPageableArray>this.data).filter(filterKey, [this.labelField]);
         this.resetScrollbar();
+    }
+
+    public _$switchViewMode(showSelected: boolean) {
+        this._$showSelected = showSelected;
+        this._$handleSearching(this._searchKeyBak);
     }
 
     public resetScrollbar() {

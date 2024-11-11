@@ -11,6 +11,7 @@ import {
 })
 export class SelectSearchableDemoComponent {
     public searchPlaceholder: string;
+    public useStatistics: boolean = true;
 
     selectedCityForSelect: any;
     cityListForSelect = new ArrayCollection([
@@ -64,6 +65,10 @@ export class SelectSearchableDemoComponent {
                 return item;
             });
         }
+    }
+
+    clearData2() {
+        this.lpaCountries.fromArray([]);
     }
 
     changeData3() {
