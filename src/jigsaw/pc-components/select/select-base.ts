@@ -824,6 +824,9 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         this.resetScrollbar();
     }
 
+    /**
+     * @internal
+     */
     public _$switchViewMode(showSelected: boolean) {
         this._$showSelected = showSelected;
         this._$handleSearching(this._searchKeyBak);

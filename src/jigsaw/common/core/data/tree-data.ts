@@ -114,8 +114,13 @@ export function escapeXmlString(xml: string): string {
     let quote: string;
     let pos: Position;
     const positions: Position[] = [];
-    xml.replace(/\\\\/g, '--') // 连续2个反斜杠就等于是普通字符了，这里将其随便改为另一个字符，避免影响下面的正则
-        .replace(/(?<!\\)['"]/g, (found: string, index: number) => {
+    const sanitizedXml = xml.replace(/\\\\/g, '--') // 连续2个反斜杠就等于是普通字符了，这里将其随便改为另一个字符，避免影响下面的正则
+    sanitizedXml.replace(/['"]/g, (found: string, index: number) => {
+            // 检查前一个字符是否为反斜杠
+            if (index > 0 && sanitizedXml[index - 1] === '\\') {
+                // 如果是转义的引号，返回空字符串
+                return "";
+            }
             if (!quote) {
                 quote = found;
                 pos = {start: index, end: -1};
