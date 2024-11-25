@@ -22,7 +22,7 @@
             </div>
             <div *ngIf="multipleSelect && _$viewData?.length > 0" class="jigsaw-select-select-all">
                 <jigsaw-checkbox *ngIf="!_$showSelected" [theme]="theme" [(checked)]="_$selectAllChecked"
-                                  (checkedChange)="_$selectAll()">
+                                  (checkedChange)="_$selectAll()" [disabled]="_$selectAllDisabled">
                     <span>{{'select.selectAll' | translate}}</span>
                 </jigsaw-checkbox>
                 <div class="jigsaw-select-show-selected" *ngIf="!_$showSelected && _$showNumStatistics()"

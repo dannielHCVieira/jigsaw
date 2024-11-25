@@ -12,6 +12,10 @@
             <span>使用统计</span>
             <jigsaw-switch [(checked)]="useStatistics"></jigsaw-switch>
         </li>
+        <li class="demo-options-item">
+            <span>多选</span>
+            <jigsaw-switch [(checked)]="multipleSelect"></jigsaw-switch>
+        </li>
     </ul>
 </div>
 
@@ -23,7 +27,8 @@
         <j-button style="margin-bottom: 6px" (click)="changeData()">change data</j-button>
         <br>
         <jigsaw-select [(value)]="selectedCityForSelect" (valueChange)="selectChange($event)"
-                       placeholder="请选择城市" [data]="cityListForSelect" [searchable]="true" [searchPlaceholder]="searchPlaceholder">
+            [multipleSelect]="multipleSelect" placeholder="请选择城市" [data]="cityListForSelect" [searchable]="true"
+            [searchPlaceholder]="searchPlaceholder">
         </jigsaw-select>
         <p class="message">选择的城市是 <span>{{selectedCityName}}</span></p>
     </div>
@@ -34,8 +39,8 @@
         <j-button style="margin-bottom: 6px" (click)="clearData2()">clear data</j-button>
         <br>
         <jigsaw-select [optionCount]="4" [data]="lpaCountries" labelField="enName" (valueChange)="selectChange2($event)"
-                       [multipleSelect]="true" [searchable]="true" [searchPlaceholder]="searchPlaceholder" placeholder="请输入"
-                       [useStatistics]="useStatistics"></jigsaw-select>
+            [multipleSelect]="multipleSelect" [searchable]="true" [searchPlaceholder]="searchPlaceholder"
+            placeholder="请输入" [useStatistics]="useStatistics"></jigsaw-select>
         <p class="message">选中的条目是: <span>{{selectedCountries}}</span></p>
     </div>
 
@@ -44,7 +49,8 @@
         <j-button style="margin-bottom: 6px" (click)="changeData3()">change data</j-button>
         <br>
         <jigsaw-select [optionCount]="4" [data]="spaCountries" labelField="enName" (valueChange)="selectChange3($event)"
-                       [multipleSelect]="true" [searchable]="true" [searchPlaceholder]="searchPlaceholder"></jigsaw-select>
+            [multipleSelect]="multipleSelect" [searchable]="true"
+            [searchPlaceholder]="searchPlaceholder"></jigsaw-select>
         <p class="message">选中的条目是: <span>{{selectedCountries2}}</span></p>
     </div>
 </div>

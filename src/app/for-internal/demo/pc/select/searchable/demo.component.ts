@@ -12,15 +12,16 @@ import {
 export class SelectSearchableDemoComponent {
     public searchPlaceholder: string;
     public useStatistics: boolean = true;
+    public multipleSelect: boolean = true;
 
     selectedCityForSelect: any;
     cityListForSelect = new ArrayCollection([
-        {label: "北京"},
-        {label: "上海"},
-        {label: "南京"},
-        {label: "深圳"},
-        {label: "长沙"},
-        {label: "西安"}
+        { label: "北京", disabled: true },
+        { label: "上海" },
+        { label: "南京", disabled: true },
+        { label: "深圳" },
+        { label: "长沙" },
+        { label: "西安" }
     ]);
 
     cityDataTemp = this.cityListForSelect.concat();
@@ -28,9 +29,13 @@ export class SelectSearchableDemoComponent {
     selectedCityName: string;
 
     public selectChange(selectedItem: any) {
-        selectedItem = selectedItem ? selectedItem : {label: ''};
-        console.log("select city is:" + selectedItem.label);
-        this.selectedCityName = selectedItem.label;
+        if (this.multipleSelect) {
+            this.selectedCityName = selectedItem.map(s => s.label).toString();
+        } else {
+            selectedItem = selectedItem ? selectedItem : {label: ''};
+            console.log("select city is:" + selectedItem.label);
+            this.selectedCityName = selectedItem.label;
+        }
     }
 
     lpaCountries: LocalPageableArray<GroupOptionValue>;
@@ -39,11 +44,19 @@ export class SelectSearchableDemoComponent {
     selectedCountries2: string;
 
     selectChange2($event) {
-        this.selectedCountries = $event.map(s => s.enName).toString();
+        if (this.multipleSelect) {
+            this.selectedCountries = $event.map(s => s.enName).toString();
+        } else {
+            this.selectedCountries = $event.enName;
+        }
     }
 
     selectChange3($event) {
-        this.selectedCountries2 = $event.map(s => s.enName).toString();
+        if (this.multipleSelect) {
+            this.selectedCountries2 = $event.map(s => s.enName).toString();
+        } else {
+            this.selectedCountries2 = $event.enName;
+        }
     }
 
     changeData() {

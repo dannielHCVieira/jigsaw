@@ -452,6 +452,13 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     public _$selectAllChecked = CheckBoxStatus.unchecked;
 
     /**
+     * 全选禁用
+     *
+     * @internal
+     */
+    public _$selectAllDisabled: boolean = false;
+
+    /**
      * @internal
      */
     public _$selectAll() {
@@ -495,6 +502,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
      */
     public _$checkSelectAll() {
         this._changeDetector.markForCheck();
+        this._$selectAllDisabled = this.data.every(item => item.disabled);
         if (!this._$selectedItems || this._$selectedItems.length === 0) {
             this._$selectAllChecked = CheckBoxStatus.unchecked;
             return;
