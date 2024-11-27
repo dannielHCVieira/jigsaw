@@ -12,6 +12,7 @@
         [jigsawCascadingMenuTheme]="_$realTheme"
         [jigsawCascadingMenuPosition]="'rightTop'"
         [jigsawCascadingMenuOpenTrigger]="'mouseenter'"
+        [jigsawCascadingMenuCloseTrigger]="_$realCloseTrigger"
         [jigsawCascadingMenuInitData]="{select:_$realSelect}"
         [disabled]="node.disabled"
         (click)="!node.disabled && !!node.label && select.emit(node);
