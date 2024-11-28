@@ -8,6 +8,23 @@ import {JigsawThemeService} from "../../core/theming/theme";
 import {InternalUtils} from "../../core/utils/internal-utils";
 import {MenuTheme, cascadingMenuFlag, closeAllContextMenu} from "./menu-typings";
 
+let closeDelayTimer: any = null;
+
+function clearCloseDelay(): void {
+    if (closeDelayTimer) {
+        clearTimeout(closeDelayTimer);
+        closeDelayTimer = null;
+    }
+}
+
+function setCloseDelay(callback: () => void, delay: number): void {
+    clearCloseDelay();
+    closeDelayTimer = setTimeout(() => {
+        callback();
+        closeDelayTimer = null;
+    }, delay);
+}
+
 @Directive({
     selector: '[jigsaw-cascading-menu],[j-cascading-menu],[jigsawCascadingMenu]',
     host: {
@@ -35,12 +52,14 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
             this.jigsawFloatInitData.theme = themeInfo.majorStyle;
         })
     }
+
     private _jigsawCascadingMenuData: SimpleTreeData;
     private _jigsawCascadingMenuWidth: string | number;
     private _jigsawCascadingMenuHeight: string | number;
     private _jigsawCascadingMenuMaxHeight: string | number;
     private _jigsawFloatOptions: PopupOptions = { size: { minWidth: null } };
     private _jigsawCascadingMenuShowBorder: boolean;
+    private _jigsawFloatCloseTrigger: 'click' | 'mouseleave' | 'none' | DropDownTrigger = "mouseleave";
     private _jigsawCascadingMenuTheme: MenuTheme;
     private _jigsawCascadingMenuPosition: FloatPosition = 'bottomLeft';
     private _themeChangeSubscription: Subscription;
@@ -162,7 +181,20 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
     public jigsawFloatOpenTrigger: 'click' | 'mouseenter' | 'none' | DropDownTrigger = 'click';
 
     @Input('jigsawCascadingMenuCloseTrigger')
-    public jigsawFloatCloseTrigger: 'click' | 'mouseleave' | 'none' | DropDownTrigger = "mouseleave";
+    public get jigsawFloatCloseTrigger(): 'click' | 'mouseleave' | 'none' | DropDownTrigger {
+        return this._jigsawFloatCloseTrigger;
+    }
+
+    public set jigsawFloatCloseTrigger(value: 'click' | 'mouseleave' | 'none' | DropDownTrigger) {
+        if (this._jigsawFloatCloseTrigger == value) {
+            return;
+        }
+        this._jigsawFloatCloseTrigger = value;
+        if (!this.jigsawFloatInitData) {
+            this.jigsawFloatInitData = {};
+        }
+        this.jigsawFloatInitData.closeTrigger = value;
+    }
 
     private _jigsawMenuFloatInitData: any = {};
 
@@ -213,6 +245,7 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
         this.jigsawFloatInitData.height = this.jigsawCascadingMenuHeight;
         this.jigsawFloatInitData.maxHeight = this.jigsawCascadingMenuMaxHeight;
         this.jigsawFloatInitData.options = this.jigsawFloatOptions;
+        this.jigsawFloatInitData.closeTrigger = this.jigsawFloatCloseTrigger;
         if (!this.jigsawFloatInitData.select) {
             this.jigsawFloatInitData.select = this.jigsawCascadingMenuSelect;
         } else {
@@ -262,6 +295,8 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
      * @internal
      */
     public _$openByHover($event) {
+        // 鼠标进入时清除延迟关闭
+        clearCloseDelay();
         // 跟当前宿主平级或者以下的其他弹出需要先关闭
         if (/^j(igsaw)?-list-option$/.test(this._elementRef.nativeElement.localName)) {
             const target = this._elementRef.nativeElement.parentElement.parentElement;
@@ -319,9 +354,10 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
         if (event && event.type == 'click') {
             // 全局click
             closeAllContextMenu(this._popupService.popups);
-        } else if (event && event.type == 'mouseleave' && event.target == this.popupElement
-            && PopupService.allPopups.some(popup => popup.extra === cascadingMenuFlag && PopupService.mouseInPopupElement(event, popup.element))) {
-            super._closeFloat(event);
+        } else if (this.jigsawFloatCloseTrigger == 'mouseleave' && event && event.type == 'mouseleave') {
+            setCloseDelay(() => {
+                closeAllContextMenu(this._popupService.popups);
+            }, 300);
         } else if (!event) {
             super._closeFloat(event);
         }

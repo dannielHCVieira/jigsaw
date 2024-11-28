@@ -18,6 +18,7 @@ import {CommonUtils} from '../../common/core/utils/common-utils';
 import {JigsawList, JigsawListOption} from "../list-and-tile/list";
 import { JigsawThemeService } from "../../common/core/theming/theme";
 import {cascadingMenuFlag, closeAllContextMenu, MenuTheme} from "../../common/directive/menu/menu-typings";
+import {DropDownTrigger} from "../../common/directive/float/float";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
 
 export class MenuOptions {
@@ -29,6 +30,7 @@ export class MenuOptions {
     options?: PopupOptions;
     showBorder?: boolean;
     select?: EventEmitter<SimpleNode>;
+    closeTrigger?: 'click' | 'mouseleave' | 'none' | DropDownTrigger;
 }
 
 /**
@@ -146,6 +148,13 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
         } else {
             return this.select;
         }
+    }
+
+    /**
+     * @internal
+     */
+    public get _$realCloseTrigger(): 'click' | 'mouseleave' | 'none' | DropDownTrigger {
+        return this.initData?.hasOwnProperty('closeTrigger') ? this.initData.closeTrigger : "mouseleave";
     }
 
     /**
