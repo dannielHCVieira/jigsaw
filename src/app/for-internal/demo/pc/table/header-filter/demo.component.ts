@@ -154,10 +154,10 @@ export class TableSetHeaderFilterDemoComponent {
     }
 
     public changeLocalPageable() {
-        if (this.localPageable.pagingInfo.totalRecord < 10) {
-            this.localPageable.fromAjax("mock-data/hr-list");
-        } else {
+        if (this.localPageable.pagingInfo.totalRecord > 10) {
             this.localPageable.fromAjax("mock-data/hr-list-short");
+        } else {
+            this.localPageable.fromAjax("mock-data/hr-list-full");
         }
         this.localPageable.onRefresh(() => {
             this.localPageable.filter(this.localPageableSearchValue || '', null);
@@ -243,7 +243,7 @@ export class TableSetHeaderFilterDemoComponent {
         this.localPageable = new LocalPageableTableData();
         this.localPageable.http = http;
         this.localPageable.pagingInfo.pageSize = 10;
-        this.localPageable.fromAjax("mock-data/hr-list");
+        this.localPageable.fromAjax("mock-data/hr-list-full");
 
         this.pageable = new PageableTableData(http, {
             url: 'mock-data/hr-list', body: { aa: 11, bb: 22 }, method: 'post'

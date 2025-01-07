@@ -18,22 +18,23 @@ import {
     Directive,
     NgZone
 } from "@angular/core";
-import {isObservable} from "rxjs";
-import {AbstractJigsawViewBase, JigsawRendererHost} from "../../common/common";
-import {_getColumnIndex, AdditionalTableData, CellRendererEvent, SortChangeEvent, TableDataChangeEvent} from "./table-typings";
-import {DefaultCellRenderer, TableCellRendererBase} from "./table-renderer";
-import {TableData} from "../../common/core/data/table-data";
-import {SortAs, SortOrder} from "../../common/core/data/component-data";
-import {CommonUtils} from "../../common/core/utils/common-utils";
-import {PerfectScrollbarDirective} from 'ngx-perfect-scrollbar';
-import {CheckBoxStatus} from '../checkbox/typings';
-import {JigsawFloat} from "../../common/directive/float/float";
-import {ArrayCollection} from '../../common/core/data/array-collection';
+import { isObservable } from "rxjs";
+import { AbstractJigsawViewBase, JigsawRendererHost } from "../../common/common";
+import { _getColumnIndex, AdditionalTableData, CellRendererEvent, SortChangeEvent, TableDataChangeEvent } from "./table-typings";
+import { DefaultCellRenderer, TableCellRendererBase } from "./table-renderer";
+import { TableData } from "../../common/core/data/table-data";
+import { SortAs, SortOrder } from "../../common/core/data/component-data";
+import { CommonUtils } from "../../common/core/utils/common-utils";
+import { PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
+import { CheckBoxStatus } from '../checkbox/typings';
+import { JigsawFloat } from "../../common/directive/float/float";
+import { ArrayCollection } from '../../common/core/data/array-collection';
+import { InfiniteScrollLocalPageableArray } from '../../common/core/data/array-collection';
 
 @Directive()
 export class TableInternalCellBase extends AbstractJigsawViewBase implements AfterViewInit, OnInit {
     constructor(protected componentFactoryResolver: ComponentFactoryResolver,
-                protected changeDetector: ChangeDetectorRef, protected _zone: NgZone) {
+        protected changeDetector: ChangeDetectorRef, protected _zone: NgZone) {
         super(_zone);
     }
 
@@ -376,7 +377,7 @@ export class JigsawTableHeaderInternalComponent extends TableInternalCellBase im
 
     private _sort(order: SortOrder): void {
         this.updateSortOrderClass(order);
-        this.sort.emit({sortAs: this.sortAs, order: order, field: this.field});
+        this.sort.emit({ sortAs: this.sortAs, order: order, field: this.field });
         this.tableData.sort(this.sortAs, order, this.field);
     }
 
@@ -494,7 +495,7 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
     private _goEditCallback: () => void;
 
     constructor(cfr: ComponentFactoryResolver, cd: ChangeDetectorRef,
-                private _renderer: Renderer2, private _elementRef: ElementRef, protected _zone: NgZone) {
+        private _renderer: Renderer2, private _elementRef: ElementRef, protected _zone: NgZone) {
         super(cfr, cd, _zone);
     }
 
@@ -671,8 +672,9 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
                 </jigsaw-search-input>
             </div>
             <j-list class="jigsaw-table-header-filter-list" [perfectScrollbar]="{ wheelSpeed: 0.5, minScrollbarLength: 20 }"
-                    [multipleSelect]="true" [(selectedItems)]="_$selectedItems" (selectedItemsChange)="_$handleSelectChange()">
-                <j-list-option #listItem *ngFor="let item of _$filteredData" [value]="item">
+                    [multipleSelect]="true" [(selectedItems)]="_$selectedItems" (selectedItemsChange)="_$handleSelectChange()"
+                    [autoRemoveInvalidValue]="false">
+                <j-list-option #listItem *ngFor="let item of _$data" [value]="item">
                     <div class="item-box">
                         <j-checkbox #checkbox [(checked)]="listItem.selected" mode="minimalist" style="margin-right: 8px;">
                         </j-checkbox>
@@ -680,7 +682,7 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
                     </div>
                 </j-list-option>
             </j-list>
-            <div *ngIf="_$filteredData?.length === 0" class="jigsaw-table-header-filter-nodata">{{'table.noData' | translate}}</div>
+            <div *ngIf="_$data?.length === 0" class="jigsaw-table-header-filter-nodata">{{'table.noData' | translate}}</div>
 
             <div *ngIf="_$dataStatus == 'loading'" class="jigsaw-table-header-filter-loading">
                 <jigsaw-circle-loading [size]="'large'"></jigsaw-circle-loading>
@@ -694,12 +696,18 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
             </div>
         </div>`
 })
-export class JigsawTableHeaderFilterBox extends AbstractJigsawViewBase implements OnInit {
-    constructor(protected _changeDetector: ChangeDetectorRef, protected _zone?: NgZone) {
+export class JigsawTableHeaderFilterBox extends AbstractJigsawViewBase implements OnInit, OnDestroy {
+    constructor(protected _changeDetector: ChangeDetectorRef, protected _renderer: Renderer2, protected _zone?: NgZone) {
         super(_zone);
     }
 
-    private _data: string[];
+    private _removeScrollBarListener: Function;
+    private _removeDataRefreshListener: Function;
+
+    /**
+     * @internal
+     */
+    public _$data: InfiniteScrollLocalPageableArray<string>;
 
     /**
      * @internal
@@ -710,11 +718,6 @@ export class JigsawTableHeaderFilterBox extends AbstractJigsawViewBase implement
      * @internal
      */
     public _$selectedItems: string[];
-
-    /**
-     * @internal
-     */
-    public _$filteredData: string[];
 
     /**
      * @internal
@@ -754,6 +757,29 @@ export class JigsawTableHeaderFilterBox extends AbstractJigsawViewBase implement
     @ViewChild(PerfectScrollbarDirective)
     private _listScrollbar: PerfectScrollbarDirective;
 
+    private _setInfiniteScroll() {
+        if (this._removeScrollBarListener) {
+            this._removeScrollBarListener();
+        }
+        const el = this._listScrollbar.elementRef.nativeElement;
+        this._removeScrollBarListener = this._renderer.listen(el, "scroll", () => {
+            this._zone.run(() => {
+                const scrollTop = el.scrollTop;
+                const scrollHeight = el.scrollHeight;
+                const clientHeight = el.clientHeight;
+                const scrolledPercentage = (scrollTop + clientHeight) / scrollHeight;
+
+                if (scrolledPercentage >= 0.75) {
+                    if (this._$data.busy || this._$data.pagingInfo.currentPage === this._$data.pagingInfo.totalPage) {
+                        return;
+                    }
+                    this._$data.nextPage();
+                    this._changeDetector.markForCheck();
+                }
+            });
+        });
+    }
+
     /**
      * @internal
      */
@@ -774,26 +800,25 @@ export class JigsawTableHeaderFilterBox extends AbstractJigsawViewBase implement
 
     private _filterData(filterKey?: string) {
         filterKey = filterKey ? filterKey.trim() : '';
-        if (filterKey.length === 0) {
-            this._$filteredData = this._data;
+        if (!this._$data) {
+            return;
         }
-        filterKey = filterKey.toLowerCase();
-        this._$filteredData = this._data.filter(item => String(item).toLowerCase().includes(filterKey));
+        this._$data.filter(filterKey);
         this._listScrollbar && this._listScrollbar.scrollToTop();
     }
 
     private _checkSelectAll() {
-        if (this._$filteredData.length === 0 || !this._$selectedItems || this._$selectedItems.length === 0) {
+        if (this._$data.length === 0 || !this._$selectedItems || this._$selectedItems.length === 0) {
             this._$selectAllChecked = CheckBoxStatus.unchecked;
             return;
         }
 
-        if (this._$filteredData.every(data => this._$selectedItems.includes(data))) {
+        if (this._$data.every(data => this._$selectedItems.includes(data))) {
             this._$selectAllChecked = CheckBoxStatus.checked;
             return;
         }
 
-        if (this._$filteredData.some(data => this._$selectedItems.includes(data))) {
+        if (this._$data.some(data => this._$selectedItems.includes(data))) {
             this._$selectAllChecked = CheckBoxStatus.indeterminate;
             return;
         }
@@ -805,22 +830,22 @@ export class JigsawTableHeaderFilterBox extends AbstractJigsawViewBase implement
      * @internal
      */
     public _$selectAll() {
-        if (this._$filteredData.length === 0) {
+        if (this._$data.length === 0) {
             return;
         }
 
         if (this._$selectAllChecked === CheckBoxStatus.checked) {
             if (this._$selectedItems?.length > 0) {
-                this._$filteredData.forEach(data => {
+                this._$data.forEach(data => {
                     if (!this._$selectedItems.includes(data)) {
                         this._$selectedItems = this._$selectedItems.concat([data]);
                     }
                 })
             } else {
-                this._$selectedItems = new ArrayCollection(this._$filteredData);
+                this._$selectedItems = new ArrayCollection(this._$data);
             }
         } else if (this._$selectAllChecked === CheckBoxStatus.unchecked && this._$selectedItems?.length > 0) {
-            this._$selectedItems = this._$selectedItems.filter(data => !this._$filteredData.includes(data));
+            this._$selectedItems = this._$selectedItems.filter(data => !this._$data.includes(data));
         }
         this._changeDetector.markForCheck();
     }
@@ -848,7 +873,7 @@ export class JigsawTableHeaderFilterBox extends AbstractJigsawViewBase implement
         if (filterIndex !== -1) {
             this.tableData.filterInfo.headerFilters[filterIndex].selectKeys = this._$selectedItems.concat([]);
         } else {
-            this.tableData.filterInfo.headerFilters.push({field: field, selectKeys: this._$selectedItems.concat([])});
+            this.tableData.filterInfo.headerFilters.push({ field: field, selectKeys: this._$selectedItems.concat([]) });
         }
         this._autoFilterData();
         this.filterCancel();
@@ -868,7 +893,17 @@ export class JigsawTableHeaderFilterBox extends AbstractJigsawViewBase implement
 
     private _initData(data: string[]): void {
         this._$dataStatus = 'resolved';
-        this._data = data;
+        this._$data = new InfiniteScrollLocalPageableArray<string>();
+        this._$data.fromArray(data);
+        this._$data.pagingInfo.pageSize = 100;
+
+        if (this._removeDataRefreshListener) {
+            this._removeDataRefreshListener();
+        }
+        this._removeDataRefreshListener = this._$data.onRefresh(() => {
+            this._changeDetector.markForCheck();
+        });
+
         const found = this.tableData.filterInfo.headerFilters?.find(item => item.field === this.field);
         if (found) {
             this._$selectedItems = found.selectKeys;
@@ -876,6 +911,10 @@ export class JigsawTableHeaderFilterBox extends AbstractJigsawViewBase implement
             this._$selectedItems = new ArrayCollection([]);
         }
         this._$handleSearching('');
+
+        this.runAfterMicrotasks(() => {
+            this._setInfiniteScroll();
+        });
     }
 
     ngOnInit(): void {
@@ -888,5 +927,15 @@ export class JigsawTableHeaderFilterBox extends AbstractJigsawViewBase implement
         this._$dataStatus = 'loading';
         const promise: Promise<any[]> = isObservable(data) ? data.toPromise() : data;
         promise.then((resolvedData: string[]) => this._initData(resolvedData));
+    }
+
+    ngOnDestroy() {
+        super.ngOnDestroy();
+        if (this._removeScrollBarListener) {
+            this._removeScrollBarListener();
+        }
+        if (this._removeDataRefreshListener) {
+            this._removeDataRefreshListener();
+        }
     }
 }
