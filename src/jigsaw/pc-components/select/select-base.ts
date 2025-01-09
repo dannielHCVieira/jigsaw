@@ -21,6 +21,7 @@ export type SelectOption = {
 @Directive()
 export abstract class JigsawSelectBase extends AbstractJigsawComponent implements IJigsawFormControl, ControlValueAccessor, OnDestroy {
     private _$filteredSelectedItems: ArrayCollection<SelectOption> | SelectOption[];
+
     public constructor(
         protected _changeDetector: ChangeDetectorRef,
         protected _injector: Injector,
@@ -29,6 +30,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         protected _zone?: NgZone
     ) {
         super(_zone);
+        this._$allSelectedText = this._translateService?.instant("select.allSelected");
     }
 
     /**
@@ -255,7 +257,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     /**
      * @internal
      */
-    public _$allSelectedText: string = this._translateService.instant("select.allSelected");
+    public _$allSelectedText: string;
 
     private _allSelectedText: string;
 
@@ -273,7 +275,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
             return;
         }
         this._allSelectedText = newValue;
-        this._$allSelectedText = this._allSelectedText || this._translateService.instant("select.allSelected");
+        this._$allSelectedText = this._allSelectedText || this._$allSelectedText;
     }
 
     /**
@@ -376,7 +378,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
      * 1. 当已知数据中包含空字符串时，点击清空按钮将使用undefined作为默认值。
      * 2. 当已知数据中不包含空字符串时，点击清空按钮将使用空字符串作为默认值以保持兼容性。
      */
-    private _getSelectedItems(newValue: any): any[] {
+    private _getSelectedItems(newValue: any): any {
         if (newValue != "") {
             return [newValue];
         }
@@ -641,7 +643,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         })
     }
 
-    protected _setData(value: ArrayCollection<SelectOption> | SelectOption[] | InfiniteScrollLocalPageableArray<SelectOption> | InfiniteScrollPageableArray) {
+    protected _setData(value: ArrayCollection<SelectOption> | SelectOption[] | InfiniteScrollLocalPageableArray<SelectOption> | InfiniteScrollPageableArray | any) {
         if (value instanceof ArrayCollection) {
             for (let i = value.length - 1; i >= 0; i--) {
                 if (CommonUtils.isUndefined(value[i])) {
@@ -812,7 +814,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
             this.data = data;
             this._filterData(filterKey);
         });
-        data.fromArray(this.data);
+        data.fromArray(this.data as any);
     }
 
     protected _filterSelectedData(filterKey?: string) {
@@ -926,7 +928,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
         return result;
     }
 
-    protected _setData(value: ArrayCollection<GroupSelectOption> | GroupSelectOption[] | InfiniteScrollLocalPageableArray<SelectOption> | InfiniteScrollPageableArray) {
+    protected _setData(value: ArrayCollection<GroupSelectOption> | GroupSelectOption[] | InfiniteScrollLocalPageableArray<SelectOption> | InfiniteScrollPageableArray | any) {
         this._viewData = undefined;
         if (value instanceof InfiniteScrollLocalPageableArray || value instanceof InfiniteScrollPageableArray) {
             this._data = value;
@@ -947,7 +949,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
                 this._removeOriginalOnRefresh();
             }
             this._removeOriginalOnRefresh = this._originalData.onRefresh(() => {
-                this.data = this._originalData;
+                this.data = this._originalData as any;
             })
         } else {
             value = (value || []).filter(el => el != null);

@@ -50,7 +50,7 @@ function checkPublicVariables(srcPath) {
 
     vars.forEach(variable => {
         const fixed = variable.replace(/\$/g, '\\$');
-        const reg = new RegExp(`[\\s\\S]*\\/\\*\\*([\\s\\S]*?)\\*\\/\\s*(@\\w+.*\\s*)?${fixed}\\b`);
+        const reg = new RegExp(`[\\s\\S]*\\/\\*\\*([\\s\\S]*?)\\*\\/\\s*(@\\w+.*\\s*)?(declare\\s*)?${fixed}\\b`);
         const match = source.match(reg);
         if (!match || match[1].indexOf('@internal') === -1) {
             const name = variable.replace(/public\s*(static\s+)?/, '').trim();

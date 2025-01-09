@@ -1,4 +1,6 @@
+const fs = require('fs-extra');
 const path = require('path');
+const minimist = require('minimist');
 
 require('ts-node').register({
     project: path.join(__dirname, 'tsconfig.json')
@@ -18,20 +20,27 @@ const {cleanAndBuild, publishJigsaw} = require('./tasks/build');
 process.chdir(path.join(__dirname, '../../../'));
 
 const task = process.argv[2];
-global.ngVersion = process.argv[3] || 'ng13';
+global.ngVersion = process.argv[3] || 'ng18';
+
+const argv = minimist(process.argv.slice(4));
+global.inDocker = argv.inDocker;
+console.log(`--- build-lib, task: ${task}, ngVersion: ${global.ngVersion}, inDocker: ${global.inDocker} ---`);
 
 if (!task) {
     printUsage('请输入任务名！');
     process.exit(1);
 }
 
-if(global.ngVersion && global.ngVersion !== 'ng9' && global.ngVersion !== 'ng13') {
+if(global.ngVersion && global.ngVersion !== 'ng9' && global.ngVersion !== 'ng18') {
     printUsage('ng版本输入错误！');
 }
 
 const param = task.split(':');
 
 switch (param[0]) {
+    case 'npmInstall':
+        npmInstall('normal');
+        break;
     case 'build':
         runBuildTask(param[1]);
         break;
@@ -96,7 +105,13 @@ function runPublishTask(task) {
             publishJigsaw().then();
             break;
         case 'all':
-            publishAll().then();
+            publishAll('all').then();
+            break;
+        case 'normal':
+            publishAll('normal').then();
+            break;
+        case 'governance':
+            publishAll('governance').then();
             break;
         case 'governance-jigsaw':
             npmInstall('governance');

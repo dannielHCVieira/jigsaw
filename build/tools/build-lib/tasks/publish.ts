@@ -1,13 +1,13 @@
-import { execSync, spawn } from 'child_process';
-import { existsSync, statSync, writeFileSync, readFileSync, removeSync } from 'fs-extra';
+import {green, grey, yellow} from 'chalk';
+import {execSync} from 'child_process';
+import {existsSync, readFileSync, removeSync, statSync, writeFileSync} from 'fs-extra';
+import {sync as glob} from "glob";
+import * as minimist from 'minimist';
 import * as path from 'path';
 import {join} from 'path';
-import { green, grey, yellow } from 'chalk';
-import * as minimist from 'minimist';
-import { sync as glob } from "glob";
 import {buildConfig} from '../util/build-config';
-import {cleanAndBuild, publishFormly, publishJigsaw, validateCheckBundles} from "./build";
 import {runCommandSync} from "../util/exec";
+import {cleanAndBuild, publishFormly, publishJigsaw, validateCheckBundles} from "./build";
 import {buildFormly} from "./build-formly";
 
 /** Parse command-line arguments for release task. */
@@ -74,23 +74,27 @@ export async function buildGovernanceFormly() {
     _restoreImport();
 }
 
-export async function publishAll() {
+export async function publishAll(type: 'all' | 'normal' | 'governance') {
     if (!argv.nextVersion) {
         argv.nextVersion = _readNextVersion();
     }
     _checkEnv();
     whoami();
 
-    npmInstall('normal');
-    argv.tag = 'latest';
-    await publishJigsaw();
-    await publishFormly();
+    if (type == 'all' || type == 'normal') {
+        npmInstall('normal');
+        argv.tag = 'latest';
+        await publishJigsaw();
+        await publishFormly();
+    }
 
-    argv.nextVersion = argv.nextVersion + '-g1';
-    argv.tag = 'governance';
-    npmInstall('governance');
-    await publishGovernanceJigsaw();
-    await publishGovernanceFormly();
+    if (type == 'all' || type == 'governance') {
+        argv.nextVersion = argv.nextVersion + '-g1';
+        argv.tag = 'governance18';
+        npmInstall('governance');
+        await publishGovernanceJigsaw();
+        await publishGovernanceFormly();
+    }
 }
 
 function _execNpmPublish(label: string, packageName: string): Promise<void> {
@@ -115,51 +119,34 @@ function _execNpmPublish(label: string, packageName: string): Promise<void> {
     process.chdir(packageDir);
     console.log(green(`Publishing ${packageName}...`));
 
-    const command = npm;
-
-    const args = [
-        'publish', '--access', 'public', '--loglevel=warn',
-        '--registry=https://artsh.zte.com.cn/artifactory/api/npm/rnia-release-npm/'
-    ];
-    if (label) {
-        args.push('--tag', label);
+    const tag = label ? '--tag ' + label : '';
+    const dry = argv.dry ? '--dry-run' : '';
+    const command = `npm publish ${tag} --access public --loglevel=warn --registry=https://artsh.zte.com.cn/artifactory/api/npm/rnia-release-npm/ ${dry}`;
+    console.log(grey(`Executing: ${command}`));
+    try {
+        execSync(command, {stdio: 'inherit'});
+        return Promise.resolve();
+    } catch (error) {
+        return Promise.reject(new Error(`Could not publish ${packageName}, error: ${error.message}`));
     }
-    if (argv.dry) {
-        args.push('--dry');
-    }
-
-    return new Promise((resolve, reject) => {
-        console.log(grey(`Executing: ${command} ${args.join(' ')}`));
-
-        const childProcess = spawn(command, args);
-        childProcess.stdout.on('data', (data: Buffer) => {
-            console.log(`  stdout: ${data.toString().split(/[\n\r]/g).join('\n          ')}`);
-        });
-        childProcess.stderr.on('data', (data: Buffer) => {
-            console.error(`  stderr: ${data.toString().split(/[\n\r]/g).join('\n          ')}`);
-        });
-
-        childProcess.on('close', (code: number) => {
-            if (code == 0) {
-                resolve();
-            } else {
-                reject(new Error(`Could not publish ${packageName}, status: ${code}.`));
-            }
-        });
-    });
 }
 
 export function npmInstall(target: 'normal' | 'governance') {
+    const inDocker = (global as any).inDocker;
     const currentDir = process.cwd();
     process.chdir(`${__dirname}/../../../../`);
 
-    execSync('git checkout package.json package-lock.json', { stdio: 'inherit' });
+    if (inDocker) {
+        execSync('cp package.json package.json.bak', { stdio: 'inherit' });
+    } else {
+        execSync('git checkout package.json package-lock.json', { stdio: 'inherit' });
+    }
     _convertNgDependencies((global as any).ngVersion);
     if (target == 'governance') {
         // 使用governance版的依赖配置
         const packageJson = JSON.parse(readFileSync('package.json').toString());
         packageJson.dependencies = packageJson.dependenciesGovernance;
-        writeFileSync('package.json', JSON.stringify(packageJson, null, 2));
+        writeFileSync('package.json', JSON.stringify(packageJson, null, 4));
     }
     try {
         execSync('npm install --force --ignore-scripts --registry=https://artsh.zte.com.cn/artifactory/api/npm/rnia-npm-virtual/', { stdio: 'inherit' });
@@ -167,11 +154,16 @@ export function npmInstall(target: 'normal' | 'governance') {
         console.error("An error occurred:", error);
     }
     // 恢复npm install过程所修改的文件
-    execSync('git checkout package.json package-lock.json', { stdio: 'inherit' });
+    if (inDocker) {
+        execSync('rm -f package.json', { stdio: 'inherit' });
+        execSync('mv package.json.bak package.json', { stdio: 'inherit' });
+    } else {
+        execSync('git checkout package.json package-lock.json', { stdio: 'inherit' });
+    }
     process.chdir(currentDir);
 }
 
-function _convertNgDependencies(ngVersion: 'ng9' | 'ng13') {
+function _convertNgDependencies(ngVersion: 'ng9' | 'ng18') {
     console.log(`installing ${ngVersion} dependencies ...`);
     removeSync('package-lock.json');
     const packageJson = JSON.parse(readFileSync('package.json').toString());
@@ -182,8 +174,8 @@ function _convertNgDependencies(ngVersion: 'ng9' | 'ng13') {
 }
 
 function _checkEnv() {
-    if (!process.version.startsWith('v16.')) {
-        throw new Error(`当前仅支持node16来构建和发布，请切换到node16。`);
+    if (!process.version.startsWith('v18.')) {
+        throw new Error(`当前仅支持node18来构建和发布，请切换到node18。`);
     }
     const nextVersion = argv.nextVersion;
     if (!/^(\d+)\.(\d+)\.(\d+)(-\w+\d+)?/.test(nextVersion)) {
@@ -192,7 +184,7 @@ function _checkEnv() {
 }
 
 function _readNextVersion() {
-    execSync('npm show --registry=https://artsh.zte.com.cn/artifactory/api/npm/rnia-npm-virtual/ @rdkmaster/jigsaw', { stdio: 'inherit' });
+    execSync('npm show --registry=https://artsh.zte.com.cn/artifactory/api/npm/rnia-npm-virtual/ @rdkmaster/jigsaw', {stdio: 'inherit'});
     const prompt = require('prompt-sync')({sigint: true});
     console.log('请输入新版本号：');
     const nextVersion = prompt('>> ');

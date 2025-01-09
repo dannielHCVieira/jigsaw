@@ -71,6 +71,7 @@ function refactorTransform(sourceFile) {
                     if (isPrivate || startsWithUnderscore || hasQuestionToken || isReadonly || isStatic) {
                         return node;
                     }
+
                     return createGetterSetter(node, className);
                 }
                 return ts.visitEachChild(node, visit, context);
@@ -99,12 +100,10 @@ function createGetterSetter(propertyNode, className) {
     const privateName = `_autoGetterSetter_${className}_${propertyName}`;
     const initializer = propertyNode.initializer || undefined;
 
-    const decorators = propertyNode.decorators || [];
     const modifiers = propertyNode.modifiers || [];
 
     return [
         ts.factory.createPropertyDeclaration(
-            undefined,
             [ts.factory.createToken(ts.SyntaxKind.PrivateKeyword)],
             ts.factory.createIdentifier(privateName),
             ts.factory.createToken(ts.SyntaxKind.QuestionToken),
@@ -112,7 +111,6 @@ function createGetterSetter(propertyNode, className) {
             initializer
         ),
         ts.factory.createGetAccessorDeclaration(
-            decorators,
             modifiers,
             ts.factory.createIdentifier(propertyName),
             [],
@@ -126,11 +124,9 @@ function createGetterSetter(propertyNode, className) {
             )
         ),
         ts.factory.createSetAccessorDeclaration(
-            undefined,
-            modifiers,
+            modifiers.filter(modifier => modifier.kind !== ts.SyntaxKind.Decorator),
             ts.factory.createIdentifier(propertyName),
             [ts.factory.createParameterDeclaration(
-                undefined,
                 undefined,
                 undefined,
                 ts.factory.createIdentifier("value"),

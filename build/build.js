@@ -3,6 +3,7 @@ const {spawn} = require("child_process");
 const chokidar = require("chokidar");
 const path = require("path");
 const generateGetterSetter = require("./scripts/generate-getter-setter");
+const flattenCodes = require("./scripts/flatten-codes");
 const processSource = require("./scripts/create-tmp-src");
 const {exec, npmInstall} = require("./npm-install");
 
@@ -12,8 +13,8 @@ if (app !== 'jigsaw-app-external' && app !== 'jigsaw-app-internal') {
     process.exit(1);
 }
 const ngVersion = process.argv[3];
-if (ngVersion !== 'ng9' && ngVersion !== 'ng13') {
-    printUsage(`无效的输出类型"${ngVersion}"，必须是 ng9/ng13 之一`);
+if (ngVersion !== 'ng9' && ngVersion !== 'ng18') {
+    printUsage(`无效的输出类型"${ngVersion}"，必须是 ng9/ng18 之一`);
     process.exit(1);
 }
 const buildMode = process.argv[4];
@@ -21,6 +22,7 @@ if (buildMode !== 'prod' && buildMode !== 'dev') {
     printUsage(`无效的输出类型"${buildMode}"，必须是 prod/dev 之一`);
     process.exit(1);
 }
+global.inDocker = process.argv[7] === 'inDocker';
 
 process.chdir(path.join(__dirname, '../'));
 
@@ -44,6 +46,7 @@ if (app === 'jigsaw-app-external' && !fs.existsSync(docOutput)) {
 processSource();
 if (ngVersion !== 'ng9') {
     generateGetterSetter(['src-tmp']);
+    flattenCodes();
 }
 
 if (buildMode === 'dev') {
@@ -80,6 +83,7 @@ function watchFiles() {
         })
         if (ngVersion !== 'ng9') {
             generateGetterSetter(tmpTsPaths);
+            flattenCodes();
         }
     }, 2000);
 
@@ -109,7 +113,7 @@ function debouncePathChange(func, wait) {
 }
 
 function runNgServe() {
-    const port = process.argv[5] || 4200;
+    const port = process.argv[5] || 14200;
     const servePath = process.argv[6] ? '--serve-path=' + process.argv[6] : '';
     const ngServeParams = ['serve', app, '--poll', '500', '--disable-host-check', '--host', '0.0.0.0',
         '--port', port, '--proxy-config', 'proxy-config.json'];
@@ -140,13 +144,13 @@ function runNgBuild() {
     const appOutput = process.argv[5] || 'dist';
     const bh = process.argv[6] || '/latest/';
     const code = exec(`node --max_old_space_size=4096 node_modules/@angular/cli/bin/ng build ${app} ` +
-        `--aot --prod --base-href="${bh}" --output-path=${appOutput}`);
+        `--configuration production --base-href="${bh}" --output-path=${appOutput}`);
     process.exit(code);
 }
 
 function printUsage(extra) {
     console.error('Error:', extra);
     console.error('用法');
-    console.error(' - 生成环境编译：node build/build.js jigsaw-app-internal ng13 prod [output=dist] [baseHref=/latest/]');
-    console.error(' - 开发环境编译：node build/build.js jigsaw-app-internal ng13 dev [port=4200] [baseHref]');
+    console.error(' - 生成环境编译：node build/build.js jigsaw-app-internal ng18 prod [output=dist] [baseHref=/latest/]');
+    console.error(' - 开发环境编译：node build/build.js jigsaw-app-internal ng18 dev [port=4200] [baseHref]');
 }

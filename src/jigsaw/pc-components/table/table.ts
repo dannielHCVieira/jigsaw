@@ -78,6 +78,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
                 private _injector: Injector, private _themeService: JigsawThemeService,
                 protected _translateService: TranslateService) {
         super();
+        this._noDataPrompt = this._translateService.instant("table.noData");
         if (CommonUtils.getBrowserType() == 'Firefox') {
             this._$isFFBrowser = true;
         }
@@ -1191,7 +1192,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     @Input()
     public noDataDarkImage: string;
 
-    private _noDataPrompt: string = this._translateService.instant("table.noData");
+    private _noDataPrompt: string;
 
     /**
      * 无数据时显示的文本

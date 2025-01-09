@@ -30,11 +30,14 @@ export class JigsawUploadResult extends AbstractJigsawComponent implements OnDes
         */
         public _$cdr: ChangeDetectorRef, protected _zone?: NgZone) {
         super(_zone);
+        this._fileTypeError = this._translateService.instant(`upload.fileTypeError`);
+        this._fileMinSizeError = this._translateService.instant(`upload.fileMinSizeError`);
+        this._fileMaxSizeError = this._translateService.instant(`upload.fileMaxSizeError`);
     }
 
-    private readonly _fileTypeError = this._translateService.instant(`upload.fileTypeError`);
-    private readonly _fileMinSizeError = this._translateService.instant(`upload.fileMinSizeError`);
-    private readonly _fileMaxSizeError = this._translateService.instant(`upload.fileMaxSizeError`);
+    private readonly _fileTypeError: string;
+    private readonly _fileMinSizeError: string;
+    private readonly _fileMaxSizeError: string;
     private _dataSendProgressSubscription: Subscription;
     private _startUploadSubscription: Subscription;
     private _changeUploadSubscription: Subscription;

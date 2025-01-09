@@ -196,6 +196,7 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
                 // @RequireMarkForCheck 需要用到，勿删
                 private _injector: Injector) {
         super();
+        this._noDataPrompt = this._translateService.instant("jigsawGraph.noData");
         this._host = this._elementRef.nativeElement;
         this._themeChangeSubscription = this._themeService.themeChange.subscribe(themeInfo => {
             InternalUtils.updateNoDataImage(this as any, CommonUtils.noDataGraphImageSrc);
@@ -292,7 +293,7 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
     private readonly _host: HTMLElement;
     private _graphContainer: HTMLElement;
 
-    private _noDataPrompt: string = this._translateService.instant("jigsawGraph.noData");
+    private _noDataPrompt: string;
 
     /**
      * 无数据时显示的文本

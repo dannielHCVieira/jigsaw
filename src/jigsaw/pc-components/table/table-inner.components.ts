@@ -4,32 +4,31 @@ import {
     Component,
     ComponentFactoryResolver,
     ComponentRef,
+    Directive,
     ElementRef,
     EmbeddedViewRef,
     EventEmitter,
     Input,
+    NgZone,
     OnDestroy,
     OnInit,
     Output,
     Renderer2,
     TemplateRef,
     Type,
-    ViewChild,
-    Directive,
-    NgZone
+    ViewChild
 } from "@angular/core";
-import { isObservable } from "rxjs";
-import { AbstractJigsawViewBase, JigsawRendererHost } from "../../common/common";
-import { _getColumnIndex, AdditionalTableData, CellRendererEvent, SortChangeEvent, TableDataChangeEvent } from "./table-typings";
-import { DefaultCellRenderer, TableCellRendererBase } from "./table-renderer";
-import { TableData } from "../../common/core/data/table-data";
-import { SortAs, SortOrder } from "../../common/core/data/component-data";
-import { CommonUtils } from "../../common/core/utils/common-utils";
-import { PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
-import { CheckBoxStatus } from '../checkbox/typings';
-import { JigsawFloat } from "../../common/directive/float/float";
-import { ArrayCollection } from '../../common/core/data/array-collection';
-import { InfiniteScrollLocalPageableArray } from '../../common/core/data/array-collection';
+import {PerfectScrollbarDirective} from 'ngx-perfect-scrollbar';
+import {isObservable} from "rxjs";
+import {AbstractJigsawViewBase, JigsawRendererHost} from "../../common/common";
+import {ArrayCollection, InfiniteScrollLocalPageableArray} from '../../common/core/data/array-collection';
+import {SortAs, SortOrder} from "../../common/core/data/component-data";
+import {TableData} from "../../common/core/data/table-data";
+import {CommonUtils} from "../../common/core/utils/common-utils";
+import {JigsawFloat} from "../../common/directive/float/float";
+import {CheckBoxStatus} from '../checkbox/typings';
+import {DefaultCellRenderer, TableCellRendererBase} from "./table-renderer";
+import {_getColumnIndex, AdditionalTableData, CellRendererEvent, SortChangeEvent, TableDataChangeEvent} from "./table-typings";
 
 @Directive()
 export class TableInternalCellBase extends AbstractJigsawViewBase implements AfterViewInit, OnInit {
@@ -842,7 +841,7 @@ export class JigsawTableHeaderFilterBox extends AbstractJigsawViewBase implement
                     }
                 })
             } else {
-                this._$selectedItems = new ArrayCollection(this._$data);
+                this._$selectedItems = new ArrayCollection(this._$data) as any;
             }
         } else if (this._$selectAllChecked === CheckBoxStatus.unchecked && this._$selectedItems?.length > 0) {
             this._$selectedItems = this._$selectedItems.filter(data => !this._$data.includes(data));
@@ -908,7 +907,7 @@ export class JigsawTableHeaderFilterBox extends AbstractJigsawViewBase implement
         if (found) {
             this._$selectedItems = found.selectKeys;
         } else {
-            this._$selectedItems = new ArrayCollection([]);
+            this._$selectedItems = new ArrayCollection([]) as any;
         }
         this._$handleSearching('');
 

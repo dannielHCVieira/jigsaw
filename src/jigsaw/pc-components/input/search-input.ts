@@ -44,9 +44,10 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
     constructor(
         protected _changeDetectorRef: ChangeDetectorRef,
         private _translateService: TranslateService,
-                // @RequireMarkForCheck 需要用到，勿删
-                private _injector: Injector) {
+        // @RequireMarkForCheck 需要用到，勿删
+        private _injector: Injector) {
         super();
+        this._$placeholder = this._translateService.instant("search-input.placeholder");
     }
 
     /**
@@ -83,7 +84,7 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
     /**
      * @internal
      */
-    public _$placeholder: string = this._translateService.instant("search-input.placeholder");
+    public _$placeholder: string;
     private _placeholder: string;
 
     /**
@@ -100,8 +101,9 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
             return;
         }
         this._placeholder = newValue;
-        this._$placeholder = CommonUtils.isUndefined(this._placeholder) ?
-            this._translateService.instant("search-input.placeholder") : this._placeholder;
+        this._$placeholder = (
+            CommonUtils.isUndefined(this._placeholder) ? this._translateService?.instant("search-input.placeholder") : this._placeholder
+        ) || this._$placeholder;
     }
 
 

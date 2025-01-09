@@ -553,7 +553,7 @@ export class InternalTabContent extends AbstractJigsawComponent implements IDyna
         } else if (value instanceof Array || value instanceof ArrayCollection) {
             const data = new LocalPageableArray();
             data.pagingInfo.pageSize = this._$cascade.pageSize;
-            data.fromArray(value);
+            data.fromArray(value as any);
             const removeDataOnRefresh = data.onRefresh(() => {
                 removeDataOnRefresh();
                 this._list = data;

@@ -14,8 +14,10 @@ const externalReferencesRegex = /(templateUrl|styleUrls): *["'[]/;
 
 /** Task that validates the given release package before releasing. */
 export function checkReleasePackage(packageName: string): string[] {
-  const bundlePath = join(releasesDir, packageName, 'fesm2015', `rdkmaster-${packageName}.mjs`);
-  const bundleContent = readFileSync(bundlePath, 'utf8');
+  const bundlePath2015 = join(releasesDir, packageName, 'fesm2015', `rdkmaster-${packageName}.mjs`);
+  const bundlePath2022 = join(releasesDir, packageName, 'fesm2022', `rdkmaster-${packageName}.mjs`);
+  const bundleContent = existsSync(bundlePath2015) ? readFileSync(bundlePath2015, 'utf8') : (existsSync(bundlePath2022) ? readFileSync(bundlePath2022, 'utf8') : '');
+  console.log("checkReleasePackage >>>>>> bundleContent: ", bundleContent.length);
   let failures = [];
 
   if (inlineStylesSourcemapRegex.exec(bundleContent) !== null) {

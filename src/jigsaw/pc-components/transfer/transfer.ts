@@ -453,13 +453,13 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
             })
             this.sourceComponent.dataFilter(this.data, this.selectedItems)
         });
-        data.fromArray(value);
+        data.fromArray(value as any);
         if (this._removeInputDataChangeListener) {
             this._removeInputDataChangeListener();
             this._removeInputDataChangeListener = null;
         }
         this._removeInputDataChangeListener = value.onRefresh(() => {
-            data.fromArray(value)
+            data.fromArray(value as any);
             this.sourceComponent.dataFilter(this.data, this.selectedItems)
             this.sourceComponent.reset();
             this._checkSourceSelectAll();
@@ -479,7 +479,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
             this._removeOnRefreshListener = null;
         }
         this._removeOnRefreshListener = data.onRefresh(() => {
-            this.sourceComponent.data = new ArrayCollection(data);
+            this.sourceComponent.data = new ArrayCollection(data as any);
             this.destComponent.data = this._$selectedItems;
             this._updateSourceSelectAllStatus();
             this._$loading = false;

@@ -116,7 +116,7 @@ export class JigsawEditableBox extends JigsawBox {
     /**
      * @internal
      */
-    public _$childrenBox: JigsawEditableBox[];
+    declare public _$childrenBox: JigsawEditableBox[];
 
     protected _setResizeLine(box: JigsawEditableBox, index: number) {
         if (!this.resizable || index == 0) {

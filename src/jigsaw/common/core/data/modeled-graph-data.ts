@@ -711,7 +711,7 @@ export class RadarItem {
 export class RadarIndicator extends Indicator {
     public max?: number;
     public min?: number;
-    public color?: string;
+    declare public color?: string;
     public static extend(indicatorItem: EchartSeriesItem, indicator: RadarIndicator) {
         const indicatorBak = <RadarIndicator>CommonUtils.deepCopy(indicator);
         indicatorItem.min = indicator.min ? indicator.min : 0;

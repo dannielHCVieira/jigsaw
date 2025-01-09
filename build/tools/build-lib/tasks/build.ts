@@ -13,7 +13,7 @@ import {checkReleasePackage} from '../util/validate-release';
 import {publishPackage, whoami} from './publish';
 import {cleanAll} from "./clean";
 import {buildFormly} from "./build-formly";
-
+const flattenCodes = require("../../../scripts/flatten-codes.js");
 const generateGetterSetter = require("../../../scripts/generate-getter-setter.js");
 const processSource = require("../../../scripts/create-tmp-src.js");
 const CleanCSS = require('clean-css');
@@ -134,7 +134,8 @@ async function build(packageName: string) {
     console.log(`----- Run Task: copy src to src-tmp and generate getter setter in src-tmp -----`);
     processSource();
     if (ngVersion != 'ng9') {
-        generateGetterSetter(['src-tmp'])
+        generateGetterSetter(['src-tmp']);
+        flattenCodes();
     }
 
     if (ngVersion == 'ng9') {

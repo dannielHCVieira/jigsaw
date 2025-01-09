@@ -1,6 +1,6 @@
+import {copySync, existsSync, mkdirpSync, removeSync} from 'fs-extra';
 import {sync as glob} from 'glob';
-import {mkdirpSync, copySync, existsSync, readdirSync, lstatSync, unlinkSync, rmdirSync, removeSync} from 'fs-extra';
-import {join, dirname} from 'path';
+import {dirname, join} from 'path';
 
 /** Function to copy files that match a glob to another directory. */
 export function copyFiles(fromPath: string, fileGlob: string, outDir: string) {

@@ -215,7 +215,7 @@ export class JigsawArray<T> implements Array<T> {
      * @param start
      * @param end
      */
-    public slice(start?: number, end?: number): T[] {
+    public slice(start?: number, end?: number): any {
         return this._agent.slice.apply(this, arguments);
     }
 
@@ -273,6 +273,7 @@ export class JigsawArray<T> implements Array<T> {
      * @param thisArg
      *
      */
+    //@ts-ignore
     public every(callbackfn: (value: T, index: number, array: T[]) => boolean, thisArg?: any): boolean {
         return this._agent.every.apply(this, arguments);
     }
@@ -312,7 +313,7 @@ export class JigsawArray<T> implements Array<T> {
      * @param thisArg
      *
      */
-    public filter(callback: (value: T, index: number, array: T[]) => any, thisArg?: any): T[] {
+    public filter(callback: (value: T, index: number, array: T[]) => any, thisArg?: any): any {
         return this._agent.filter.apply(this, arguments);
     }
 

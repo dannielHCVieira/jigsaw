@@ -57,6 +57,10 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
         private _injector: Injector
     ) {
         super();
+        this._$pageSize = {
+            value: null,
+            label: "--/" + this._translateService.instant("pagination.page")
+        };
     }
 
     private _totalRecord: number; // 数据总数
@@ -74,10 +78,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     /**
      * @internal
      */
-    public _$pageSize: PageSizeData = {
-        value: null,
-        label: "--/" + this._translateService.instant("pagination.page")
-    };
+    public _$pageSize: PageSizeData;
 
     /**
      * @internal

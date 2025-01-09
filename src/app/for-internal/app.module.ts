@@ -40,7 +40,7 @@ import {DemoCodeComponent} from "./demo-code.component";
                     {path: '**', component: DemoCodeComponent}
                 ]},
             {path: '**', redirectTo: '/'}
-        ], { useHash: true, relativeLinkResolution: 'legacy' }),
+        ], { useHash: true }),
         JigsawRootModule, JigsawFloatModule, JigsawListLiteModule, JigsawTreeExtModule, JigsawButtonBarModule,
         JigsawCheckBoxModule, JigsawNumericInputModule, JigsawSelectModule,
         TranslateModule.forRoot()

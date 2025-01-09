@@ -79,7 +79,7 @@ export class HttpClientOptions {
  * 一般Jigsaw内部使用，应用无需关注，详情参考`HttpClientOptions.prepare`的说明。
  */
 export class PreparedHttpClientOptions extends HttpClientOptions {
-    public params?: { [key: string]: string | string[] } | HttpParams;
+    declare public params?: { [key: string]: string | string[] } | HttpParams;
 
     public static prepareParams(params: any): { [key: string]: string | string[] } | HttpParams {
         if (params instanceof HttpParams) {

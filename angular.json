@@ -89,18 +89,18 @@
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
-                        "browserTarget": "jigsaw-app-internal:build"
+                        "buildTarget": "jigsaw-app-internal:build"
                     },
                     "configurations": {
                         "production": {
-                            "browserTarget": "jigsaw-app-internal:build:production"
+                            "buildTarget": "jigsaw-app-internal:build:production"
                         }
                     }
                 },
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "jigsaw-app-internal:build"
+                        "buildTarget": "jigsaw-app-internal:build"
                     }
                 },
                 "test": {
@@ -237,18 +237,18 @@
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
-                        "browserTarget": "jigsaw-app-external:build"
+                        "buildTarget": "jigsaw-app-external:build"
                     },
                     "configurations": {
                         "production": {
-                            "browserTarget": "jigsaw-app-external:build:production"
+                            "buildTarget": "jigsaw-app-external:build:production"
                         }
                     }
                 },
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "jigsaw-app-external:build"
+                        "buildTarget": "jigsaw-app-external:build"
                     }
                 },
                 "test": {
@@ -442,7 +442,6 @@
             }
         }
     },
-    "defaultProject": "jigsaw-app-internal",
     "cli": {
         "analytics": "d2a728b2-b764-4978-a47d-7d76c3eeb242"
     }

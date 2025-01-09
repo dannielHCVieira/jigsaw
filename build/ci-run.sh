@@ -37,6 +37,10 @@ runShell() {
         exit 1
     }
 }
+runDockerTask() {
+    local ngVersion=$1
+    runShell build/docker/start-docker.sh $change $patch $ngVersion
+}
 
 runScript build/scripts/check-demo-import.js
 runScript build/scripts/check-html-element-type.js
@@ -58,14 +62,37 @@ npm test || {
     exit 1
 }
 
-runShell build/tools/build-lib/build-lib.sh build:jigsaw ng9
-runShell build/tools/build-lib/build-lib.sh build:formly ng9
+# 把这个node_modules挪出去，可以节省很多构建docker镜像的时间
+rm -rf ../temp-change-$change-$patch
+mkdir ../temp-change-$change-$patch
+mv node_modules ../temp-change-$change-$patch/
 
-runShell build/tools/build-lib/build-lib.sh build:jigsaw-novice-guide
-runShell build/tools/build-lib/build-lib.sh build:formly
-runShell build/tools/build-lib/build-lib.sh build:jigsaw-omni
+# 并行执行两个 docker 任务
+runDockerTask ng9 &
+pid1=$!
+runDockerTask ng18 &
+pid2=$!
+# 等待两个任务都完成
+wait $pid1
+if [ $? -ne 0 ]; then
+    echo "Error: ng9 docker build failed"
+    rm -rf ../temp-change-$change-$patch
+    exit 1
+fi
+wait $pid2
+if [ $? -ne 0 ]; then
+    echo "Error: ng18 docker build failed"
+    rm -rf ../temp-change-$change-$patch
+    exit 1
+fi
 
-sh node16.sh build/build.js jigsaw-app-internal ng13 prod dist /lui-dev/jigsaw/change-$change-$patch/
+mv ../temp-change-$change-$patch/node_modules .
+rm -rf ../temp-change-$change-$patch
+
+if [[ ! -d "dist" ]]; then
+    echo "Error: dist directory was not found after running docker build"
+    exit 1
+fi
 
 echo "====================================================================================================="
 echo "常用命令"

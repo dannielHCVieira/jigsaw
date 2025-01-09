@@ -447,7 +447,7 @@ export abstract class TransferTreeRendererBase extends AbstractTransferRendererB
     }
 
     public update(): void {
-        this.currentSelectedItems = this.selectedItems;
+        this.currentSelectedItems = this.selectedItems as any;
     }
 
     public reset(): void {
@@ -636,7 +636,7 @@ export abstract class TransferTableRendererBase extends AbstractTransferRenderer
      */
     public _$updateSelectedItems(value: AdditionalTableData): void {
         this.selectedRows = this._getSelectedRows(value);
-        this.selectedItems = new ArrayCollection(this.selectedRows);
+        this.selectedItems = new ArrayCollection(this.selectedRows as any);
         this.selectedItemsChange.emit(this.selectedItems);
     }
 

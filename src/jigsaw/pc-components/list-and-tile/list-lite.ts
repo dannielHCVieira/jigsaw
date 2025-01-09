@@ -217,7 +217,7 @@ export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements 
             this._updateData(data, false);
             this._filterData(filterKey);
         });
-        data.fromArray(this.data);
+        data.fromArray(this.data as any);
     }
 
     private _filterData(filterKey?: string) {

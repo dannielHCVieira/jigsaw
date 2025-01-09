@@ -380,7 +380,7 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements A
             this._asyncSetStyle(this.selectedIndex);
         } else {
             const match = (tabElem.style.transform + '').match(/\btranslate3d\s*\((\d+)px\s*,/);
-            const styleOffset = match ? match[1] : -1;
+            const styleOffset = match ? Number(match[1]) : -1;
             const labelOffset = labelPos.offSet + this._tabLeftMap.get(this.selectedIndex);
             // 当tab的宽度缩放到小于标题头的宽度时，这里会出现两个负值的偏移量，且不相等
             // 这里会一直重复计算，从而导致页面卡死
@@ -623,7 +623,7 @@ export class JigsawTab extends JigsawTabBase {
      * @internal
      */
     @ContentChildren(JigsawTabPane)
-    public _$tabPanes: QueryList<JigsawTabPane>;
+    declare public _$tabPanes: QueryList<JigsawTabPane>;
 
     /**
      * @internal
