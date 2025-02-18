@@ -458,6 +458,28 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         this.searchKeywordChange.emit(this.searchKeyword);
     }
 
+    /* Started by AICoder, pid:i5aa7hffb2947e6144b60964401d5e102379feae */
+    /**
+     * @internal
+     * 处理箭头点击事件，可以被子类覆盖
+     */
+    public _$handleArrowClick(event: Event): void {
+        event.preventDefault();
+        event.stopPropagation();
+
+        // 如果是禁用状态，不处理点击事件
+        if (this.disabled) {
+            return;
+        }
+
+        // 如果当前是打开状态，则关闭
+        this.open = !this._$opened;
+
+        // 触发touched回调
+        this._onTouched();
+    }
+    /* Ended by AICoder, pid:i5aa7hffb2947e6144b60964401d5e102379feae */
+
     public ngOnInit() {
         super.ngOnInit();
         // 设置初始值
