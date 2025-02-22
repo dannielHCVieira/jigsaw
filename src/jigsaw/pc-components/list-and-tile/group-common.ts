@@ -1,20 +1,20 @@
-import {AbstractJigsawComponent} from "../../common/common";
-import {ControlValueAccessor} from "@angular/forms";
 import {
     AfterContentInit,
     ChangeDetectorRef,
+    Directive,
     EventEmitter,
+    Injector,
     Input,
     OnDestroy,
-    Output,
-    QueryList,
     OnInit,
-    Directive,
-    Injector
+    Output,
+    QueryList
 } from "@angular/core";
-import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
-import {ArrayCollection} from "../../common/core/data/array-collection";
+import {ControlValueAccessor} from "@angular/forms";
 import {Subscription} from "rxjs";
+import {AbstractJigsawComponent} from "../../common/common";
+import {ArrayCollection} from "../../common/core/data/array-collection";
+import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 export class GroupOptionValue {
@@ -177,9 +177,12 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
                 });
             }
         } else {
-            //单选选中
+            //单选
             this._selectedItems.splice(0, this._selectedItems.length);
-            this.selectedItems.push(itemValue);
+            if(selected) {
+                // 只有选中时才需要添加
+                this.selectedItems.push(itemValue);
+            }
         }
         this._selectedItems.refresh();
         this.selectedItemsChange.emit(this.selectedItems);
