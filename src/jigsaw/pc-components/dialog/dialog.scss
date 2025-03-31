@@ -1,3 +1,17 @@
 $jigsaw-dialog: #{$jigsaw-prefix}-dialog;
 $jigsaw-dialog-selector: #{$jigsaw-prefix}-dialog;
 @import "../../common/components/base/dialog/dialog";
+
+
+.#{$jigsaw-dialog-selector}-host {
+    .#{$jigsaw-dialog} {
+        .#{$jigsaw-dialog}-button-group {
+            & > div {
+                jigsaw-button,
+                j-button {
+                    margin-right: 8px;
+                }
+            }
+        }
+    }
+}
