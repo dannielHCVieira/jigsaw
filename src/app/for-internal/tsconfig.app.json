@@ -4,7 +4,11 @@
         "outDir": "../../../out-tsc/app",
         "baseUrl": "../../",
         "types": ["node"],
-        "target": "ES2015"
+        "target": "ES2015",
+        "paths": {
+            "@rdkmaster/jigsaw": ["jigsaw/public_api"],
+            "@rdkmaster/formly": ["ngx-formly/jigsaw/src/public_api"]
+        }
     },
     "files": [
         "main.ts",

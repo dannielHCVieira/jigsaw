@@ -24,6 +24,7 @@ import {PCDemoListComponent} from "./pc-demo-list.component";
 import {MobileDemoListComponent} from "./mobile-demo-list.component";
 import {SwitchDemoComponent} from "./switch-demo.component";
 import {DemoCodeComponent} from "./demo-code.component";
+import {FormlyModule} from '@ngx-formly/core';
 
 @NgModule({
     declarations: [
@@ -43,7 +44,8 @@ import {DemoCodeComponent} from "./demo-code.component";
         ], { useHash: true }),
         JigsawRootModule, JigsawFloatModule, JigsawListLiteModule, JigsawTreeExtModule, JigsawButtonBarModule,
         JigsawCheckBoxModule, JigsawNumericInputModule, JigsawSelectModule,
-        TranslateModule.forRoot()
+        TranslateModule.forRoot(),
+        FormlyModule.forRoot({extras: {lazyRender: true, resetFieldOnHide: false}})
     ],
     providers: [
         {

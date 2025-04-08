@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormlyModule} from '@ngx-formly/core';
 import {ReactiveFormsModule} from '@angular/forms';
-import {FormlyJigsawFormFieldModule} from "@rdkmaster/formly/form-field";
+import {FormlyJigsawFormFieldModule} from "../../form-field";
 import {JigsawTrustedHtmlModule} from "@rdkmaster/jigsaw";
 
 import {FormlyTemplateFieldType} from "./template.type";

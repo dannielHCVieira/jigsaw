@@ -1,0 +1,14 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="form-container">
+    
+    <form #elementForm="ngForm" [style.width]="'100%'" [style.height]="'100%'" [formGroup]="ngForm">
+        <formly-form style="height: 100%; display: flex; flex-direction: column;" [form]="ngForm"
+            [fields]="fields" [(model)]="model"></formly-form>
+    </form>
+
+</div>

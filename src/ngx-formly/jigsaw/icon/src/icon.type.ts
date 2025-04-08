@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, ViewChild} from '@angular/core';
-import {FormlyFieldType} from "@rdkmaster/formly/form-field";
+import {FormlyFieldType} from "../../form-field";
 import {JigsawIcon} from "@rdkmaster/jigsaw";
 
 @Component({

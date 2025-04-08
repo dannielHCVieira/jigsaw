@@ -873,7 +873,9 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
 
     protected _valueChange(value): void {
         this.valueChange.emit(value);
-        this._propagateChange(value);
+        // 在升级到angular18之后，多选的时候，在清空已选项的时候，无法触发valid校验
+        // 这里将空的ArrayCollection转为普通的空数组就好了
+        this._propagateChange(value instanceof ArrayCollection && value?.length == 0 ? [] : value);
     }
 }
 
@@ -1050,7 +1052,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
         }
         this._updateOutputValue();
         this.valueChange.emit(this._outputValue);
-        this._propagateChange(this._outputValue);
+        this._propagateChange(this._outputValue instanceof ArrayCollection && this._outputValue?.length == 0 ? [] : this._outputValue);
     }
 
     private _getFlatData(value: GroupSelectOption[]): SelectOption[] {

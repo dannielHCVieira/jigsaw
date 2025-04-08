@@ -5,7 +5,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 
 import {FormlyFieldTextArea} from './textarea.type';
 import {JigsawTextareaModule} from "@rdkmaster/jigsaw";
-import {FormlyJigsawFormFieldModule} from "@rdkmaster/formly/form-field";
+import {FormlyJigsawFormFieldModule} from "../../form-field";
 
 @NgModule({
     declarations: [FormlyFieldTextArea],

@@ -14,6 +14,7 @@ import {publishPackage, whoami} from './publish';
 import {cleanAll} from "./clean";
 import {buildFormly} from "./build-formly";
 const flattenCodes = require("../../../scripts/flatten-codes.js");
+const updateFormlyImport = require("../../../scripts/update-formly-import.js");
 const generateGetterSetter = require("../../../scripts/generate-getter-setter.js");
 const processSource = require("../../../scripts/create-tmp-src.js");
 const CleanCSS = require('clean-css');
@@ -133,6 +134,7 @@ async function build(packageName: string) {
     const ngVersion = (global as any).ngVersion;
     console.log(`----- Run Task: copy src to src-tmp and generate getter setter in src-tmp -----`);
     processSource();
+    updateFormlyImport();
     if (ngVersion != 'ng9') {
         generateGetterSetter(['src-tmp']);
         flattenCodes();

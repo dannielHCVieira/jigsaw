@@ -5,7 +5,7 @@ import {FormlyModule} from '@ngx-formly/core';
 
 import {FormlyFieldSelect} from './select.type';
 import {JigsawSelectModule} from "@rdkmaster/jigsaw";
-import {FormlyJigsawFormFieldModule} from "@rdkmaster/formly/form-field";
+import {FormlyJigsawFormFieldModule} from "../../form-field";
 import {FormlyFieldSelectGroup} from "./select-group.type";
 import {FormlyFieldSelectCollapse} from "./select-collpase.type";
 

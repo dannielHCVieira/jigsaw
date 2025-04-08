@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, ViewChild} from '@angular/core';
-import {FormlyFieldType} from "@rdkmaster/formly/form-field";
-import {ColorType, SizeType} from "@rdkmaster/formly/button";
+import {FormlyFieldType} from "../../form-field";
+import {ColorType, SizeType} from "../../button";
 import {FormlyUploadComponent} from "./upload.component";
 
 @Component({

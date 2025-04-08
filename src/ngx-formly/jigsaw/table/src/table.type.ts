@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, ViewChild} from '@angular/core';
 import {JigsawTable} from "@rdkmaster/jigsaw";
-import {FormlyFieldType} from "@rdkmaster/formly/form-field";
+import {FormlyFieldType} from "../../form-field";
 
 @Component({
     selector: 'formly-field-jigsaw-table',

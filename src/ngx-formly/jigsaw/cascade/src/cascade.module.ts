@@ -4,7 +4,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {FormlyModule} from '@ngx-formly/core';
 import {JigsawCascadeModule, JigsawComboSelectModule} from "@rdkmaster/jigsaw";
 
-import {FormlyJigsawFormFieldModule} from "@rdkmaster/formly/form-field";
+import {FormlyJigsawFormFieldModule} from "../../form-field";
 import {FormlyFieldCascade} from "./cascade.type";
 
 @NgModule({

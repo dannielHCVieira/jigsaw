@@ -1,0 +1,23 @@
+.form-container {
+    padding: 16px;
+    width: 400px;
+}
+
+.awade-form-group {
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.awade-form-group-field {
+    flex: 1;
+    min-width: 0;
+}
+
+[class*='awade-form-group-'] {
+    margin-left: 0;
+}
+
+[class*='awade-form-group-'] ~ [class*='awade-form-group-'] {
+    margin-left: 16px;
+}
